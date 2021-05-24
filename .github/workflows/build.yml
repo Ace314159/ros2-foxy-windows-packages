@@ -26,9 +26,10 @@ jobs:
           Expand-Archive -Path 'ros.zip' -DestinationPath ros2
       - name: Download MoveIt source
         run: |
+          ros\local_setup.ps1
           mkdir ws/src
           cd ws/src
-          Invoke-WebRequest https://raw.githubusercontent.com/ros-planning/moveit2/main/moveit2.repos
+          Invoke-WebRequest https://raw.githubusercontent.com/ros-planning/moveit2/main/moveit2.repos -OutFile moveit2.repos
           Get-Content moveit2.repos | vcs import
           git clone https://github.com/ros-planning/moveit2.git
       - name: Build MoveIt
