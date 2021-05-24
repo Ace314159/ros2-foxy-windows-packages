@@ -22,19 +22,17 @@ jobs:
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/bullet.2.89.0.nupkg -OutFile bullet.2.89.0.nupkg
           choco install -y -s . asio cunit eigen tinyxml-usestl tinyxml2 log4cxx bullet
           python -m pip install -U catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro
+      - name: Build
+        run: |
           Invoke-WebRequest https://github.com/ros2/ros2/releases/download/release-foxy-20201211/ros2-foxy-20201211-windows-release.amd64.zip -OutFile ros.zip
           Expand-Archive -Path 'ros.zip' -DestinationPath ros2
-      - name: Download MoveIt source
-        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           .\ros\local_setup.ps1
           mkdir ws/src
           cd ws/src
           Invoke-WebRequest https://raw.githubusercontent.com/ros-planning/moveit2/main/moveit2.repos -OutFile moveit2.repos
           Get-Content moveit2.repos | vcs import
           git clone https://github.com/ros-planning/moveit2.git
-      - name: Build MoveIt
-        run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           .\ros\local_setup.ps1
           cd ws/src
           colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False
