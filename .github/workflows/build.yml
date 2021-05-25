@@ -24,9 +24,9 @@ jobs:
           python -m pip install -U catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro
       - name: Build
         run: |
+          "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           Invoke-WebRequest https://github.com/ros2/ros2/releases/download/release-foxy-20201211/ros2-foxy-20201211-windows-release.amd64.zip -OutFile ros.zip
           Expand-Archive -Path 'ros.zip' -DestinationPath ros2
-          "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           .\ros2\local_setup.ps1
           mkdir ws/src
           cd ws/src
