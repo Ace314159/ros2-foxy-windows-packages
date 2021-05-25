@@ -33,6 +33,5 @@ jobs:
           Invoke-WebRequest https://raw.githubusercontent.com/ros-planning/moveit2/main/moveit2.repos -OutFile moveit2.repos
           Get-Content moveit2.repos | vcs import
           git clone https://github.com/ros-planning/moveit2.git
-          .\ros2-windows\local_setup.ps1
-          cd ws/src
+          cd ..
           colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False
