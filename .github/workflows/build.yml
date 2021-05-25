@@ -22,9 +22,10 @@ jobs:
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/bullet.2.89.0.nupkg -OutFile bullet.2.89.0.nupkg
           choco install -y -s . asio cunit eigen tinyxml-usestl tinyxml2 log4cxx bullet
           python -m pip install -U catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro vcstool colcon-common-extensions
+          C:\vcpkg\vcpkg install eigen3 --triplet=x64-windows
+          C:\vcpkg\vcpkg integrate install
       - name: Build
         run: |
-          refreshenv
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
           Invoke-WebRequest https://github.com/ros2/ros2/releases/download/release-foxy-20201211/ros2-foxy-20201211-windows-release.amd64.zip -OutFile ros.zip
           Expand-Archive -Path 'ros.zip' -DestinationPath .
@@ -35,4 +36,4 @@ jobs:
           Get-Content moveit2.repos | vcs import
           git clone https://github.com/ros-planning/moveit2.git
           cd ..
-          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False
+          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake
