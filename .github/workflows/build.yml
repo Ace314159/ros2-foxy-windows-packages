@@ -21,7 +21,7 @@ jobs:
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/log4cxx.0.10.0.nupkg -OutFile log4cxx.0.10.0.nupkg
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/bullet.2.89.0.nupkg -OutFile bullet.2.89.0.nupkg
           choco install -y -s . asio cunit eigen tinyxml-usestl tinyxml2 log4cxx bullet
-          python -m pip install -U catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro vcstool
+          python -m pip install -U catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro vcstool colcon-common-extensions
       - name: Build
         run: |
           "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
