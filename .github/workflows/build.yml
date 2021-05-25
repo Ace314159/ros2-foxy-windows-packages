@@ -26,13 +26,13 @@ jobs:
         run: |
           "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           Invoke-WebRequest https://github.com/ros2/ros2/releases/download/release-foxy-20201211/ros2-foxy-20201211-windows-release.amd64.zip -OutFile ros.zip
-          Expand-Archive -Path 'ros.zip' -DestinationPath ros2
-          .\ros2\local_setup.ps1
+          Expand-Archive -Path 'ros.zip' -DestinationPath .
+          .\ros2-windows\local_setup.ps1
           mkdir ws/src
           cd ws/src
           Invoke-WebRequest https://raw.githubusercontent.com/ros-planning/moveit2/main/moveit2.repos -OutFile moveit2.repos
           Get-Content moveit2.repos | vcs import
           git clone https://github.com/ros-planning/moveit2.git
-          .\ros2\local_setup.ps1
+          .\ros2-windows\local_setup.ps1
           cd ws/src
           colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False
