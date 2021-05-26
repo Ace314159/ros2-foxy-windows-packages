@@ -33,6 +33,8 @@ jobs:
           Get-Content moveit2.repos | vcs import
           git clone https://github.com/ros-planning/moveit2.git
           cd ..
-          dir "C:\Program Files"
-          $env:OPENSSL_ROOT_DIR="C:\Program Files\OpenSSL-Win64"
+          dir "C:\Program Files\OpenSSL"
+          $env:PATH += ";C:\Program Files\OpenSSL;"
+          echo $env:PATH
+          echo $env:OPENSSL_CONF
           colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False
