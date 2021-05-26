@@ -12,15 +12,14 @@ jobs:
       - name: Setup
         run: |
           choco install -y python --version 3.8.3
-          choco install -y vcredist2013 vcredist140 opennsl opencv
+          choco install -y vcredist2013 vcredist140 opennsl opencv eigen boost-msvc-14.1
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/asio.1.12.1.nupkg -OutFile asio.1.12.1.nupkg
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/cunit.2.1.3.nupkg -OutFile cunit.2.1.3.nupkg
-          Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/eigen.3.3.4.nupkg -OutFile eigen.3.3.4.nupkg
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/tinyxml-usestl.2.6.2.nupkg -OutFile usestl.2.6.2.nupkg
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/tinyxml2.6.0.0.nupkg -OutFile tinyxml2.6.0.0.nupkg
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/log4cxx.0.10.0.nupkg -OutFile log4cxx.0.10.0.nupkg
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/bullet.2.89.0.nupkg -OutFile bullet.2.89.0.nupkg
-          choco install -y -s . asio cunit eigen tinyxml-usestl tinyxml2 log4cxx bullet boost-msvc-14.1
+          choco install -y -s . asio cunit tinyxml-usestl tinyxml2 log4cxx bullet
           python -m pip install -U catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro vcstool colcon-common-extensions
       - name: Build
         run: |
