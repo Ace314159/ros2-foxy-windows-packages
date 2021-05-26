@@ -20,10 +20,8 @@ jobs:
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/tinyxml2.6.0.0.nupkg -OutFile tinyxml2.6.0.0.nupkg
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/log4cxx.0.10.0.nupkg -OutFile log4cxx.0.10.0.nupkg
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/bullet.2.89.0.nupkg -OutFile bullet.2.89.0.nupkg
-          choco install -y -s . asio cunit eigen tinyxml-usestl tinyxml2 log4cxx bullet
+          choco install -y -s . asio cunit eigen tinyxml-usestl tinyxml2 log4cxx bullet boost-msvc-14.1
           python -m pip install -U catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro vcstool colcon-common-extensions
-          C:\vcpkg\vcpkg install eigen3 qt5 asio assimp tinyxml tinyxml2 log4cxx eigen3 opencv bullet3 boost pcl poco ompl gtest --triplet=x64-windows
-          C:\vcpkg\vcpkg integrate install
       - name: Build
         run: |
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
@@ -32,7 +30,7 @@ jobs:
           .\ros2-windows\local_setup.ps1
           mkdir ws/src
           cd ws/src
-          Invoke-WebRequest https://raw.githubusercontent.com/ros-planning/moveit2/main/moveit2.repos -OutFile moveit2.repos
+          Invoke-WebRequest https://raw.githubusercontent.com/nkalupahana/ros2-foxy-macos/main/repos/ros2-foxy-moveit2.repos -OutFile moveit2.repos
           Get-Content moveit2.repos | vcs import
           git clone https://github.com/ros-planning/moveit2.git
           cd ..
