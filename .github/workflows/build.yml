@@ -33,5 +33,4 @@ jobs:
           Get-Content moveit2.repos | vcs import
           git clone https://github.com/ros-planning/moveit2.git
           cd ..
-          $env:OPENSSL_ROOT_DIR="C:\Program Files\OpenSSL"
-          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake
+          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DOPENSSL_ROOT_DIR="C:\Program Files\OpenSSL" -DOPENSSL_CRYPTO_LIBRARY="C:\Program Files\OpenSSL"
