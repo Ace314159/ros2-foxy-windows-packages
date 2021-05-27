@@ -23,6 +23,7 @@ jobs:
           python -m pip install -U catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro vcstool colcon-common-extensions
       - name: Build
         run: |
+          Update-SessionEnvironment
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
           Invoke-WebRequest https://github.com/ros2/ros2/releases/download/release-foxy-20201211/ros2-foxy-20201211-windows-release.amd64.zip -OutFile ros.zip
           Expand-Archive -Path 'ros.zip' -DestinationPath .
