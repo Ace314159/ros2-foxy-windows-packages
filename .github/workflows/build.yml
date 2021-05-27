@@ -33,4 +33,5 @@ jobs:
           Get-Content moveit2.repos | vcs import
           git clone https://github.com/ros-planning/moveit2.git
           cd ..
-          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False
+          echo $env:PATH
+          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -D CMAKE_PREFIX_PATH=C:\ProgramData\chocolatey\lib\
