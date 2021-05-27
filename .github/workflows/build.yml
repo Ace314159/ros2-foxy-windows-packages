@@ -9,9 +9,12 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8.3'
+          architecture: 'x64'
       - name: Setup
         run: |
-          choco install -y python --version 3.8.3
           choco install -y vcredist2013 vcredist140 openssl opencv eigen boost-msvc-14.1
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/asio.1.12.1.nupkg -OutFile asio.1.12.1.nupkg
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/cunit.2.1.3.nupkg -OutFile cunit.2.1.3.nupkg
