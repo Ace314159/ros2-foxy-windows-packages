@@ -35,6 +35,5 @@ jobs:
           cd ..
           dir "C:\Program Files\OpenSSL"
           $env:PATH += ";C:\Program Files\OpenSSL;"
-          echo $env:PATH
-          echo $env:OPENSSL_CONF
+          $env:OPENSSL_CONF="C:\Program Files\OpenSSL-Win64\bin\openssl.cfg"
           colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False
