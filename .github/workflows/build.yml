@@ -21,8 +21,6 @@ jobs:
           choco install -y -s . asio cunit tinyxml-usestl tinyxml2 log4cxx bullet
           Import-Module "C:\ProgramData\chocolatey\helpers\chocolateyProfile.psm1"
           refreshenv
-          echo $env:PATH
-          Get-ChildItem -Path Registry::HKEY_LOCAL_MACHINE\Software\Kitware\CMake\Packages\
       - uses: actions/setup-python@v2
         with:
           python-version: '3.8.3'
@@ -40,4 +38,4 @@ jobs:
           Invoke-WebRequest https://raw.githubusercontent.com/nkalupahana/ros2-foxy-macos/main/repos/ros2-foxy-moveit2.repos -OutFile moveit2.repos
           Get-Content moveit2.repos | vcs import
           cd ..
-          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_FIND_DEBUG_MODE=1
+          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False
