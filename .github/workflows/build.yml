@@ -21,6 +21,7 @@ jobs:
           choco install -y -s . asio cunit tinyxml-usestl tinyxml2 log4cxx bullet
           Import-Module "C:\ProgramData\chocolatey\helpers\chocolateyProfile.psm1"
           refreshenv
+          echo $env:PATH
       - uses: actions/setup-python@v2
         with:
           python-version: '3.8.3'
