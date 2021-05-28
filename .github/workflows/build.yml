@@ -36,8 +36,6 @@ jobs:
           Get-Content moveit2.repos | vcs import
           git clone https://github.com/ros-planning/moveit2.git
           cd ..
-          $ChocolateyProfile = "C:\ProgramData\chocolatey\helpers\chocolateyProfile.psm1"
-          Import-Module "$ChocolateyProfile"
-          if (Test-Path($ChocolateyProfile)) {
-          }
+          Import-Module "C:\ProgramData\chocolatey\helpers\chocolateyProfile.psm1"
+          refreshenv
           colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_FIND_DEBUG_MODE=1
