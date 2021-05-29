@@ -24,7 +24,7 @@ jobs:
           vcpkgGitCommitId: 7bc5b8cdfaf35329c1520b2af8d368e2b1cb78e6
       - name: Setup Environment
         run: |
-          choco install -y cmake vcredist2013 vcredist140 openssl eigen boost-msvc-14.2
+          choco install -y cmake vcredist2013 vcredist140 openssl boost-msvc-14.2
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/asio.1.12.1.nupkg -OutFile asio.1.12.1.nupkg
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/cunit.2.1.3.nupkg -OutFile cunit.2.1.3.nupkg
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/tinyxml-usestl.2.6.2.nupkg -OutFile tinyxml-usestl.2.6.2.nupkg
@@ -45,4 +45,4 @@ jobs:
           cd ws/src
           Get-Content $env:GITHUB_WORKSPACE/ros2-foxy-moveit2.repos | vcs import
           cd ..
-          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_TOOLCHAIN_FILE=${{ runner.workspace }}/b/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows
+          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_TOOLCHAIN_FILE=${{ runner.workspace }}/b/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows -Wno-dev
