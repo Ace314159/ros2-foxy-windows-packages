@@ -57,8 +57,8 @@ repositories:
     version: patch-1
   vision_opencv:
     type: git
-    url: https://github.com/ms-iot/vision_opencv.git
-    version: windows/2.2.1
+    url: https://github.com/ros-perception/vision_opencv.git
+    version: ros2
   image_common:
     type: git
     url: https://github.com/ros-perception/image_common
