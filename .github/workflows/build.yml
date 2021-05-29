@@ -9,13 +9,15 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - name: Install vcpkg packages
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup vcpkg
         uses: lukka/run-vcpkg@dev/always_cache_in_post_action
         with:
-          vcpkgArguments: octomap qhull fcl opencv
+          setupOnly: true
+          vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+          appendedCacheKey: ${{ hashFiles( '**/vcpkg.json' ) }}
           vcpkgTriplet: x64-windows
-          vcpkgDirectory: '${{ runner.workspace }}/b/vcpkg'
-          vcpkgGitCommitId: 7bc5b8cdfaf35329c1520b2af8d368e2b1cb78e6
       - name: Setup Environment
         run: |
           choco install -y cmake vcredist2013 vcredist140 openssl eigen boost-msvc-14.2
@@ -29,9 +31,6 @@ jobs:
           Import-Module "C:\ProgramData\chocolatey\helpers\chocolateyProfile.psm1"
           refreshenv
           python -m pip install -U catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro vcstool colcon-common-extensions
-      - uses: actions/checkout@v2
-        with:
-          path: repo
       - name: Build
         run: |
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
@@ -42,4 +41,4 @@ jobs:
           cd ws/src
           Get-Content $env:GITHUB_WORKSPACE/repo/ros2-foxy-moveit2.repos | vcs import
           cd ..
-          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_TOOLCHAIN_FILE=${{ runner.workspace }}/b/vcpkg/scripts/buildsystems/vcpkg.cmake
+          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake -GNinja -DVCPKG_TARGET_TRIPLET=x64-windows

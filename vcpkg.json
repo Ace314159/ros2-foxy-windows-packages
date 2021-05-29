@@ -1,0 +1,10 @@
+{
+    "name": "ros2-foxy-windows-packages",
+    "version-string": "0.0.1",
+    "dependencies": [
+        "octomap",
+        "qhull",
+        "fcl",
+        "openc"
+    ]
+}
