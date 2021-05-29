@@ -10,7 +10,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Install vcpkg packages
-        uses: lukka/run-vcpkg@main
+        uses: lukka/run-vcpkg@dev/always_cache_in_post_action
         with:
           vcpkgArguments: octomap qhull fcl opencv
           vcpkgTriplet: x64-windows
