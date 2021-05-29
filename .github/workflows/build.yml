@@ -18,9 +18,8 @@ jobs:
         uses: lukka/run-vcpkg@main
         id: runvcpkg
         with:
-          vcpkgArguments: octomap qhull fcl opencv
+          vcpkgArguments: octomap qhull fcl opencv eigen3 fastcdr
           vcpkgDirectory: '${{ runner.workspace }}/b/vcpkg'
-          appendedCacheKey: ${{ hashFiles( '**/vcpkg.json' ) }}
           vcpkgTriplet: x64-windows
           vcpkgGitCommitId: 7bc5b8cdfaf35329c1520b2af8d368e2b1cb78e6
       - name: Setup Environment
