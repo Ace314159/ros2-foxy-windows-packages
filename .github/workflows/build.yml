@@ -16,7 +16,6 @@ jobs:
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@dev/always_cache_in_post_action
         with:
-          setupOnly: true
           vcpkgDirectory: '${{ github.workspace }}/vcpkg'
           appendedCacheKey: ${{ hashFiles( '**/vcpkg.json' ) }}
           vcpkgTriplet: x64-windows
