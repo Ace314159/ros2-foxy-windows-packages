@@ -41,6 +41,6 @@ jobs:
           .\ros2-windows\local_setup.ps1
           mkdir ws/src
           cd ws/src
-          Get-Content $env:GITHUB_WORKSPACE/repo/ros2-foxy-moveit2.repos | vcs import
+          Get-Content $env:GITHUB_WORKSPACE/ros2-foxy-moveit2.repos | vcs import
           cd ..
           colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake -GNinja -DVCPKG_TARGET_TRIPLET=x64-windows
