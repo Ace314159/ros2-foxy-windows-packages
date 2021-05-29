@@ -18,7 +18,7 @@ jobs:
         uses: lukka/run-vcpkg@main
         id: runvcpkg
         with:
-          vcpkgArguments: octomap qhull fcl opencv eigen3 fastcdr
+          vcpkgArguments: octomap qhull fcl opencv eigen3
           vcpkgDirectory: '${{ runner.workspace }}/b/vcpkg'
           vcpkgTriplet: x64-windows
           vcpkgGitCommitId: 7bc5b8cdfaf35329c1520b2af8d368e2b1cb78e6
@@ -45,4 +45,4 @@ jobs:
           cd ws/src
           Get-Content $env:GITHUB_WORKSPACE/ros2-foxy-moveit2.repos | vcs import
           cd ..
-          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_TOOLCHAIN_FILE=${{ runner.workspace }}/b/vcpkg/scripts/buildsystems/vcpkg.cmake -GNinja -DVCPKG_TARGET_TRIPLET=x64-windows
+          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_TOOLCHAIN_FILE=${{ runner.workspace }}/b/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows
