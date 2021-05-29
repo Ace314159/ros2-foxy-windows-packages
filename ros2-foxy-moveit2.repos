@@ -29,8 +29,8 @@ repositories:
     version: ros2
   random_numbers:
     type: git
-    url: https://github.com/ms-iot/random_numbers.git
-    version: windows/2.0.0
+    url: https://github.com/Ace314159/random_numbers.git
+    version: ros2
   control_msgs:
     type: git
     url: https://github.com/ros-controls/control_msgs.git
