@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - name: Setup Choco
+      - name: Setup
         run: |
           choco install -y cmake vcredist2013 vcredist140 openssl opencv eigen boost-msvc-14.1
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/asio.1.12.1.nupkg -OutFile asio.1.12.1.nupkg
@@ -22,6 +22,7 @@ jobs:
           Import-Module "C:\ProgramData\chocolatey\helpers\chocolateyProfile.psm1"
           refreshenv
           python -m pip install -U catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro vcstool colcon-common-extensions
+          C:\vcpkg\vcpkg install octomap qhull fcl boost-python --triplet=x64-windows
       - name: Build
         run: |
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
@@ -33,4 +34,4 @@ jobs:
           Invoke-WebRequest https://raw.githubusercontent.com/nkalupahana/ros2-foxy-macos/main/repos/ros2-foxy-moveit2.repos -OutFile moveit2.repos
           Get-Content moveit2.repos | vcs import
           cd ..
-          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False
+          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False e -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake
