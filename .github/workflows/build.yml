@@ -14,11 +14,14 @@ jobs:
         with:
           submodules: true
       - name: Setup vcpkg
-        uses: lukka/run-vcpkg@dev/always_cache_in_post_action
+        uses: lukka/run-vcpkg@main
+        id: runvcpkg
         with:
-          vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+          vcpkgArguments: octomap qhull fcl opencv
+          vcpkgDirectory: '${{ runner.workspace }}/b/vcpkg'
           appendedCacheKey: ${{ hashFiles( '**/vcpkg.json' ) }}
           vcpkgTriplet: x64-windows
+          vcpkgGitCommitId: 7bc5b8cdfaf35329c1520b2af8d368e2b1cb78e6
       - name: Setup Environment
         run: |
           choco install -y cmake vcredist2013 vcredist140 openssl eigen boost-msvc-14.2
@@ -42,4 +45,4 @@ jobs:
           cd ws/src
           Get-Content $env:GITHUB_WORKSPACE/ros2-foxy-moveit2.repos | vcs import
           cd ..
-          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake -GNinja -DVCPKG_TARGET_TRIPLET=x64-windows
+          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_TOOLCHAIN_FILE=${{ runner.workspace }}/b/vcpkg/scripts/buildsystems/vcpkg.cmake -GNinja -DVCPKG_TARGET_TRIPLET=x64-windows
