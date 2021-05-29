@@ -9,7 +9,7 @@ repositories:
     version: ros2
   geometric_shapes:
     type: git
-    url: https://github.com/ros-planning/geometric_shapes
+    url: https://github.com/Ace314159/geometric_shapes
     version: ros2
   srdfdom:
     type: git
