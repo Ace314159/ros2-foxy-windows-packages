@@ -29,6 +29,9 @@ jobs:
           Import-Module "C:\ProgramData\chocolatey\helpers\chocolateyProfile.psm1"
           refreshenv
           python -m pip install -U catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro vcstool colcon-common-extensions
+      - uses: actions/checkout@v2
+        with:
+          path: repo
       - name: Build
         run: |
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
@@ -37,7 +40,6 @@ jobs:
           .\ros2-windows\local_setup.ps1
           mkdir ws/src
           cd ws/src
-          Invoke-WebRequest https://raw.githubusercontent.com/nkalupahana/ros2-foxy-macos/main/repos/ros2-foxy-moveit2.repos -OutFile moveit2.repos
-          Get-Content moveit2.repos | vcs import
+          Get-Content $env:GITHUB_WORKSPACE/repo/ros2-foxy-moveit2.repos | vcs import
           cd ..
           colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_TOOLCHAIN_FILE=${{ runner.workspace }}/b/vcpkg/scripts/buildsystems/vcpkg.cmake

@@ -1,0 +1,65 @@
+repositories:
+  moveit_msgs:
+    type: git
+    url: https://github.com/ros-planning/moveit_msgs
+    version: ros2
+  moveit_resources:
+    type: git
+    url: https://github.com/ros-planning/moveit_resources
+    version: ros2
+  geometric_shapes:
+    type: git
+    url: https://github.com/ros-planning/geometric_shapes
+    version: ros2
+  srdfdom:
+    type: git
+    url: https://github.com/ros-planning/srdfdom
+    version: ros2
+  ros2_control:
+    type: git
+    url: https://github.com/ros-controls/ros2_control
+    version: master
+  ros2_controllers:
+    type: git
+    url: https://github.com/ros-controls/ros2_controllers
+    version: master
+  eigen_stl_containers:
+    type: git
+    url: https://github.com/ros/eigen_stl_containers.git
+    version: ros2
+  random_numbers:
+    type: git
+    url: https://github.com/ms-iot/random_numbers.git
+    version: windows/2.0.0
+  control_msgs:
+    type: git
+    url: https://github.com/ros-controls/control_msgs.git
+    version: foxy-devel
+  object_recognition_msgs:
+    type: git
+    url: https://github.com/wg-perception/object_recognition_msgs.git
+    version: ros2
+  octomap_msgs:
+    type: git
+    url: https://github.com/OctoMap/octomap_msgs.git
+    version: ros2
+  angles:
+    type: git
+    url: https://github.com/ros/angles.git
+    version: ros2
+  realtime_tools:
+    type: git
+    url: https://github.com/ros-controls/realtime_tools.git
+    version: foxy-devel
+  moveit2:
+    type: git
+    url: https://github.com/nkalupahana/moveit2.git
+    version: patch-1
+  vision_opencv:
+    type: git
+    url: https://github.com/ms-iot/vision_opencv.git
+    version: windows/2.2.1
+  image_common:
+    type: git
+    url: https://github.com/ros-perception/image_common
+    version: ros2
