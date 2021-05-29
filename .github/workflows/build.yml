@@ -11,8 +11,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          submodules: true
+      - name: Remove existing vcpkg
+        run: rm -rf "$VCPKG_INSTALLATION_ROOT"
+        shell: 'bash'
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@main
         id: runvcpkg
