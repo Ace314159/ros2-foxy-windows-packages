@@ -17,7 +17,7 @@ jobs:
         uses: lukka/run-vcpkg@main
         id: runvcpkg
         with:
-          vcpkgArguments: octomap qhull fcl opencv
+          vcpkgArguments: octomap
           vcpkgDirectory: '${{ runner.workspace }}/b/vcpkg'
           appendedCacheKey: ${{ hashFiles( '**/vcpkg.json' ) }}
           vcpkgTriplet: x64-windows
