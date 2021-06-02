@@ -23,6 +23,10 @@ repositories:
     type: git
     url: https://github.com/ros-controls/ros2_controllers
     version: master
+  warehouse_ros:
+    type: git
+    url: https://github.com/ros-planning/warehouse_ros
+    version: ros2
   eigen_stl_containers:
     type: git
     url: https://github.com/ros/eigen_stl_containers.git
@@ -53,11 +57,11 @@ repositories:
     version: foxy-devel
   moveit2:
     type: git
-    url: https://github.com/nkalupahana/moveit2.git
+    url: https://github.com/Ace314159/moveit2.git
     version: patch-1
   vision_opencv:
     type: git
-    url: https://github.com/ros-perception/vision_opencv.git
+    url: https://github.com/Ace314159/vision_opencv.git
     version: ros2
   image_common:
     type: git
