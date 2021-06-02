@@ -20,12 +20,12 @@ jobs:
         uses: lukka/run-vcpkg@main
         id: runvcpkg
         with:
-          vcpkgArguments: octomap qhull fcl opencv eigen3 ompl boost-python
+          vcpkgArguments: octomap qhull fcl opencv eigen3 ompl boost-python boost-filesystem boost-program-options boost-iostreams boost-signals2
           vcpkgDirectory: '${{ github.workspace }}/vcpkg'
           vcpkgTriplet: x64-windows
       - name: Setup Environment
         run: |
-          choco install -y cmake vcredist2013 vcredist140 openssl boost-msvc-14.2
+          choco install -y cmake vcredist2013 vcredist140 openssl
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/asio.1.12.1.nupkg -OutFile asio.1.12.1.nupkg
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/cunit.2.1.3.nupkg -OutFile cunit.2.1.3.nupkg
           Invoke-WebRequest https://github.com/ros2/choco-packages/releases/download/2020-02-24/tinyxml-usestl.2.6.2.nupkg -OutFile tinyxml-usestl.2.6.2.nupkg
