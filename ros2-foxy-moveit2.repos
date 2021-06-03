@@ -13,7 +13,7 @@ repositories:
     version: ros2
   srdfdom:
     type: git
-    url: https://github.com/ros-planning/srdfdom
+    url: https://github.com/Ace314159/srdfdom
     version: ros2
   ros2_control:
     type: git
@@ -58,7 +58,7 @@ repositories:
   moveit2:
     type: git
     url: https://github.com/Ace314159/moveit2.git
-    version: patch-1
+    version: main
   vision_opencv:
     type: git
     url: https://github.com/Ace314159/vision_opencv.git
