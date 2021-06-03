@@ -16,7 +16,7 @@ jobs:
       - name: Remove existing vcpkg and python
         run: |
           rm -rf "$VCPKG_INSTALLATION_ROOT"
-          rm -rf "C:\hostedtoolcache\windows\python\"
+          rm -rf "C:/hostedtoolcache/windows/python/"
         shell: 'bash'
       - name: Install Python
         uses: actions/setup-python@v2
