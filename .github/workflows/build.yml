@@ -16,6 +16,8 @@ jobs:
       - name: Remove existing vcpkg
         run: rm -rf "$VCPKG_INSTALLATION_ROOT"
         shell: 'bash'
+      - name: Setup Python
+        run: python -m pip install -U numpy catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro vcstool colcon-common-extensions
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@main
         id: runvcpkg
@@ -41,7 +43,6 @@ jobs:
           choco install -y -s . asio cunit tinyxml-usestl tinyxml2 log4cxx bullet
           Import-Module "C:\ProgramData\chocolatey\helpers\chocolateyProfile.psm1"
           refreshenv
-          python -m pip install -U numpy catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro vcstool colcon-common-extensions
       - name: Build
         run: |
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
