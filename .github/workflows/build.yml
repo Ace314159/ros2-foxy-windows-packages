@@ -13,11 +13,17 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Remove existing vcpkg
-        run: rm -rf "$VCPKG_INSTALLATION_ROOT"
+      - name: Remove existing vcpkg and python
+        run: |
+          rm -rf "$VCPKG_INSTALLATION_ROOT"
+          rm -rf "C:\hostedtoolcache\windows\python\"
         shell: 'bash'
-      - name: Setup Python
-        run: python -m pip install -U numpy catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro vcstool colcon-common-extensions
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8.3'
+      - name: Install Python Deps
+          run: python -m pip install -U numpy catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro vcstool colcon-common-extensions
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@main
         id: runvcpkg
@@ -53,4 +59,4 @@ jobs:
           cd ws/src
           Get-Content $env:GITHUB_WORKSPACE/ros2-foxy-moveit2.repos | vcs import
           cd ..
-          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake -DPython_ROOT_DIR="c:\hostedtoolcache\windows\python\3.7.9\x64" -DVCPKG_TARGET_TRIPLET=x64-windows -Wno-dev
+          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows -Wno-dev
