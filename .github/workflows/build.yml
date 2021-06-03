@@ -27,6 +27,12 @@ jobs:
           vcpkgArguments: octomap qhull fcl opencv eigen3 ompl boost-python boost-filesystem boost-program-options boost-iostreams boost-signals2
           vcpkgDirectory: '${{ github.workspace }}/vcpkg'
           vcpkgTriplet: x64-windows
+      - name: Save log
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: log
+          path: '${{ github.workspace }}/vcpkg/buildtrees/boost-python/build-x64-windows-rel-out.log'
       - name: Setup Environment
         run: |
           choco install -y cmake vcredist2013 vcredist140 openssl eigen
