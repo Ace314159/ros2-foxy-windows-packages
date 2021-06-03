@@ -25,7 +25,7 @@ repositories:
     version: master
   warehouse_ros:
     type: git
-    url: https://github.com/ros-planning/warehouse_ros
+    url: https://github.com/Ace314159/warehouse_ros
     version: ros2
   eigen_stl_containers:
     type: git
