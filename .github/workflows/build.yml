@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: '3.8.3'
       - name: Install Python Deps
-          run: python -m pip install -U numpy catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro vcstool colcon-common-extensions
+        run: python -m pip install -U numpy catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro vcstool colcon-common-extensions
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@main
         id: runvcpkg
