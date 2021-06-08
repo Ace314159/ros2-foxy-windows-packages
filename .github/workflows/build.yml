@@ -57,6 +57,7 @@ jobs:
           Expand-Archive -Path 'ros.zip' -DestinationPath .
           .\ros2-windows\local_setup.ps1
           New-Item -ItemType SymbolicLink -Path "C:/ci/ws/install/opt/" -Target .\ros2-windows -Force
+          New-Item -ItemType SymbolicLink -Path "C:/Qt/5.12.10/msvc2017_64" -Target C:\Qt\5.15.2\mingw81_64\ -Force
           mkdir ws/src
           cd ws/src
           Get-Content $env:GITHUB_WORKSPACE/ros2-foxy-moveit2.repos | vcs import
