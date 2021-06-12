@@ -31,12 +31,6 @@ jobs:
           vcpkgArguments: octomap qhull fcl opencv eigen3 ompl glew freeglut boost-python boost-filesystem boost-program-options boost-iostreams boost-signals2
           vcpkgDirectory: '${{ github.workspace }}/vcpkg'
           vcpkgTriplet: x64-windows
-      - name: Save log
-        uses: actions/upload-artifact@v2
-        if: ${{ always() }}
-        with:
-          name: log
-          path: '${{ github.workspace }}/vcpkg/buildtrees/boost-python/build-x64-windows-rel-out.log'
       - name: Setup Environment
         run: |
           choco install -y cmake vcredist2013 vcredist140 openssl eigen qt5-default
@@ -63,3 +57,9 @@ jobs:
           Get-Content $env:GITHUB_WORKSPACE/ros2-foxy-moveit2.repos | vcs import
           cd ..
           colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake -D_IMPORT_PREFIX="${{ github.workspace }}/vcpkg/installed/x64-windows/" -DVCPKG_TARGET_TRIPLET=x64-windows -Wno-dev
+      - name: Save log
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: log
+          path: '${{ github.workspace }}/ws/log/latest_build/srdfdom/stdout_stderr.log'
