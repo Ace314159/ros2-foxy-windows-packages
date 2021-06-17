@@ -55,7 +55,9 @@ jobs:
           cd ws/src
           Get-Content $env:GITHUB_WORKSPACE/ros2-foxy-moveit2.repos | vcs import
           cd ..
-          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake -D_IMPORT_PREFIX="${{ github.workspace }}/vcpkg/installed/x64-windows/" -DVCPKG_TARGET_TRIPLET=x64-windows -Wno-dev
+          $VCPKG_ROOT = "${{ github.workspace }}/vcpkg"
+          $VCPKG_ROOT = $VCPKG_ROOT -replace "[\\]", "/"
+          colcon build --event-handlers console_cohesion+ status- --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING:BOOL=False -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -D_IMPORT_PREFIX="$VCPKG_ROOT/installed/x64-windows/" -DVCPKG_TARGET_TRIPLET=x64-windows -Wno-dev
       - name: Save log
         uses: actions/upload-artifact@v2
         if: ${{ always() }}
