@@ -16,7 +16,7 @@ jobs:
       - name: Remove existing vcpkg and python
         run: |
           rm -rf "$VCPKG_INSTALLATION_ROOT"
-          rm -rf "C:/hostedtoolcache/windows/python/" - Only do this when installing boost-python
+          rm -rf "C:/hostedtoolcache/windows/python/"
         shell: 'bash'
       - name: Install Python
         uses: actions/setup-python@v2
@@ -28,7 +28,7 @@ jobs:
         uses: lukka/run-vcpkg@main
         id: runvcpkg
         with:
-          vcpkgArguments: tinyxml tinyxml2 octomap qhull fcl opencv eigen3 ompl glew freeglut boost-python boost-filesystem boost-program-options boost-iostreams boost-signals2
+          vcpkgArguments: octomap qhull fcl opencv eigen3 ompl glew freeglut boost-python boost-filesystem boost-program-options boost-iostreams boost-signals2
           vcpkgDirectory: '${{ github.workspace }}/vcpkg'
           vcpkgTriplet: x64-windows
       - name: Setup Environment
@@ -44,7 +44,6 @@ jobs:
           Import-Module "C:\ProgramData\chocolatey\helpers\chocolateyProfile.psm1"
           refreshenv
           $env:Qt5_DIR="C:\Qt\5.15.2\mingw81_64"
-          $env:TinyXML_ROOT_DIR="C:\ProgramData\chocolatey\lib\tinyxml-usestl"
       - name: Build
         run: |
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
@@ -52,7 +51,6 @@ jobs:
           Expand-Archive -Path 'ros.zip' -DestinationPath .
           .\ros2-windows\local_setup.ps1
           New-Item -ItemType SymbolicLink -Path "C:/ci/ws/install/opt/" -Target .\ros2-windows -Force
-          New-Item -ItemType SymbolicLink -Path "C:/Qt/5.12.10/msvc2017_64" -Target C:\Qt\5.15.2\mingw81_64\ -Force
           mkdir ws/src
           cd ws/src
           Get-Content $env:GITHUB_WORKSPACE/ros2-foxy-moveit2.repos | vcs import
