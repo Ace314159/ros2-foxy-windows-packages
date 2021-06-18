@@ -39,7 +39,7 @@ jobs:
           vcpkgDirectory: '${{ github.workspace }}/vcpkg'
           appendedCacheKey: ${{ hashFiles( '/vcpkg.json' ) }}
           vcpkgTriplet: x64-windows
-          additionalCachedPaths: ${{ ${{ github.workspace }}/vcpkg_installed }}
+          additionalCachedPaths: ${{ github.workspace }}/vcpkg_installed
       - name: Setup Environment
         run: |
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
