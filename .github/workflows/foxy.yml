@@ -10,6 +10,9 @@ on:
   workflow_dispatch:
 
 jobs:
+  env:
+    FOXY_INSTALL_DIR: C:/opt/ros/foxy
+    VCPKG_MANIFEST_DIR: ${{ github.workspace }}
   build-foxy:
     runs-on: windows-latest
     steps:
@@ -32,22 +35,23 @@ jobs:
         uses: lukka/run-vcpkg@main
         id: runvcpkg
         with:
-          vcpkgArguments: 
+          setupOnly: true
           vcpkgDirectory: '${{ github.workspace }}/vcpkg'
           appendedCacheKey: ${{ hashFiles( '/vcpkg.json' ) }}
           vcpkgTriplet: x64-windows
+          additionalCachedPaths: ${{ ${{ github.workspace }}/vcpkg_installed }}
       - name: Setup Environment
         run: |
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
           mkdir ws/src
-          vcs import --input ros2.repos ws/src
+          vcs import --input foxy.repos ws/src
       - name: Build
         run: |
           $VCPKG_PATH = "${{ github.workspace }}/vcpkg"
           $VCPKG_PATH = $VCPKG_PATH -replace "[\\]", "/"
-          colcon build --merge-install --install-base C:/opt/ros/foxy --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE="$VCPKG_PATH/scripts/buildsystems/vcpkg.cmake" -Wno-dev --event-handlers console_cohesion+ status-
+          colcon build --merge-install --install-base ${{ env.FOXY_INSTALL_DIR }} --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE="$VCPKG_PATH/scripts/buildsystems/vcpkg.cmake" -Wno-dev --event-handlers console_cohesion+ status-
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: foxy
-          path: C:/opt/ros/foxy
+          path: ${{ env.FOXY_INSTALL_DIR }}
