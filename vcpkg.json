@@ -8,7 +8,7 @@
         "boost-program-options",
         "boost-python",
         "boost-signals2",
-        "bullet",
+        "bullet3",
         "cunit",
         "eigen3",
         "fcl",
