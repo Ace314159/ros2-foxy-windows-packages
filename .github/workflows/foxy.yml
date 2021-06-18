@@ -4,6 +4,7 @@ on:
   push:
     branches: main
     paths:
+      - .github/workflows/foxy.yml
       - "vcpkg.json"
       - "foxy.repos"
   workflow_dispatch:
