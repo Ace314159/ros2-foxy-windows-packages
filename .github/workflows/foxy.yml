@@ -4,14 +4,14 @@ on:
   push:
     branches: main
     paths:
-      - .github/workflows/foxy.yml
+      - ".github/workflows/foxy.yml"
       - "vcpkg.json"
       - "foxy.repos"
   workflow_dispatch:
 
 jobs:
   env:
-    FOXY_INSTALL_DIR: C:/opt/ros/foxy
+    FOXY_INSTALL_DIR: "C:/opt/ros/foxy"
     VCPKG_MANIFEST_DIR: ${{ github.workspace }}
   build-foxy:
     runs-on: windows-latest
