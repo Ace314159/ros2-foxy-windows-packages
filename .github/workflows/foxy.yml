@@ -47,5 +47,6 @@ jobs:
           colcon build --merge-install --install-base C:/opt/ros/foxy --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE="$VCPKG_PATH/scripts/buildsystems/vcpkg.cmake" -Wno-dev --event-handlers console_cohesion+ status-
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
-        name: foxy
-        path: C:/opt/ros/foxy
+        with:
+          name: foxy
+          path: C:/opt/ros/foxy
