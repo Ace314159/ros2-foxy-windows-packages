@@ -26,7 +26,7 @@ jobs:
         uses: lukka/run-vcpkg@main
         id: runvcpkg
         with:
-          vcpkgArguments: octomap qhull fcl opencv eigen3 ompl glew freeglut boost-python boost-filesystem boost-program-options boost-iostreams boost-signals2
+          vcpkgArguments: 
           vcpkgDirectory: '${{ github.workspace }}/vcpkg'
           vcpkgTriplet: x64-windows
       - name: Setup Environment
