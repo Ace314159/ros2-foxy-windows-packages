@@ -10,10 +10,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  env:
-    FOXY_INSTALL_DIR: "C:/opt/ros/foxy"
-    VCPKG_MANIFEST_DIR: ${{ github.workspace }}
   build-foxy:
+    env:
+      FOXY_INSTALL_DIR: "C:/opt/ros/foxy"
+      VCPKG_MANIFEST_DIR: ${{ github.workspace }}
     runs-on: windows-latest
     steps:
       - name: Checkout
