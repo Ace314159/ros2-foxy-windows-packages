@@ -49,15 +49,15 @@ jobs:
           $VCPKG_PATH = $VCPKG_PATH -replace "[\\]", "/"
           cd ws
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
-          > colcon build
-            --merge-install
-            --install-base ${{ env.FOXY_INSTALL_DIR }}
-            --cmake-args
-              -DCMAKE_BUILD_TYPE=RelWithDebInfo
-              -DCMAKE_TOOLCHAIN_FILE="$VCPKG_PATH/scripts/buildsystems/vcpkg.cmake"
-              -DVCPKG_MANIFEST_DIR="${{ github.workspace }}"
+          colcon build \
+            --merge-install \
+            --install-base ${{ env.FOXY_INSTALL_DIR }} \
+            --event-handlers console_cohesion+ status- \
+            --cmake-args \
+              -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+              -DCMAKE_TOOLCHAIN_FILE="$VCPKG_PATH/scripts/buildsystems/vcpkg.cmake" \
+              -DVCPKG_MANIFEST_DIR="${{ github.workspace }}" \ 
               -Wno-dev
-            --event-handlers console_cohesion+ status-
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
