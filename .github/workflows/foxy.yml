@@ -49,6 +49,7 @@ jobs:
         run: |
           $VCPKG_PATH = "${{ github.workspace }}/vcpkg"
           $VCPKG_PATH = $VCPKG_PATH -replace "[\\]", "/"
+          cd ws
           colcon build --merge-install --install-base ${{ env.FOXY_INSTALL_DIR }} --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE="$VCPKG_PATH/scripts/buildsystems/vcpkg.cmake" -Wno-dev --event-handlers console_cohesion+ status-
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
