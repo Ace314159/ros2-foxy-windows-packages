@@ -1,0 +1,51 @@
+name: Build Foxy
+
+on:
+  push:
+    branches: main
+    paths:
+      - "vcpkg.json"
+      - "foxy.repos"
+  workflow_dispatch:
+
+jobs:
+  build-foxy:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Remove existing vcpkg and python
+        run: |
+          rm -rf "$VCPKG_INSTALLATION_ROOT"
+          rm -rf "C:/hostedtoolcache/windows/python/"
+        shell: 'bash'
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8.3'
+      - name: Install Python Deps
+        run: pip install -U vcstool colcon-common-extensions catkin_pkg cryptography EmPy ifcfg lark-parser lxml numpy pyparsing pyyaml
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@main
+        id: runvcpkg
+        with:
+          vcpkgArguments: 
+          vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+          appendedCacheKey: ${{ hashFiles( '/vcpkg.json' ) }}
+          vcpkgTriplet: x64-windows
+      - name: Setup Environment
+        run: |
+          & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
+          mkdir ws/src
+          vcs import --input ros2.repos ws/src
+      - name: Build
+        run: |
+          $VCPKG_PATH = "${{ github.workspace }}/vcpkg"
+          $VCPKG_PATH = $VCPKG_PATH -replace "[\\]", "/"
+          colcon build --merge-install --install-base C:/opt/ros/foxy --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE="$VCPKG_PATH/scripts/buildsystems/vcpkg.cmake" -Wno-dev --event-handlers console_cohesion+ status-
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        name: foxy
+        path: C:/opt/ros/foxy

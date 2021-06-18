@@ -1,0 +1,27 @@
+{
+    "name": "ros2-foxy-packages",
+    "version-string": "0.0.1",
+    "dependencies": [
+        "asio",
+        "boost-filesystem",
+        "boost-iostreams",
+        "boost-program-options",
+        "boost-python",
+        "boost-signals2",
+        "bullet",
+        "cunit",
+        "eigen3",
+        "fcl",
+        "freeglut",
+        "glew",
+        "qt5-base",
+        "qt5-svg",
+        "log4cxx",
+        "octomap",
+        "ompl",
+        "tinyxml",
+        "tinyxml2",
+        "opencv",
+        "qhull"
+    ]
+  }
