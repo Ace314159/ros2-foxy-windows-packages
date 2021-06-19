@@ -12,7 +12,8 @@ on:
 jobs:
   build-foxy:
     env:
-      FOXY_INSTALL_DIR: "C:/opt/ros/foxy"
+      INSTALL_DIR: "C:/opt/ros/foxy"
+      BUILD_DIR: "C/build"
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -49,13 +50,10 @@ jobs:
           $VCPKG_PATH = $VCPKG_PATH -replace "[\\]", "/"
           cd ws
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
-          mkdir install
-          New-Item -ItemType SymbolicLink -Path ${{ env.FOXY_INSTALL_DIR }} -Target .\install -Force
-          dir
-          ls ${{ env.FOXY_INSTALL_DIR }}
           colcon build `
             --merge-install `
-            --install-base ${{ env.FOXY_INSTALL_DIR }} `
+            --install-base ${{ env.INSTALL_DIR }} `
+            --build-base ${{ env.BUILD_DIR }} `
             --event-handlers console_cohesion+ status- `
             --cmake-args `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
@@ -66,4 +64,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: foxy
-          path: ${{ env.FOXY_INSTALL_DIR }}
+          path: ${{ env.INSTALL_DIR }}
