@@ -50,7 +50,7 @@ jobs:
           cd ws
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
           mkdir install
-          New-Item -Path ${{ env.FOXY_INSTALL_DIR }} -ItemType SymbolicLink -Force -Value .\install
+          New-Item -ItemType SymbolicLink -Path ${{ env.FOXY_INSTALL_DIR }} -Target .\install -Force
           colcon build `
             --merge-install `
             --install-base ${{ env.FOXY_INSTALL_DIR }} `
