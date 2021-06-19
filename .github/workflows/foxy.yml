@@ -31,7 +31,7 @@ jobs:
       - name: Install Python Deps
         run: pip install -U vcstool colcon-common-extensions catkin_pkg cryptography EmPy ifcfg lark-parser lxml numpy pyparsing pyyaml
       - name: Setup vcpkg
-        uses: lukka/run-vcpkg@main
+        uses: lukka/run-vcpkg@dev/always_cache_in_post_action
         id: runvcpkg
         with:
           setupOnly: true
@@ -49,6 +49,8 @@ jobs:
           $VCPKG_PATH = $VCPKG_PATH -replace "[\\]", "/"
           cd ws
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
+          mkdir install
+          New-Item -Path ${{ env.FOXY_INSTALL_DIR }} -ItemType SymbolicLink -Value .\install
           colcon build `
             --merge-install `
             --install-base ${{ env.FOXY_INSTALL_DIR }} `
