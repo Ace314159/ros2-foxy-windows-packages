@@ -52,7 +52,7 @@ jobs:
           mkdir install
           New-Item -ItemType SymbolicLink -Path ${{ env.FOXY_INSTALL_DIR }} -Target .\install -Force
           dir
-          ls $${{ env.FOXY_INSTALL_DIR }}
+          ls ${{ env.FOXY_INSTALL_DIR }}
           colcon build `
             --merge-install `
             --install-base ${{ env.FOXY_INSTALL_DIR }} `
