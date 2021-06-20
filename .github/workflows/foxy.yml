@@ -27,7 +27,7 @@ jobs:
           VCPKG_DIR="${{ github.workspace }}/vcpkg"
           echo ${VCPKG_DIR//\\/$'/'}
           mv ${VCPKG_DIR//\\/$'/'} C:/vcpkg
-          ls -a C:/vcpkg
+          mv {{ github.workspace }}/.git C/.git
         shell: 'bash'
       - name: Install Python
         uses: actions/setup-python@v2
