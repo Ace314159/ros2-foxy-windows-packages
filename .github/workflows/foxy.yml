@@ -26,6 +26,7 @@ jobs:
           rm -rf "C:/hostedtoolcache/windows/python/"
           WORKSPACE="${{ github.workspace }}"
           mv ${WORKSPACE//\\/$'/'}/vcpkg C:/vcpkg
+          ls -a ${WORKSPACE//\\/$'/'}
           mv ${WORKSPACE//\\/$'/'}/.git C/.git
         shell: 'bash'
       - name: Install Python
