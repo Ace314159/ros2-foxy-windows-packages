@@ -24,6 +24,7 @@ jobs:
         run: |
           rm -rf "$VCPKG_INSTALLATION_ROOT"
           rm -rf "C:/hostedtoolcache/windows/python/"
+          mv ${{ github.workspace }}/vcpkg C:/vcpkg
         shell: 'bash'
       - name: Install Python
         uses: actions/setup-python@v2
@@ -36,7 +37,7 @@ jobs:
         id: runvcpkg
         with:
           setupOnly: true
-          vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+          vcpkgDirectory: 'C:/vcpkg'
           appendedCacheKey: ${{ hashFiles( '/vcpkg.json' ) }}
           vcpkgTriplet: x64-windows
           additionalCachedPaths: ${{ github.workspace }}/vcpkg_installed
@@ -46,8 +47,7 @@ jobs:
           vcs import --input foxy.repos ws/src
       - name: Build
         run: |
-          $VCPKG_PATH = "${{ github.workspace }}/vcpkg"
-          $VCPKG_PATH = $VCPKG_PATH -replace "[\\]", "/"
+          $VCPKG_PATH = "C:/vcpkg"
           cd ws
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
           colcon build `
