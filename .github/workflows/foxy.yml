@@ -24,7 +24,7 @@ jobs:
         run: |
           rm -rf "$VCPKG_INSTALLATION_ROOT"
           rm -rf "C:/hostedtoolcache/windows/python/"
-          VCPKG_DIR=${{ github.workspace }}/vcpkg
+          VCPKG_DIR="${{ github.workspace }}/vcpkg"
           mv ${VCPKG_DIR//\\/$'/'} C:/vcpkg
         shell: 'bash'
       - name: Install Python
