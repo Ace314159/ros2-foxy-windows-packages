@@ -43,9 +43,9 @@ jobs:
           vcpkgDirectory: 'C:/vcpkg'
           appendedCacheKey: ${{ hashFiles( '/vcpkg.json' ) }}
           vcpkgTriplet: x64-windows
-          additionalCachedPaths: ${{ github.workspace }}/vcpkg_installed
       - name: Setup Environment
         run: |
+          C:/vcpkg/vcpkg.exe install
           mkdir ws/src
           vcs import --input foxy.repos ws/src
       - name: Build
