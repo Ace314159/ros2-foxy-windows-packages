@@ -45,6 +45,7 @@ jobs:
           vcpkgDirectory: 'C:/vcpkg'
           appendedCacheKey: ${{ hashFiles( '/vcpkg.json' ) }}
           vcpkgTriplet: x64-windows
+          vcpkgGitCommitId: "2bcc2d07f382e55e140289e0fecfad1f094fb14c"
       - name: Setup Environment
         run: |
           C:/vcpkg/vcpkg.exe install
