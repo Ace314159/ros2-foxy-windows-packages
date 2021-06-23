@@ -28,6 +28,7 @@ jobs:
           mv ${WORKSPACE//\\/$'/'}/vcpkg C:/vcpkg
           ls -a ${WORKSPACE//\\/$'/'}
           mv ${WORKSPACE//\\/$'/'}/.git C:/.git
+          mv ${WORKSPACE//\\/$'/'}/.gitmodules C/.gitmodules
         shell: 'bash'
       - name: Install Python
         uses: actions/setup-python@v2
