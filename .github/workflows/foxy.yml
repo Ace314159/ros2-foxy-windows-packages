@@ -25,10 +25,10 @@ jobs:
           rm -rf "$VCPKG_INSTALLATION_ROOT"
           rm -rf "C:/hostedtoolcache/windows/python/"
           WORKSPACE="${{ github.workspace }}"
-          mv ${WORKSPACE//\\/$'/'}/vcpkg C:/
-          mv ${WORKSPACE//\\/$'/'}/.git C:/
-          mv ${WORKSPACE//\\/$'/'}/.gitmodules C:/
+          mv ${WORKSPACE//\\/$'/'}/vcpkg C:/vcpkg
+          ln -s C:/vcpkg ${{ github.workspace }}/vcpkg
           ls -a ${WORKSPACE//\\/$'/'}
+          echo "HERE"
           ls -a C:/
         shell: 'bash'
       - name: Install Python
@@ -42,10 +42,9 @@ jobs:
         id: runvcpkg
         with:
           setupOnly: true
-          vcpkgDirectory: 'C:/vcpkg'
+          vcpkgDirectory: '${{ github.workspace }}/vcpkg'
           appendedCacheKey: ${{ hashFiles( '/vcpkg.json' ) }}
           vcpkgTriplet: x64-windows
-          vcpkgGitCommitId: "2bcc2d07f382e55e140289e0fecfad1f094fb14c"
       - name: Setup Environment
         run: |
           C:/vcpkg/vcpkg.exe install
