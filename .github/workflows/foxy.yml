@@ -38,11 +38,11 @@ jobs:
       - name: Install Python Deps
         run: pip install -U vcstool colcon-common-extensions catkin_pkg cryptography EmPy ifcfg lark-parser lxml numpy pyparsing pyyaml
       - name: Setup vcpkg
-        uses: lukka/run-vcpkg@dev/always_cache_in_post_action
+        uses: lukka/run-vcpkg@v7
         id: runvcpkg
         with:
           setupOnly: true
-          vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+          vcpkgDirectory: 'C:/vcpkg'
           appendedCacheKey: ${{ hashFiles( '/vcpkg.json' ) }}
           vcpkgTriplet: x64-windows
       - name: Setup Environment
