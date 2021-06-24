@@ -41,7 +41,7 @@ jobs:
           vcpkgTriplet: x64-windows
       - name: Setup Environment
         run: |
-          move '${{ github.workspace }}/vcpkg' C:/vcpkg
+          Move-Item -Path '${{ github.workspace }}/vcpkg' -Destination C:/vcpkg
           C:/vcpkg/vcpkg.exe install
           mkdir ws/src
           vcs import --input foxy.repos ws/src
