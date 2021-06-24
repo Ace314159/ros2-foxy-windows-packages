@@ -24,12 +24,6 @@ jobs:
         run: |
           rm -rf "$VCPKG_INSTALLATION_ROOT"
           rm -rf "C:/hostedtoolcache/windows/python/"
-          WORKSPACE="${{ github.workspace }}"
-          mv ${WORKSPACE//\\/$'/'}/vcpkg C:/vcpkg
-          ln -s C:/vcpkg ${WORKSPACE//\\/$'/'}/vcpkg
-          ls -a ${WORKSPACE//\\/$'/'}
-          echo "HERE"
-          ls -a C:/
         shell: 'bash'
       - name: Install Python
         uses: actions/setup-python@v2
@@ -42,11 +36,12 @@ jobs:
         id: runvcpkg
         with:
           setupOnly: true
-          vcpkgDirectory: 'C:/vcpkg'
+          vcpkgDirectory: '${{ github.workspace }}/vcpkg'
           appendedCacheKey: ${{ hashFiles( '/vcpkg.json' ) }}
           vcpkgTriplet: x64-windows
       - name: Setup Environment
         run: |
+          New-Item -ItemType SymbolicLink -Path '${{ github.workspace }}/vcpkg' -Target C:/vcpkg
           C:/vcpkg/vcpkg.exe install
           mkdir ws/src
           vcs import --input foxy.repos ws/src
