@@ -13,7 +13,8 @@ jobs:
   build-foxy:
     env:
       INSTALL_DIR: "C:/opt/ros/foxy"
-      BUILD_DIR: "C/build"
+      BUILD_DIR: "C:/build"
+      VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -38,11 +39,23 @@ jobs:
       #     path: C:/vcpkg_installed
       #     key: foxy-${{ hashFiles('/vcpkg.json') }}
       - name: Setup Environment
+        working-directory: C:/
         run: |
           Move-Item -Path '${{ github.workspace }}/vcpkg' -Destination C:/vcpkg
           Move-Item -Path '${{ github.workspace }}/vcpkg.json' -Destination C:/vcpkg.json
           mkdir C:/ws/src
           vcs import --input foxy.repos C:/ws/src
+          C:/vcpkg/bootstrap-vcpkg.bat
+      - name: Setup NuGet Credentials
+        shell: 'bash'
+        run: >
+          ${{ matrix.mono }} `./vcpkg/vcpkg fetch nuget | tail -n 1`
+          sources add
+          -source "https://nuget.pkg.github.com/Ace314159/index.json"
+          -storepasswordincleartext
+          -name "GitHub"
+          -username "Ace314159"
+          -password "${{ secrets.GITHUB_TOKEN }}"
       - name: Build
         working-directory: C:/ws
         run: |
