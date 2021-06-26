@@ -7,6 +7,7 @@ on:
       - ".github/workflows/foxy.yml"
       - "vcpkg.json"
       - "foxy.repos"
+      - "vcpkg/**"
   workflow_dispatch:
 
 jobs:
