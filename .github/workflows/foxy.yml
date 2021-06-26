@@ -44,7 +44,7 @@ jobs:
           Move-Item -Path '${{ github.workspace }}/vcpkg' -Destination C:/vcpkg
           Move-Item -Path '${{ github.workspace }}/vcpkg.json' -Destination C:/vcpkg.json
           mkdir C:/ws/src
-          vcs import --input foxy.repos C:/ws/src
+          vcs import --input '${{ github.workspace }}/foxy.repos' C:/ws/src
           C:/vcpkg/bootstrap-vcpkg.bat
       - name: Setup NuGet Credentials
         working-directory: C:/
