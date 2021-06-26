@@ -77,3 +77,9 @@ jobs:
         with:
           name: foxy
           path: ${{ env.INSTALL_DIR }}
+      - name: Save log
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: log
+          path: 'C:/ws/log/build_2021-06-26_07-00-53/ament_cmake_target_dependencies/streams.log'
