@@ -31,24 +31,23 @@ jobs:
           python-version: '3.8.3'
       - name: Install Python Deps
         run: pip install -U vcstool colcon-common-extensions catkin_pkg cryptography EmPy ifcfg lark-parser lxml numpy pyparsing pyyaml
-      - name: Setup vcpkg
-        uses: lukka/run-vcpkg@v7
-        id: runvcpkg
-        with:
-          setupOnly: true
-          vcpkgDirectory: '${{ github.workspace }}/vcpkg'
-          appendedCacheKey: ${{ hashFiles( '/vcpkg.json' ) }}
-          vcpkgTriplet: x64-windows
+      # - name: Cache vcpkg
+      #   if: ${{ always() }}
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: C:/vcpkg_installed
+      #     key: foxy-${{ hashFiles('/vcpkg.json') }}
       - name: Setup Environment
         run: |
           Move-Item -Path '${{ github.workspace }}/vcpkg' -Destination C:/vcpkg
-          C:/vcpkg/vcpkg.exe install
-          mkdir ws/src
-          vcs import --input foxy.repos ws/src
+          Move-Item -Path '${{ github.workspace }}/vcpkg.json' -Destination C:/vcpkg.json
+          mkdir C:/ws/src
+          vcs import --input foxy.repos C:/ws/src
       - name: Build
+        working-directory: C:/ws
         run: |
           $VCPKG_PATH = "C:/vcpkg"
-          cd ws
+          cd C:/ws
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
           colcon build `
             --merge-install `
@@ -58,7 +57,7 @@ jobs:
             --cmake-args `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
               -DCMAKE_TOOLCHAIN_FILE="$VCPKG_PATH/scripts/buildsystems/vcpkg.cmake" `
-              -DVCPKG_MANIFEST_DIR="${{ github.workspace }}" `
+              -DVCPKG_MANIFEST_DIR="C:/" `
               -Wno-dev
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
