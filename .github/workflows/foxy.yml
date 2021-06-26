@@ -47,9 +47,10 @@ jobs:
           vcs import --input foxy.repos C:/ws/src
           C:/vcpkg/bootstrap-vcpkg.bat
       - name: Setup NuGet Credentials
+        working-directory: C:/
         shell: 'bash'
         run: >
-          ${{ matrix.mono }} `./vcpkg/vcpkg fetch nuget | tail -n 1`
+          `./vcpkg/vcpkg fetch nuget | tail -n 1`
           sources add
           -source "https://nuget.pkg.github.com/Ace314159/index.json"
           -storepasswordincleartext
@@ -60,7 +61,6 @@ jobs:
         working-directory: C:/ws
         run: |
           $VCPKG_PATH = "C:/vcpkg"
-          cd C:/ws
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
           colcon build `
             --merge-install `
