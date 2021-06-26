@@ -79,13 +79,13 @@ jobs:
             --install-base ${{ env.INSTALL_DIR }} `
             --build-base ${{ env.BUILD_DIR }} `
             --event-handlers console_cohesion+ status- `
+            --packages-skip-build-finished `
             --cmake-args `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
               -DCMAKE_TOOLCHAIN_FILE="$VCPKG_PATH/scripts/buildsystems/vcpkg.cmake" `
               -DVCPKG_MANIFEST_DIR="C:/" `
               -D_VCPKG_INSTALLED_DIR="../vcpkg_installed" `
               -Wno-dev
-            --packages-skip-build-finished
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
