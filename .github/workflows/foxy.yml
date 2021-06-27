@@ -73,7 +73,7 @@ jobs:
               -DCMAKE_TOOLCHAIN_FILE="$VCPKG_PATH/scripts/buildsystems/vcpkg.cmake" `
               -DVCPKG_MANIFEST_DIR="C:/" `
               -DVCPKG_INSTALLED_DIR="../vcpkg_installed" `
-              -Wno-dev
+              -Wno-dev `
             --packages-up-to urdfdom
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
