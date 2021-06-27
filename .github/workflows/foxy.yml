@@ -86,7 +86,7 @@ jobs:
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
               -DCMAKE_TOOLCHAIN_FILE="$VCPKG_PATH/scripts/buildsystems/vcpkg.cmake" `
               -DVCPKG_MANIFEST_DIR="C:/" `
-              -D_VCPKG_INSTALLED_DIR="../vcpkg_installed" `
+              -DVCPKG_INSTALLED_DIR="../vcpkg_installed" `
               -Wno-dev
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
