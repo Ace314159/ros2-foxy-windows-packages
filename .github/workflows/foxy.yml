@@ -67,7 +67,7 @@ jobs:
             --merge-install `
             --install-base ${{ env.INSTALL_DIR }} `
             --build-base ${{ env.BUILD_DIR }} `
-            --event-handlers console_cohesion+ status- `
+            --event-handlers console_cohesion+ status- console_package_list+ `
             --cmake-args `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
               -DCMAKE_TOOLCHAIN_FILE="$VCPKG_PATH/scripts/buildsystems/vcpkg.cmake" `
