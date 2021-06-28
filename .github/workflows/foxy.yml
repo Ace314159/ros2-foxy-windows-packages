@@ -36,23 +36,19 @@ jobs:
         run: |
           pip install -U vcstool colcon-common-extensions catkin_pkg cryptography EmPy ifcfg lark-parser lxml numpy pyparsing pyyaml
           Move-Item -Path '${{ github.workspace }}/vcpkg' -Destination C:/vcpkg
-          C:/vcpkg/bootstrap-vcpkg.bat
-          C:/vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/.vcpkg_deps.txt'
+          ./vcpkg/bootstrap-vcpkg.bat
+          ./vcpkg/vcpkg fetch nuget | Select-Object -Last 1 `
+            sources add `
+              -source "https://nuget.pkg.github.com/Ace314159/index.json" `
+              -storepasswordincleartext `
+              -name "GitHub" `
+              -username "Ace314159" `
+              -password "${{ secrets.GITHUB_TOKEN }}"
+          ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/.vcpkg_deps.txt'
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
           vcs import --input '${{ github.workspace }}/foxy.repos' C:/ws/src
-      - name: Setup NuGet Credentials
-        working-directory: C:/
-        shell: 'bash'
-        run: >
-          `./vcpkg/vcpkg fetch nuget | tail -n 1`
-          sources add
-          -source "https://nuget.pkg.github.com/Ace314159/index.json"
-          -storepasswordincleartext
-          -name "GitHub"
-          -username "Ace314159"
-          -password "${{ secrets.GITHUB_TOKEN }}"
       - name: Build
         working-directory: C:/ws
         run: |
