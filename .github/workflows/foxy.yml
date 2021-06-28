@@ -5,7 +5,7 @@ on:
     branches: main
     paths:
       - ".github/workflows/foxy.yml"
-      - "vcpkg.json"
+      - ".vcpkg_deps.txt"
       - "foxy.repos"
       - "vcpkg/**"
   workflow_dispatch:
@@ -31,22 +31,16 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.8.3'
-      - name: Install Python Deps
-        run: pip install -U vcstool colcon-common-extensions catkin_pkg cryptography EmPy ifcfg lark-parser lxml numpy pyparsing pyyaml
-      # - name: Cache vcpkg
-      #   if: ${{ always() }}
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: C:/vcpkg_installed
-      #     key: foxy-${{ hashFiles('/vcpkg.json') }}
       - name: Setup Environment
         working-directory: C:/
         run: |
+          pip install -U vcstool colcon-common-extensions catkin_pkg cryptography EmPy ifcfg lark-parser lxml numpy pyparsing pyyaml
           Move-Item -Path '${{ github.workspace }}/vcpkg' -Destination C:/vcpkg
-          Move-Item -Path '${{ github.workspace }}/vcpkg.json' -Destination C:/vcpkg.json
+          C:/vcpkg/bootstrap-vcpkg.bat
+          C:/vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/.vcpkg_deps.txt'
+      - name: Clone Repos
           mkdir C:/ws/src
           vcs import --input '${{ github.workspace }}/foxy.repos' C:/ws/src
-          C:/vcpkg/bootstrap-vcpkg.bat
       - name: Setup NuGet Credentials
         working-directory: C:/
         shell: 'bash'
@@ -71,8 +65,6 @@ jobs:
             --cmake-args `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
               -DCMAKE_TOOLCHAIN_FILE="$VCPKG_PATH/scripts/buildsystems/vcpkg.cmake" `
-              -DVCPKG_MANIFEST_DIR="C:/" `
-              -DVCPKG_INSTALLED_DIR="../vcpkg_installed" `
               -Wno-dev `
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
