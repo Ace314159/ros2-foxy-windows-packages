@@ -31,6 +31,10 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.8.3'
+      - nanme: Update Windows SDK
+        uses: fbactions/setup-winsdk@v1
+        with:
+          winsdk-build-version: 19041
       - name: Setup Environment
         working-directory: C:/
         run: |
@@ -62,6 +66,7 @@ jobs:
             --cmake-args `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
               -DCMAKE_TOOLCHAIN_FILE="$VCPKG_PATH/scripts/buildsystems/vcpkg.cmake" `
+              -D-DCMAKE_SYSTEM_VERSION=10.0.19041.0 `
               -Wno-dev `
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
