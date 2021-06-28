@@ -74,7 +74,6 @@ jobs:
               -DVCPKG_MANIFEST_DIR="C:/" `
               -DVCPKG_INSTALLED_DIR="../vcpkg_installed" `
               -Wno-dev `
-            --packages-up-to urdfdom
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:

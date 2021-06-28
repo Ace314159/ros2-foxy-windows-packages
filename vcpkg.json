@@ -9,6 +9,7 @@
         "boost-python",
         "boost-signals2",
         "bullet3",
+        "console-bridge",
         "cunit",
         "eigen3",
         "fcl",
