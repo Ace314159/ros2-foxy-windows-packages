@@ -4,7 +4,7 @@ on:
   push:
     branches: main
     paths:
-      - ".github/workflows/foxy.yml"
+      - .github/workflows/foxy.yml
       - ".vcpkg_deps.txt"
       - "foxy.repos"
       - "vcpkg/**"
