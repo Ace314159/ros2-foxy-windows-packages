@@ -39,6 +39,7 @@ jobs:
           C:/vcpkg/bootstrap-vcpkg.bat
           C:/vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/.vcpkg_deps.txt'
       - name: Clone Repos
+        run: |
           mkdir C:/ws/src
           vcs import --input '${{ github.workspace }}/foxy.repos' C:/ws/src
       - name: Setup NuGet Credentials
