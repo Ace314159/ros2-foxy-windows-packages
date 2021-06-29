@@ -6,7 +6,8 @@ on:
     paths:
       - .github/workflows/foxy.yml
       - ".vcpkg_deps.txt"
-      - "foxy.repos"
+      - "repos/foxy.repos"
+      - "patches/foxy.patch"
       - "vcpkg/**"
   workflow_dispatch:
 
@@ -52,7 +53,8 @@ jobs:
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
-          vcs import --input '${{ github.workspace }}/foxy.repos' C:/ws/src
+          vcs import --input '${{ github.workspace }}/repos/foxy.repos' C:/ws/src
+          git apply '${{ github.workspace }}/patches/foxy.patch' --directory=C:/ws/src
       - name: Build
         working-directory: C:/ws
         run: |
