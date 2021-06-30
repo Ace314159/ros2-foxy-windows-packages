@@ -70,14 +70,14 @@ jobs:
               -DCMAKE_TOOLCHAIN_FILE="$VCPKG_PATH/scripts/buildsystems/vcpkg.cmake" `
               -DCMAKE_SYSTEM_VERSION="10.0.19041.0" `
               -Wno-dev `
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: foxy
-          path: ${{ env.INSTALL_DIR }}
-      # - name: Save log
-      #   uses: actions/upload-artifact@v2
-      #   if: ${{ always() }}
-      #   with:
-      #     name: log
-      #     path: 'C:/opt/ros/foxy'
+      - name: Package
+        run: |
+          Move-Item -Path '${{ github.workspace }}/nuspec/foxy.nuspec' -Destination C:/opt/ros/foxy
+          & (./vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
+            pack C:/opt/ros/foxy `
+              -NoDefaultExcludes `
+              -NonInteractive `
+              -OutputFileNamesWithoutVersion
+          & (./vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
+            push ros2-foxy-base.nupkg `
+              --source "github"
