@@ -73,11 +73,11 @@ jobs:
       - name: Package
         run: |
           Move-Item -Path '${{ github.workspace }}/nuspec/foxy.nuspec' -Destination C:/opt/ros/foxy
-          & (./vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
+          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
             pack C:/opt/ros/foxy `
               -NoDefaultExcludes `
               -NonInteractive `
               -OutputFileNamesWithoutVersion
-          & (./vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
+          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
             push ros2-foxy-base.nupkg `
               --source "github"
