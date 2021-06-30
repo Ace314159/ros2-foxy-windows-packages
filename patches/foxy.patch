@@ -11,3 +11,26 @@ index c400c07f..574c74bf 100644
      list(APPEND extra_cmake_args "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}")
    else()
      list(APPEND extra_cmake_args "-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}")
+diff --git a/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in b/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in
+index 053d91e9..69ae0417 100644
+--- a/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in
++++ b/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in
+@@ -130,10 +130,14 @@ foreach(_lib IN LISTS OGRE_LIBRARIES)
+     if(APPLE)
+       list(APPEND _extra_interface_link_libraries "-framework Cocoa")
+     endif()
+-    set_target_properties(rviz_ogre_vendor::OgreMain
+-      PROPERTIES
+-        "INTERFACE_LINK_LIBRARIES" "${_extra_interface_link_libraries}"
+-    )
++    if(CMAKE_VERSION VERSION_LESS 3.11)
++      set_target_properties(rviz_ogre_vendor::OgreMain
++        PROPERTIES
++          "INTERFACE_LINK_LIBRARIES" "${_extra_interface_link_libraries}"
++      )
++    else()
++      target_link_libraries(rviz_ogre_vendor::OgreMain INTERFACE ${_extra_interface_link_libraries})
++    endif()
+   endif()
+   if("OgreOverlayStatic" STREQUAL ${_lib} OR "OgreOverlay" STREQUAL ${_lib})
+     find_library(_ogre_overlay_static_library_abs ${_lib}
