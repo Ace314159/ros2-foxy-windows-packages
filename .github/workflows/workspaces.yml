@@ -1,0 +1,98 @@
+name: Build Foxy Workspaces
+
+on:
+  push:
+    branches: main
+    paths:
+      - .github/workflows/workspaces.yml
+      - .vcpkg_deps.txt
+      - vcpkg/**
+      - nuspec/*.nuspec
+      - patches/*.patch
+      - repos/*.repos
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        workspace: [moveit2]
+    env:
+      INSTALL_DIR: C:/opt/ros/foxy/${{ matrix.workspace }}
+      VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Remove existing vcpkg and python
+        run: |
+          rm -rf "$VCPKG_INSTALLATION_ROOT"
+          rm -rf "C:/hostedtoolcache/windows/python/"
+        shell: 'bash'
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8.3'
+      - name: Update Windows SDK
+        uses: fbactions/setup-winsdk@v1
+        with:
+          winsdk-build-version: 19041
+      - name: Setup Environment
+        working-directory: C:/
+        run: |
+          pip install -U vcstool colcon-common-extensions catkin_pkg cryptography EmPy ifcfg lark-parser lxml numpy pyparsing pyyaml
+          Move-Item -Path '${{ github.workspace }}/vcpkg' -Destination C:/vcpkg
+          ./vcpkg/bootstrap-vcpkg.bat
+          & (./vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
+            sources add `
+              -source "https://nuget.pkg.github.com/Ace314159/index.json" `
+              -storepasswordincleartext `
+              -name "GitHub" `
+              -username "Ace314159" `
+              -password "${{ secrets.GITHUB_TOKEN }}"
+          ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/.vcpkg_deps.txt'
+      - name: Setup ROS 2 Foxy Base
+        run: |
+          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
+            install ros2-foxy-base `
+              -ExcludeVersion `
+              -Source "GitHub" `
+              -OutputDirectory C:/opt/ros/foxy/
+          Rename-Item -Path "C:/opt/ros/foxy/ros2-foxy-base" -NewName "C:/opt/ros/foxy/base"
+      - name: Clone Repos
+        run: |
+          mkdir C:/ws/src
+          vcs import --input '${{ github.workspace }}/repos/${{ matrix.workspace }}.repos' C:/ws/src
+          $patchFile = '${{ github.workspace }}/patches/${{ matrix.workspace }}.patch'
+          if (Test-Path $patchFile) {
+            git apply $patchFile --unsafe-paths --directory=C:/ws/src
+          }
+      - name: Build
+        working-directory: C:/ws
+        run: |
+          & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
+          C:/opt/ros/foxy/base/local_setup.ps1
+          colcon build `
+            --merge-install `
+            --install-base ${{ env.INSTALL_DIR }} `
+            --event-handlers console_cohesion+ status- `
+            --cmake-args `
+              -DCMAKE_BUILD_TYPE=RelWithDebInfo `
+              -DBUILD_TESTING=False `
+              -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" `
+              -DCMAKE_SYSTEM_VERSION="10.0.19041.0" `
+              -D_IMPORT_PREFIX="C:/vcpkg/installed/x64-windows/" `
+              -Wno-dev `
+      - name: Package
+        run: |
+          Move-Item -Path '${{ github.workspace }}/nuspec/${{ matrix.workspace }}.nuspec' -Destination ${{ env.INSTALL_DIR }}
+          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
+            pack ${{ env.INSTALL_DIR}} `
+              -NoDefaultExcludes `
+              -NonInteractive `
+              -OutputFileNamesWithoutVersion
+          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
+            push ros2-foxy-${{ matrix.workspace }}.nupkg `
+              -Source "GitHub"

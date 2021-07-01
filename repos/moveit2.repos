@@ -9,11 +9,11 @@ repositories:
     version: ros2
   geometric_shapes:
     type: git
-    url: https://github.com/Ace314159/geometric_shapes
+    url: https://github.com/ros-planning/geometric_shapes
     version: ros2
   srdfdom:
     type: git
-    url: https://github.com/Ace314159/srdfdom
+    url: https://github.com/ros-planning/srdfdom
     version: ros2
   ros2_control:
     type: git
@@ -21,11 +21,11 @@ repositories:
     version: master
   ros2_controllers:
     type: git
-    url: https://github.com/Ace314159/ros2_controllers
+    url: https://github.com/ros-controls/ros2_controllers
     version: master
   warehouse_ros:
     type: git
-    url: https://github.com/Ace314159/warehouse_ros
+    url: https://github.com/ros-planning/warehouse_ros
     version: ros2
   eigen_stl_containers:
     type: git
@@ -33,7 +33,7 @@ repositories:
     version: ros2
   random_numbers:
     type: git
-    url: https://github.com/Ace314159/random_numbers.git
+    url: https://github.com/ros-planning/random_numbers.git
     version: ros2
   control_msgs:
     type: git
