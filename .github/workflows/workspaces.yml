@@ -30,6 +30,7 @@ jobs:
         run: |
           rm -rf "$VCPKG_INSTALLATION_ROOT"
           rm -rf "C:/hostedtoolcache/windows/python/"
+          rm "C:/Strawberry/perl/bin/pkg-config.bat"
         shell: 'bash'
       - name: Install Python
         uses: actions/setup-python@v2

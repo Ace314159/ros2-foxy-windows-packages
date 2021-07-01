@@ -82,5 +82,5 @@ jobs:
               -NonInteractive `
               -OutputFileNamesWithoutVersion
           & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
-            push ros2-${{ env.WORKSPACE }}.nupkg `
+            push ros2-${{ env.WORKSPACE }}-base.nupkg `
               -Source "GitHub"
