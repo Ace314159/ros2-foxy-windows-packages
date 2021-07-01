@@ -55,7 +55,7 @@ jobs:
         run: |
           mkdir C:/ws/src
           vcs import --input '${{ github.workspace }}/repos/${{ env.WORKSPACE }}.repos' C:/ws/src
-          $patchFile = 'github.workspace }}/patches/${{ env.WORKSPACE }}.patch'
+          $patchFile = '${{ github.workspace }}/patches/${{ env.WORKSPACE }}.patch'
           if (Test-Path $patchFile) {
             git apply $patchFile --unsafe-paths --directory=C:/ws/src
           }
