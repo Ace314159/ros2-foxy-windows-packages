@@ -6,9 +6,10 @@ on:
     paths:
       - .github/workflows/foxy.yml
       - ".vcpkg_deps.txt"
-      - "repos/foxy.repos"
-      - "patches/foxy.patch"
       - "vcpkg/**"
+      - "nuspec/foxy.nuspec"
+      - "patches/foxy.patch"
+      - "repos/foxy.repos"
   workflow_dispatch:
 
 jobs:
