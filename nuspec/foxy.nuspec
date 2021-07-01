@@ -6,5 +6,6 @@
     <authors>vur</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>ROS2 Foxy for Windows</description>
+    <repository type="git" url="https://github.com/Ace314159/ros2-foxy-windows-packages.git" />
   </metadata>
 </package>
