@@ -205,7 +205,7 @@ repositories:
     version: foxy
   ros2/geometry2:
     type: git
-    url: https://github.com/ros2/geometry2.git
+    url: https://github.com/Ace314159/geometry2.git
     version: foxy
   ros2/launch:
     type: git
@@ -353,7 +353,7 @@ repositories:
     version: foxy
   ros2/rviz:
     type: git
-    url: https://github.com/ros2/rviz.git
+    url: https://github.com/Ace314159/rviz.git
     version: foxy
   ros2/spdlog_vendor:
     type: git
