@@ -62,7 +62,6 @@ jobs:
       - name: Build
         working-directory: C:/ws
         run: |
-          $VCPKG_PATH = "C:/vcpkg"
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
           colcon build `
             --merge-install `
@@ -70,8 +69,8 @@ jobs:
             --event-handlers console_cohesion+ status- `
             --cmake-args `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
-              -DBUILD_TESTING=False
-              -DCMAKE_TOOLCHAIN_FILE="$VCPKG_PATH/scripts/buildsystems/vcpkg.cmake" `
+              -DBUILD_TESTING=False `
+              -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" `
               -DCMAKE_SYSTEM_VERSION="10.0.19041.0" `
               -Wno-dev `
       - name: Package
