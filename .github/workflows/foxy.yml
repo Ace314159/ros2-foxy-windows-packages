@@ -1,23 +1,23 @@
-name: Build Foxy
+name: Build Foxy Base
 
 on:
   push:
     branches: main
     paths:
       - .github/workflows/foxy.yml
-      - ".vcpkg_deps.txt"
-      - "vcpkg/**"
-      - "nuspec/foxy.nuspec"
-      - "patches/foxy.patch"
-      - "repos/foxy.repos"
+      - .vcpkg_deps.txt
+      - vcpkg/**
+      - nuspec/foxy.nuspec
+      - patches/foxy.patch
+      - repos/foxy.repos
   workflow_dispatch:
 
 jobs:
-  build-foxy:
+  build:
     env:
-      INSTALL_DIR: "C:/opt/ros/foxy"
-      BUILD_DIR: "C:/build"
+      INSTALL_DIR: C:/opt/ros/foxy/base
       VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
+      WORKSPACE: foxy
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -54,8 +54,11 @@ jobs:
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
-          vcs import --input '${{ github.workspace }}/repos/foxy.repos' C:/ws/src
-          git apply '${{ github.workspace }}/patches/foxy.patch'  --unsafe-paths --directory=C:/ws/src
+          vcs import --input '${{ github.workspace }}/repos/${{ env.WORKSPACE }}.repos' C:/ws/src
+          $patchFile = 'github.workspace }}/patches/${{ env.WORKSPACE }}.patch'
+          if (Test-Path $patchFile) {
+            git apply $patchFile --unsafe-paths --directory=C:/ws/src
+          }
       - name: Build
         working-directory: C:/ws
         run: |
@@ -64,21 +67,21 @@ jobs:
           colcon build `
             --merge-install `
             --install-base ${{ env.INSTALL_DIR }} `
-            --build-base ${{ env.BUILD_DIR }} `
-            --event-handlers console_cohesion+ status- console_package_list+ `
+            --event-handlers console_cohesion+ status- `
             --cmake-args `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
+              -DBUILD_TESTING=False
               -DCMAKE_TOOLCHAIN_FILE="$VCPKG_PATH/scripts/buildsystems/vcpkg.cmake" `
               -DCMAKE_SYSTEM_VERSION="10.0.19041.0" `
               -Wno-dev `
       - name: Package
         run: |
-          Move-Item -Path '${{ github.workspace }}/nuspec/foxy.nuspec' -Destination C:/opt/ros/foxy
+          Move-Item -Path '${{ github.workspace }}/nuspec/${{ env.WORKSPACE }}.nuspec' -Destination ${{ env.INSTALL_DIR }}
           & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
-            pack C:/opt/ros/foxy `
+            pack ${{ env.INSTALL_DIR }} `
               -NoDefaultExcludes `
               -NonInteractive `
               -OutputFileNamesWithoutVersion
           & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
-            push ros2-foxy-base.nupkg `
+            push ros2-${{ env.WORKSPACE }}.nupkg `
               -Source "GitHub"
