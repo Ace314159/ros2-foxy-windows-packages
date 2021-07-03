@@ -18,7 +18,8 @@ jobs:
       matrix:
         workspace: [moveit2]
     env:
-      INSTALL_DIR: C:/opt/ros/foxy/${{ matrix.workspace }}
+      ROS_BASE: C:/opt/ros/foxy
+      INSTALL_DIR: ${{ env.ROS_BASE }}/${{ matrix.workspace }}
       VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
     runs-on: windows-latest
     steps:
@@ -60,8 +61,7 @@ jobs:
             install ros2-foxy-base `
               -ExcludeVersion `
               -Source "GitHub" `
-              -OutputDirectory C:/opt/ros/foxy/
-          Rename-Item -Path "C:/opt/ros/foxy/ros2-foxy-base" -NewName "C:/opt/ros/foxy/base"
+              -OutputDirectory ${{ env.ROS_BASE }}
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
@@ -74,7 +74,7 @@ jobs:
         working-directory: C:/ws
         run: |
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
-          C:/opt/ros/foxy/base/local_setup.ps1
+          ${{ env.ROS_BASE }}/ros2-foxy-base/local_setup.ps1
           colcon build `
             --merge-install `
             --install-base ${{ env.INSTALL_DIR }} `
