@@ -40,6 +40,7 @@ jobs:
       - name: Setup Environment
         working-directory: C:/
         run: |
+          Move-Item -Path C:/hostedtoolcache/windows/python/3.8.3/x64/ -Destination C:/Python38
           pip install -U vcstool colcon-common-extensions catkin_pkg cryptography EmPy ifcfg lark-parser lxml numpy pyparsing pyyaml
           Move-Item -Path '${{ github.workspace }}/vcpkg' -Destination C:/vcpkg
           ./vcpkg/bootstrap-vcpkg.bat
