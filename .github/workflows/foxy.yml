@@ -75,8 +75,13 @@ jobs:
               -Wno-dev `
       - name: Package
         run: |
+          Move-Item -Path C:/vcpkg/installed/x64-windows/bin/** -Destination ${{ env.INSTALL_DIR }}/bin
+          $plugins="iconengines","imageformats","platforms","styles"
+          foreach ($plugin in $plugins) {
+            Move-Item -Path C:/vcpkg/installed/x64-windows/plugins/$plugin -Destination ${{ env.INSTALL_DIR }}/bin
+          }
           Move-Item -Path '${{ github.workspace }}/nuspec/${{ env.WORKSPACE }}.nuspec' -Destination ${{ env.INSTALL_DIR }}
-          $version = Get-Date -Format "yyyy.MM.ddTHH.MM.ss"
+          $version = Get-Date -Format "yyyy.MMdd.HHMMss"
           & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
             pack ${{ env.INSTALL_DIR }} `
               -NoDefaultExcludes `
