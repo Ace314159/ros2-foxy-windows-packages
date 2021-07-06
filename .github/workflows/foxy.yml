@@ -74,13 +74,19 @@ jobs:
               -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" `
               -DCMAKE_SYSTEM_VERSION="10.0.19041.0" `
               -Wno-dev `
-      - name: Package
+      - name: Fix Installation
         run: |
           Move-Item -Path C:/vcpkg/installed/x64-windows/bin/** -Destination ${{ env.INSTALL_DIR }}/bin
+          $files = Get-ChildItem -Path * -Include *.py
+          foreach ($file in $files) {
+            (Get-Content $file).replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
+          }
           $plugins="iconengines","imageformats","platforms","styles"
           foreach ($plugin in $plugins) {
             Move-Item -Path C:/vcpkg/installed/x64-windows/plugins/$plugin -Destination ${{ env.INSTALL_DIR }}/bin
           }
+      - name: Package
+        run: |
           Move-Item -Path '${{ github.workspace }}/nuspec/${{ env.WORKSPACE }}.nuspec' -Destination ${{ env.INSTALL_DIR }}
           $version = Get-Date -Format "yyyy.MMdd.HHMMss"
           & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
