@@ -74,6 +74,7 @@ jobs:
               -DCMAKE_SYSTEM_VERSION="10.0.19041.0" `
               -Wno-dev `
       - name: Fix Installation
+        working-directory: ${{ env.INSTALL_DIR }}/Scripts
         run: |
           Move-Item -Path C:/vcpkg/installed/x64-windows/bin/** -Destination ${{ env.INSTALL_DIR }}/bin
           $files = Get-ChildItem -Path * -Include *.py
