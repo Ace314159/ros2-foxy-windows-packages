@@ -76,7 +76,7 @@ jobs:
       - name: Fix Installation
         working-directory: ${{ env.INSTALL_DIR }}/Scripts
         run: |
-          $files = "Qt5Core.dll","Qt5Gui.dll","Qt5Svg.dll","Qt5Widgets.dll","libGLESv2.dll","libEGL.dll"
+          $files = "Qt5Core.dll","Qt5Gui.dll","Qt5Svg.dll","Qt5Widgets.dll","libEGL.dll"
           foreach ($file in $files) {
             Move-Item -Path C:/vcpkg/installed/x64-windows/bin/$file -Destination ${{ env.INSTALL_DIR }}/bin
           }
