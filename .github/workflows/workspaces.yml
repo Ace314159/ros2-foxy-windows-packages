@@ -84,7 +84,6 @@ jobs:
               -DBUILD_TESTING=False `
               -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" `
               -DCMAKE_SYSTEM_VERSION="10.0.19041.0" `
-              -D_IMPORT_PREFIX="C:/vcpkg/installed/x64-windows/" `
               -Wno-dev `
       - name: Package
         run: |
