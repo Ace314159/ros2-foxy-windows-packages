@@ -88,11 +88,13 @@ jobs:
       - name: Package
         run: |
           Move-Item -Path '${{ github.workspace }}/nuspec/${{ matrix.workspace }}.nuspec' -Destination ${{ env.INSTALL_DIR }}
+          $version = Get-Date -Format "yyyy.MMdd.HHMMss"
           & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
             pack ${{ env.INSTALL_DIR}} `
               -NoDefaultExcludes `
               -NonInteractive `
               -OutputFileNamesWithoutVersion
+              -Version $version
           & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
             push ros2-foxy-${{ matrix.workspace }}.nupkg `
               -Source "GitHub"
