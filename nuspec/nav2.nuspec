@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>ros2-foxy-nav2</id>
+    <version>1</version>
+    <authors>vur</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ROS2 Foxy Nav2 2 for Windows</description>
+    <repository type="git" url="https://github.com/Ace314159/ros2-foxy-windows-packages.git" />
+  </metadata>
+</package>
