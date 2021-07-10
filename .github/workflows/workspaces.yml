@@ -16,7 +16,7 @@ jobs:
   build:
     strategy:
       matrix:
-        workspace: [nav2]
+        workspace: [moveit2]
     env:
       ROS_BASE: C:/opt/ros/foxy
       INSTALL_DIR: C:/opt/ros/foxy/${{ matrix.workspace }}
@@ -31,7 +31,6 @@ jobs:
         run: |
           rm -rf "$VCPKG_INSTALLATION_ROOT"
           rm -rf "C:/hostedtoolcache/windows/python/"
-          rm "C:/Strawberry/perl/bin/pkg-config.bat"
         shell: 'bash'
       - name: Install Python
         uses: actions/setup-python@v2
