@@ -20,3 +20,4 @@ tinyxml
 tinyxml2
 opencv
 qhull
+urdfdom
