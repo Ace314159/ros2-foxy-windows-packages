@@ -11,6 +11,7 @@ jobs:
   Build:
     env:
       VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
+      INCLUDE: '${{ github.workspace }}/vcpkg/installed/x64-windows/include'
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -47,6 +48,5 @@ jobs:
             boost-thread boost-filesystem boost-program-options boost-system
       - name: Build Driver
         run: |
-          $env:INCLUDE = "${{ github.workspace }}/vcpkg/installed/x64-windows/include"
           cd ${{ github.workspace }}/driver
           scons --full --use-system-boost --disable-warnings-as-errors
