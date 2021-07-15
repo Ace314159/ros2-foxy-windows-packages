@@ -23,7 +23,7 @@ jobs:
           path: driver
       - name: Build Mongo CXX Driver
         run: |
-        pip install -U setuptools wheel
+          pip install -U setuptools wheel
           pip install scons==2.5.1
           cd ${{ github.workspace }}/driver
           scons --full --disable-warnings-as-errors
