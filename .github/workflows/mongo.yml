@@ -47,5 +47,6 @@ jobs:
             boost-thread boost-filesystem boost-program-options boost-system
       - name: Build Driver
         run: |
+          $env:PATH += "${{ github.workspace }}/vcpkg/installed/x64-windows/include"
           cd ${{ github.workspace }}/driver
           scons --full --use-system-boost --disable-warnings-as-errors
