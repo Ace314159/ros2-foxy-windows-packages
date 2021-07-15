@@ -24,7 +24,7 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v2
         with:
-          python-version: '2.7.17'
+          python-version: '2.7'
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -35,7 +35,9 @@ jobs:
         run: |
           pip install -U setuptools wheel
           pip install scons==2.5.1
-          ${{ github.workspace }}/vcpkg/vcpkg.exe install boost-thread boost-filesystem boost-program-options boost-system
+          ${{ github.workspace }}/vcpkg/bootstrap-vcpkg.bat
+          ${{ github.workspace }}/vcpkg/vcpkg.exe install --triplet=x64-windows `
+            boost-thread boost-filesystem boost-program-options boost-system
       - name: Build Driver
         run: |
           cd ${{ github.workspace }}/driver
