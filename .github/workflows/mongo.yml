@@ -20,5 +20,5 @@ jobs:
       - name: Build Mongo CXX Driver
         run: |
           pip install scons==2.5.1
-          cd 26compat
+          cd ${{ env.GITHUB_WORKSPACE }}/driver
           scons --full --disable-warnings-as-errors
