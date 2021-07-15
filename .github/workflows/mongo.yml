@@ -26,4 +26,4 @@ jobs:
           pip install -U setuptools wheel
           pip install scons==2.5.1
           cd ${{ github.workspace }}/driver
-          scons --full --disable-warnings-as-errors
+          scons --full --use-system-boost --disable-warnings-as-errors
