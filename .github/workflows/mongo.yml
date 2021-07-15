@@ -1,0 +1,24 @@
+name: Mongo
+
+on:
+  push:
+    branches: main
+    paths:
+      - .github/workflows/mongo.yml
+  workflow_dispatch:
+
+jobs:
+  Build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: mongodb/mongo-cxx-driver
+          ref: 26compat
+          path: driver
+      - name: Build Mongo CXX Driver
+        run: |
+          pip install scons==2.5.1
+          cd 26compat
+          scons --full --disable-warnings-as-errors
