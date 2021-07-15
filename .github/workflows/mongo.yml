@@ -35,7 +35,7 @@ jobs:
         run: |
           pip install -U setuptools wheel
           pip install scons==2.5.1
-          & (./vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
+          & (${{ github.workspace }}/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
             sources add `
               -source "https://nuget.pkg.github.com/Ace314159/index.json" `
               -storepasswordincleartext `
