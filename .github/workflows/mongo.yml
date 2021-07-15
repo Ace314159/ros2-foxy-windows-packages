@@ -9,8 +9,17 @@ on:
 
 jobs:
   Build:
+    env:
+      VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
     runs-on: windows-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Remove existing vcpkg
+        run: |
+          rm -rf "$VCPKG_INSTALLATION_ROOT"
       - name: Install Python
         uses: actions/setup-python@v2
         with:
@@ -21,9 +30,12 @@ jobs:
           repository: mongodb/mongo-cxx-driver
           ref: 26compat
           path: driver
-      - name: Build Mongo CXX Driver
+      - name: Build Dependencies
         run: |
           pip install -U setuptools wheel
           pip install scons==2.5.1
+          ${{ github.workspace }}/vcpkg/vcpkg.exe install boost-thread boost-filesystem boost-program-options boost-system
+      - name: Build Driver
+        run: |
           cd ${{ github.workspace }}/driver
           scons --full --use-system-boost --disable-warnings-as-errors
