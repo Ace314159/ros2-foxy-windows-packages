@@ -56,3 +56,4 @@ jobs:
         with:
           name: log
           path: ${{ github.workspace }}/driver/.scons
+        if: ${{ always() }}
