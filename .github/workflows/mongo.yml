@@ -51,3 +51,8 @@ jobs:
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
           cd ${{ github.workspace }}/driver
           scons --full --use-system-boost --disable-warnings-as-errors
+      - name: Save Log
+        uses: actions/upload-artifact@v2
+        with:
+          name: log
+          path: ${{ github.workspace }}/driver/.scons
