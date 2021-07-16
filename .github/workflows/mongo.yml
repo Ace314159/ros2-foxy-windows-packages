@@ -11,7 +11,7 @@ jobs:
   Build:
     env:
       VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
-      INCLUDE: '${{ github.workspace }}/vcpkg/installed/x64-windows/include'
+      INCLUDE: '${{ github.workspace }}\vcpkg\installed\x64-windows\include'
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -48,7 +48,6 @@ jobs:
             boost-thread boost-filesystem boost-program-options boost-system
       - name: Build Driver
         run: |
-          'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat'
+          & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
           cd ${{ github.workspace }}/driver
           scons --full --use-system-boost --disable-warnings-as-errors
-        shell: cmd
