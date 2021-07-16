@@ -48,6 +48,7 @@ jobs:
             boost-thread boost-filesystem boost-program-options boost-system
       - name: Build Driver
         run: |
-          & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
+          'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat'
           cd ${{ github.workspace }}/driver
           scons --full --use-system-boost --disable-warnings-as-errors
+        shell: cmd
