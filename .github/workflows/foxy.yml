@@ -5,7 +5,7 @@ on:
     branches: main
     paths:
       - .github/workflows/foxy.yml
-      - .vcpkg_deps.txt
+      - deps/foxy.txt
       - vcpkg/**
       - nuspec/foxy.nuspec
       - patches/foxy.patch
@@ -50,7 +50,7 @@ jobs:
               -name "GitHub" `
               -username "Ace314159" `
               -password "${{ secrets.GITHUB_TOKEN }}"
-          ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/.vcpkg_deps.txt'
+          ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps/foxy.txt'
       - name: Clone Repos
         run: |
           mkdir C:/ws/src

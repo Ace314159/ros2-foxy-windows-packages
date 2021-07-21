@@ -1,0 +1,4 @@
+console-bridge
+qt5-base
+qt5-svg
+urdfdom
