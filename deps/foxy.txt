@@ -1,4 +1,11 @@
+asio
+bullet3
 console-bridge
+cunit
+log4cxx
+opencv
 qt5-base
 qt5-svg
+tinyxml
+tinyxml2
 urdfdom
