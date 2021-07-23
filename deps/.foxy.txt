@@ -2,6 +2,7 @@ asio
 bullet3
 console-bridge
 cunit
+eigen3
 log4cxx
 opencv
 qt5-base
