@@ -50,7 +50,7 @@ jobs:
               -name "GitHub" `
               -username "Ace314159" `
               -password "${{ secrets.GITHUB_TOKEN }}"
-          ./vcpkg/vcpkg.exe --triplet=x64-windows --debug install asio
+          ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps/foxy.txt'
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
