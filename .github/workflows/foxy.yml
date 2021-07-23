@@ -50,7 +50,7 @@ jobs:
               -name "GitHub" `
               -username "Ace314159" `
               -password "${{ secrets.GITHUB_TOKEN }}"
-          ./vcpkg/vcpkg.exe --triplet=x64-windows install asio
+          ./vcpkg/vcpkg.exe install asio --triplet=x64-windows
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
