@@ -9,7 +9,7 @@ repositories:
     version: ros2
   navigation2:
     type: git
-    url: https://github.com/ros-planning/navigation2.git
+    url: https://github.com/Ace314159/navigation2.git
     version: foxy-devel
   bond_core:
     type: git
@@ -25,7 +25,7 @@ repositories:
     version: ros2
   vision_opencv:
     type: git
-    url: https://github.com/ros-perception/vision_opencv.git
+    url: https://github.com/Ace314159/vision_opencv.git
     version: ros2
   turtlebot3/turtlebot3:
     type: git
