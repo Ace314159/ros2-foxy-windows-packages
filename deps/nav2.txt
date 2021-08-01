@@ -1,4 +1,5 @@
 asio
+boost-coroutine2
 boost-program-options
 bullet3
 console-bridge
