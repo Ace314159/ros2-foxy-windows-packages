@@ -16,7 +16,7 @@ jobs:
   Build:
     strategy:
       matrix:
-        workspace: [nav2]
+        workspace: [moveit2]
     env:
       ROS_BASE: C:/opt/ros/foxy
       INSTALL_DIR: C:/opt/ros/foxy/ros2-foxy-${{ matrix.workspace }}
@@ -62,6 +62,7 @@ jobs:
               -ExcludeVersion `
               -Source "GitHub" `
               -OutputDirectory ${{ env.ROS_BASE }}
+          Rename-Item -Path ${{ env.ROS_BASE }}/ros2-foxy-base -NewName x64
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
@@ -74,7 +75,7 @@ jobs:
         working-directory: C:/ws
         run: |
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
-          ${{ env.ROS_BASE }}/ros2-foxy-base/local_setup.ps1
+          ${{ env.ROS_BASE }}/x64/local_setup.ps1
           colcon build `
             --merge-install `
             --install-base ${{ env.INSTALL_DIR }} `
