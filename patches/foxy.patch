@@ -14,7 +14,7 @@ index 8e41fe66..4854b903 100644
 diff --git a/ros2/rviz/rviz_common/CMakeLists.txt b/ros2/rviz/rviz_common/CMakeLists.txt
 index 62bb1091..c9fb1a67 100644
 --- a/ros2/rviz/rviz_common/CMakeLists.txt
-+++ b/rviz_common/CMakeLists.txt
++++ b/ros2/rviz/rviz_common/CMakeLists.txt
 @@ -273,6 +273,7 @@ ament_export_dependencies(
    geometry_msgs
    pluginlib
