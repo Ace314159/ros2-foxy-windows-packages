@@ -1,4 +1,5 @@
 asio
+assimp
 boost-filesystem
 boost-iostreams
 boost-program-options
