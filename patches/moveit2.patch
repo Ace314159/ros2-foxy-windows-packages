@@ -1,0 +1,22 @@
+﻿diff --git a/geometric_shapes/CMakeLists.txt b/geometric_shapes/CMakeLists.txt
+index b1c4e83..faa2074 100644
+--- a/geometric_shapes/CMakeLists.txt
++++ b/geometric_shapes/CMakeLists.txt
+@@ -40,8 +40,7 @@ endif()
+ # find *absolute* paths to ASSIMP_LIBRARIES
+ # Both, pkg-config and assimp's cmake-config don't provide an absolute library path.
+ # For, pkg-config the path is in ASSIMP_PC_LIBRARY_DIRS, for cmake in ASSIMP_LIBRARY_DIRS.
+-find_library(ASSIMP_ABS_LIBRARIES NAMES ${ASSIMP_LIBRARIES} assimp HINTS ${ASSIMP_LIBRARY_DIRS} ${ASSIMP_PC_LIBRARY_DIRS})
+-set(ASSIMP_LIBRARIES "${ASSIMP_ABS_LIBRARIES}")
++set(ASSIMP_LIBRARIES assimp::assimp)
+ 
+ # These need to be in this order to find header files
+ find_package(eigen3_cmake_module REQUIRED)
+@@ -62,6 +61,7 @@ find_package(shape_msgs REQUIRED)
+ find_package(visualization_msgs REQUIRED)
+ 
+ set(THIS_PACKAGE_EXPORT_DEPENDS
++  ASSIMP
+   eigen3_cmake_module
+   Eigen3
+   Boost
