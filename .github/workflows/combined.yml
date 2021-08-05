@@ -1,0 +1,95 @@
+name: Build Foxy Base
+
+on:
+  push:
+    branches: main
+    paths:
+      - .github/workflows/combined.yml
+      - deps/foxy.txt
+      - vcpkg/**
+      - nuspec/combined.nuspec
+      - patches/combined.patch
+      - repos/combined.repos
+  workflow_dispatch:
+
+jobs:
+  Build:
+    env:
+      INSTALL_DIR: C:/opt/ros/foxy/x64
+      VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
+      WORKSPACE: foxy
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Remove existing vcpkg and python
+        run: |
+          rm -rf "$VCPKG_INSTALLATION_ROOT"
+          rm -rf "C:/hostedtoolcache/windows/python/"
+        shell: 'bash'
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8.3'
+      - name: Update Windows SDK
+        uses: fbactions/setup-winsdk@v1
+        with:
+          winsdk-build-version: 19041
+      - name: Setup Environment
+        working-directory: C:/
+        run: |
+          pip install -U vcstool colcon-common-extensions catkin_pkg cryptography EmPy ifcfg lark-parser lxml numpy pyparsing pyyaml
+          Move-Item -Path '${{ github.workspace }}/vcpkg' -Destination C:/vcpkg
+          ./vcpkg/bootstrap-vcpkg.bat
+          & (./vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
+            sources add `
+              -source "https://nuget.pkg.github.com/Ace314159/index.json" `
+              -storepasswordincleartext `
+              -name "GitHub" `
+              -username "Ace314159" `
+              -password "${{ secrets.GITHUB_TOKEN }}"
+          ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps/foxy.txt'
+          Move-Item -Path C:/vcpkg/install/x64-windows -Destination ${{ env.INSTALL_DIR }}
+      - name: Clone Repos
+        run: |
+          mkdir C:/ws/src
+          vcs import --input '${{ github.workspace }}/repos/${{ env.WORKSPACE }}.repos' C:/ws/src
+          $patchFile = '${{ github.workspace }}/patches/${{ env.WORKSPACE }}.patch'
+          if (Test-Path $patchFile) {
+            git apply $patchFile --unsafe-paths --directory=C:/ws/src
+          }
+      - name: Build
+        working-directory: C:/ws
+        run: |
+          & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
+          colcon build `
+            --merge-install `
+            --install-base ${{ env.INSTALL_DIR }} `
+            --event-handlers console_cohesion+ status- `
+            --cmake-args `
+              -DCMAKE_BUILD_TYPE=RelWithDebInfo `
+              -DBUILD_TESTING=False `
+              -DCMAKE_SYSTEM_VERSION="10.0.19041.0" `
+              -Wno-dev `
+      - name: Fix Installation
+        working-directory: ${{ env.INSTALL_DIR }}/Scripts
+        run: |
+          $files = Get-ChildItem -Path * -Include *.py
+          foreach ($file in $files) {
+            (Get-Content $file).replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
+          }
+      - name: Package
+        run: |
+          Move-Item -Path '${{ github.workspace }}/nuspec/${{ env.WORKSPACE }}.nuspec' -Destination ${{ env.INSTALL_DIR }}
+          $version = Get-Date -Format "yyyy.MMdd.HHMMss"
+          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
+            pack ${{ env.INSTALL_DIR }} `
+              -NoDefaultExcludes `
+              -NonInteractive `
+              -OutputFileNamesWithoutVersion `
+              -Version $version
+          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
+            push ros2-${{ env.WORKSPACE }}-base.nupkg `
+              -Source "GitHub"
