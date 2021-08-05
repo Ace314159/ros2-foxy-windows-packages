@@ -51,7 +51,7 @@ jobs:
               -username "Ace314159" `
               -password "${{ secrets.GITHUB_TOKEN }}"
           ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps/foxy.txt'
-          New-Item ${{ env.INSTALL_DIR }} -Force
+          New-Item ${{ env.INSTALL_DIR }} -Type Directory
           Move-Item C:/vcpkg/installed/x64-windows/** ${{ env.INSTALL_DIR }}
       - name: Clone Repos
         run: |
