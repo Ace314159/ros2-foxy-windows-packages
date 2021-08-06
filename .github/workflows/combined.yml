@@ -51,8 +51,7 @@ jobs:
               -username "Ace314159" `
               -password "${{ secrets.GITHUB_TOKEN }}"
           ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps/foxy.txt'
-          New-Item ${{ env.INSTALL_DIR }} -Type Directory
-          Move-Item C:/vcpkg/installed/x64-windows/** ${{ env.INSTALL_DIR }}
+          New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
@@ -72,6 +71,7 @@ jobs:
             --cmake-args `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
               -DBUILD_TESTING=False `
+              -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" `
               -DCMAKE_SYSTEM_VERSION="10.0.19041.0" `
               -DCMAKE_IGNORE_PATH=${{ env.INSTALL_DIR }}/debug `
               -Wno-dev `
