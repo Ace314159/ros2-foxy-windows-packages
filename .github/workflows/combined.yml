@@ -57,7 +57,7 @@ jobs:
           mkdir C:/ws/src
           $workspaces = '${{ env.WORKSPACES }}'.split(';')
           foreach ($workspace in $workspaces) {
-            vcs import --input '${{ github.workspace }}/repos/$workspace.repos' C:/ws/src
+            vcs import --input "${{ github.workspace }}/repos/$($workspace).repos" C:/ws/src
             $patchFile = '${{ github.workspace }}/patches/$workspace.patch'
             if (Test-Path $patchFile) {
               git apply $patchFile --unsafe-paths --directory=C:/ws/src
