@@ -17,7 +17,7 @@ jobs:
     env:
       INSTALL_DIR: C:/opt/ros/foxy/x64
       VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
-      WORKSPACE: foxy
+      WORKSPACES: foxy, moveit2
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -55,10 +55,12 @@ jobs:
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
-          vcs import --input '${{ github.workspace }}/repos/${{ env.WORKSPACE }}.repos' C:/ws/src
-          $patchFile = '${{ github.workspace }}/patches/${{ env.WORKSPACE }}.patch'
-          if (Test-Path $patchFile) {
-            git apply $patchFile --unsafe-paths --directory=C:/ws/src
+          foreach ($workspace in ${{ env.WORKSPACES }}) {
+            vcs import --input '${{ github.workspace }}/repos/$workspace.repos' C:/ws/src
+            $patchFile = '${{ github.workspace }}/patches/$workspace.patch'
+            if (Test-Path $patchFile) {
+              git apply $patchFile --unsafe-paths --directory=C:/ws/src
+            }
           }
       - name: Build
         working-directory: C:/ws
