@@ -1,10 +1,6 @@
 asio
 assimp
-boost-filesystem
-boost-iostreams
-boost-program-options
-boost-python
-boost-signals2
+boost
 bullet3
 console-bridge
 cunit
