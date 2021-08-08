@@ -5,7 +5,7 @@ on:
     branches: main
     paths:
       - .github/workflows/combined.yml
-      - deps/foxy.txt
+      - deps.txt
       - vcpkg/**
       - nuspec/combined.nuspec
       - patches/combined.patch
@@ -50,7 +50,7 @@ jobs:
               -name "GitHub" `
               -username "Ace314159" `
               -password "${{ secrets.GITHUB_TOKEN }}"
-          ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps/foxy.txt'
+          ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps.txt'
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
       - name: Clone Repos
         run: |
