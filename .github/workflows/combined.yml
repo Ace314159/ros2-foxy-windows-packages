@@ -56,15 +56,11 @@ jobs:
         run: |
           mkdir C:/ws/src
           $workspaces = '${{ env.WORKSPACES }}'.split(';')
-          echo $workspaces
           foreach ($workspace in $workspaces) {
-            echo $workspace
             vcs import --input "${{ github.workspace }}/repos/$($workspace).repos" C:/ws/src
-            $patchFile = '${{ github.workspace }}/patches/$($workspace).patch'
+            $patchFile = "${{ github.workspace }}/patches/$($workspace).patch"
             if (Test-Path $patchFile) {
               git apply $patchFile --unsafe-paths --directory=C:/ws/src
-            } else {
-              echo "Didn't apply patch $($workspace)"
             }
           }
       - name: Build
