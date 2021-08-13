@@ -85,6 +85,10 @@ jobs:
           foreach ($file in $files) {
             (Get-Content $file).replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
           }
+          $files = Get-ChildItem -Recurse -Path * -Include *.cmake
+          foreach ($file in $files) {
+            (Get-Content $file).replace('C:/vcpkg/installed/x64-windows/', 'C:/opt/ros/foxy/x64/') | Set-Content $file
+          }
       - name: Package
         run: |
           Move-Item -Path '${{ github.workspace }}/nuspec/combined.nuspec' -Destination ${{ env.INSTALL_DIR }}
