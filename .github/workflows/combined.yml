@@ -84,7 +84,7 @@ jobs:
           $files = Get-ChildItem -Recurse -Path * -Include *.cmake
           foreach ($file in $files) {
             (Get-Content $file).replace('C:/vcpkg/installed/x64-windows/', 'C:/opt/ros/foxy/x64/') | Set-Content $file
-            (Get-Content $file).replace('C:/vcpkg/packages/.+/include', 'C:/opt/ros/foxy/x64/include') | Set-Content $file
+            (Get-Content $file) -replace 'C:/vcpkg/packages/.+/include', 'C:/opt/ros/foxy/x64/include' | Set-Content $file
           }
           $files = Get-ChildItem -Path Scripts/* -Include *.py
           foreach ($file in $files) {
