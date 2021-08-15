@@ -2,9 +2,11 @@ asio
 boost-coroutine2
 boost-program-options
 bullet3
+ceres[suitesparse]
 console-bridge
 cunit
 eigen3
+graphicsmagick
 log4cxx
 opencv
 qt5-base
