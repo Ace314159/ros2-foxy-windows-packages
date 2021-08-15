@@ -54,7 +54,7 @@ jobs:
               -name "GitHub" `
               -username "Ace314159" `
               -password "${{ secrets.GITHUB_TOKEN }}"
-          ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps/${{ matrix.workspace }}.txt'
+          ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps.txt'
       - name: Setup ROS 2 Foxy Base
         run: |
           & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
