@@ -1,7 +1,7 @@
 repositories:
   BehaviorTree.CPP:
     type: git
-    url: https://github.com/BehaviorTree/BehaviorTree.CPP.git
+    url: https://github.com/Ace314159/BehaviorTree.CPP.git
     version: master
   angles:
     type: git
@@ -17,7 +17,7 @@ repositories:
     version: dashing-devel
   gazebo_ros_pkgs:
     type: git
-    url: https://github.com/ros-simulation/gazebo_ros_pkgs.git
+    url: https://github.com/Ace314159/gazebo_ros_pkgs.git
     version: foxy
   image_common:
     type: git
@@ -49,5 +49,5 @@ repositories:
     version: foxy-devel
   slam_toolbox:
     type: git
-    url: https://github.com/SteveMacenski/slam_toolbox.git
+    url: https://github.com/Ace314159/slam_toolbox.git
     version: foxy-devel
