@@ -17,7 +17,7 @@ jobs:
     env:
       INSTALL_DIR: C:/opt/ros/foxy/x64
       VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
-      WORKSPACES: foxy;moveit2
+      WORKSPACES: foxy;moveit2;nav2
     runs-on: windows-latest
     steps:
       - name: Checkout
