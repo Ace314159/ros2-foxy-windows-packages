@@ -14,7 +14,7 @@ repositories:
   bond_core:
     type: git
     url: https://github.com/Ace314159/bond_core.git
-    version: dashing-devel
+    version: foxy-devel
   gazebo_ros_pkgs:
     type: git
     url: https://github.com/Ace314159/gazebo_ros_pkgs.git
