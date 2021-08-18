@@ -68,6 +68,7 @@ jobs:
         working-directory: C:/ws
         run: |
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
+          $env:PYTHONPATH += ";C:/opt/ros/foxy/x64/Lib/site-packages"
           colcon build `
             --merge-install `
             --install-base ${{ env.INSTALL_DIR }} `
