@@ -70,6 +70,7 @@ jobs:
           & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
           $env:PYTHONPATH = "C:/opt/ros/foxy/x64/Lib/site-packages;" + $env:PYTHONPATH
           $env:PATH = "C:\opt\ros\foxy\x64\opt\yaml_cpp_vendor\bin;C:\opt\ros\foxy\x64\opt\rviz_ogre_vendor\bin;C:\opt\ros\foxy\x64\opt\libcurl_vendor\bin;C:\opt\ros\foxy\x64\Scripts;C:\opt\ros\foxy\x64\bin;" + $env:PATH
+          $env:CMAKE_PREFIX_PATH = "C:\opt\ros\foxy\x64;" + $env:CMAKE_PREFIX_PATH
           colcon build `
             --merge-install `
             --install-base ${{ env.INSTALL_DIR }} `
