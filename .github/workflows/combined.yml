@@ -76,6 +76,7 @@ jobs:
             --install-base ${{ env.INSTALL_DIR }} `
             --event-handlers console_cohesion+ status- `
             --cmake-args `
+              install
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
               -DBUILD_TESTING=False `
               -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" `
