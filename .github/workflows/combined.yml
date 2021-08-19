@@ -76,9 +76,10 @@ jobs:
             --install-base ${{ env.INSTALL_DIR }} `
             --event-handlers console_cohesion+ status- `
             --cmake-args `
-              install `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
               -DBUILD_TESTING=False `
+              -DBUILD_EXAMPLES=False `
+              -DBUILD_UNIT_TESTS=False `
               -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" `
               -DCMAKE_SYSTEM_VERSION="10.0.19041.0" `
               -Wno-dev
