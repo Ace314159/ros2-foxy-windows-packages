@@ -76,6 +76,7 @@ jobs:
             --install-base ${{ env.INSTALL_DIR }} `
             --event-handlers console_cohesion+ status- `
             --cmake-args `
+              -G Ninja
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
               -DBUILD_TESTING=False `
               -DBUILD_EXAMPLES=False `
