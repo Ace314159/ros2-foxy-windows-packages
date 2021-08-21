@@ -53,6 +53,7 @@ jobs:
               -password "${{ secrets.GITHUB_TOKEN }}"
           ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps.txt'
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
+          Install-Module Pscx -Scope CurrentUser
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
@@ -67,7 +68,6 @@ jobs:
       - name: Build
         working-directory: C:/ws
         run: |
-          Install-Module Pscx
           Invoke-BatchFile "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
           $env:PYTHONPATH = "C:/opt/ros/foxy/x64/Lib/site-packages;" + $env:PYTHONPATH
           $env:PATH = "C:\opt\ros\foxy\x64\opt\yaml_cpp_vendor\bin;C:\opt\ros\foxy\x64\opt\rviz_ogre_vendor\bin;C:\opt\ros\foxy\x64\opt\libcurl_vendor\bin;C:\opt\ros\foxy\x64\Scripts;C:\opt\ros\foxy\x64\bin;" + $env:PATH
