@@ -53,7 +53,7 @@ jobs:
               -password "${{ secrets.GITHUB_TOKEN }}"
           ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps.txt'
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
-          Install-Module Pscx -Scope CurrentUser
+          Install-Module Pscx -Scope CurrentUser -Force
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
