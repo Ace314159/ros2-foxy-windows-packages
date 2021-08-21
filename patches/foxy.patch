@@ -64,9 +64,18 @@ index 62bb1091..c9fb1a67 100644
    std_msgs
    tf2
 diff --git a/ros2/rviz/rviz_ogre_vendor/CMakeLists.txt b/ros2/rviz/rviz_ogre_vendor/CMakeLists.txt
-index c400c07f..6ee7601a 100644
+index c400c07f..7c57b918 100644
 --- a/ros2/rviz/rviz_ogre_vendor/CMakeLists.txt
 +++ b/ros2/rviz/rviz_ogre_vendor/CMakeLists.txt
+@@ -6,7 +6,7 @@ find_package(ament_cmake REQUIRED)
+ 
+ set(PACKAGE_VERSION "1.0.0")
+ 
+-if(WIN32)
++if(false)
+   set(BUILDING_FREETYPE_LOCALLY ON)
+   set(BUILDING_ZLIB_LOCALLY ON)
+ else()
 @@ -143,7 +143,7 @@ macro(build_ogre)
        "-DZLIB_ROOT=${CMAKE_CURRENT_BINARY_DIR}/zlib-install")
    endif()
