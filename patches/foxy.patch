@@ -86,9 +86,18 @@ index c400c07f..7c57b918 100644
    else()
      list(APPEND extra_cmake_args "-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}")
 diff --git a/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in b/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in
-index 0ab09b60..dd59679d 100644
+index 0ab09b60..7b7fbd92 100644
 --- a/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in
 +++ b/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in
+@@ -97,7 +97,7 @@ foreach(_lib IN LISTS OGRE_LIBRARIES)
+       message(FATAL_ERROR "Could not find freetype package")
+     endif()
+ 
+-    if(WIN32)
++    if(false)
+       if(_ogre_main_static_library_debug_abs)
+         set(ZLIB_LIBRARIES "${ZLIB_HOME}/lib/zlibstaticd.lib")
+       else()
 @@ -127,10 +127,14 @@ foreach(_lib IN LISTS OGRE_LIBRARIES)
      if(APPLE)
        list(APPEND _extra_interface_link_libraries "-framework Cocoa")
