@@ -52,6 +52,7 @@ jobs:
               -username "Ace314159" `
               -password "${{ secrets.GITHUB_TOKEN }}"
           ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps.txt'
+          Remove-Item C:/vcpkg/installed/x64-windows/debug -Force -Recurse
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
       - name: Clone Repos
