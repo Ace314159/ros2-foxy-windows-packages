@@ -52,7 +52,6 @@ jobs:
               -username "Ace314159" `
               -password "${{ secrets.GITHUB_TOKEN }}"
           ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps.txt'
-          Remove-Item C:/vcpkg/installed/x64-windows/debug -Force -Recurse
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
       - name: Clone Repos
@@ -80,6 +79,7 @@ jobs:
             --cmake-args `
               -G Ninja `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
+              -DVCPKG_BUILD_TYPE=Release `
               -DBUILD_TESTING=False `
               -DBUILD_EXAMPLES=False `
               -DBUILD_UNIT_TESTS=False `
@@ -98,6 +98,7 @@ jobs:
           foreach ($file in $files) {
             (Get-Content $file).replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
           }
+          Remove-Item C:/vcpkg/installed/x64-windows/debug -Force -Recurse
       - name: Package
         run: |
           Move-Item -Path '${{ github.workspace }}/nuspec/combined.nuspec' -Destination ${{ env.INSTALL_DIR }}
