@@ -17,7 +17,7 @@ jobs:
     env:
       INSTALL_DIR: C:/opt/ros/foxy/x64
       VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
-      WORKSPACES: foxy;moveit2;nav2
+      WORKSPACES: foxy;moveit2
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -98,7 +98,6 @@ jobs:
           foreach ($file in $files) {
             (Get-Content $file).replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
           }
-          Remove-Item C:/vcpkg/installed/x64-windows/debug -Force -Recurse
       - name: Package
         run: |
           Move-Item -Path '${{ github.workspace }}/nuspec/combined.nuspec' -Destination ${{ env.INSTALL_DIR }}
