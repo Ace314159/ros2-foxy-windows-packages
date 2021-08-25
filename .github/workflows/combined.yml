@@ -108,7 +108,8 @@ jobs:
               -NonInteractive `
               -OutputFileNamesWithoutVersion `
               -Version $version
-          echo (Get-Item ros2-foxy-combined.nupkg).length
           & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
             push ros2-foxy-combined.nupkg `
-              -Source "GitHub"
+              -Source "GitHub" `
+              -Verbosity detailed `
+              -Timeout 0
