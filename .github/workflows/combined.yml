@@ -62,7 +62,6 @@ jobs:
               -NoDefaultExcludes `
               -NonInteractive `
               -OutputFileNamesWithoutVersion `
-              -Version $version
           & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
             push ros2-foxy-deps.nupkg `
               -Source "GitHub" `
