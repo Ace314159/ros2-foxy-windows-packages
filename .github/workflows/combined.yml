@@ -54,6 +54,21 @@ jobs:
           ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps.txt'
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
+
+          Copy-Item -Path ${{ env.INSTALL_DIR }} -Destination C:/deps -Recurse
+          Move-Item -Path '${{ github.workspace }}/nuspec/deps.nuspec' -Destination ${{ env.INSTALL_DIR }}
+          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
+            pack ${{ env.INSTALL_DIR }} `
+              -NoDefaultExcludes `
+              -NonInteractive `
+              -OutputFileNamesWithoutVersion `
+              -Version $version
+          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
+            push ros2-foxy-deps.nupkg `
+              -Source "GitHub" `
+              -SkipDuplicate `
+              -Verbosity detailed `
+              -Timeout 0
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
@@ -97,6 +112,10 @@ jobs:
           $files = Get-ChildItem -Path Scripts/* -Include *.py
           foreach ($file in $files) {
             (Get-Content $file).replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
+          }
+          $files = Get-ChildItem -Recurse C:/deps -Name
+          foreach ($file in $files) {
+            Remove-Item $file
           }
       - name: Package
         run: |
