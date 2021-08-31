@@ -103,4 +103,4 @@ jobs:
           sed -i -e '$d' description.txt
           echo "Last updated: "$(date) >> description.txt 
           hub release delete ros2-foxy-combined
-          hub release create -F description.txt -a /opt/ros/foxy/ros2-foxy-combined.zip ros2-foxy-combined
+          hub release create -F description.txt -a C:/opt/ros/foxy/ros2-foxy-combined.zip ros2-foxy-combined
