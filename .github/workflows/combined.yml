@@ -20,6 +20,10 @@ jobs:
       WORKSPACES: foxy;moveit2
     runs-on: windows-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
       - name: Test
         run: |
           mkdir -p C:/opt/ros/foxy/x64
@@ -32,13 +36,9 @@ jobs:
         with:
           allowUpdates: true
           artifacts: release.zip
-          bodyFile: releaseBody.md
+          bodyFile: ${{ github.workspace }}/releaseBody.md
           tag: ros2-foxy-combined
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          submodules: true
       - name: Remove existing vcpkg and python
         run: |
           rm -rf "$VCPKG_INSTALLATION_ROOT"
