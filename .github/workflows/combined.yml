@@ -10,6 +10,7 @@ on:
       - nuspec/combined.nuspec
       - patches/combined.patch
       - repos/combined.repos
+      - releaseBody.md
   workflow_dispatch:
 
 jobs:
@@ -27,6 +28,8 @@ jobs:
       - name: Test
         run: |
           mkdir -p C:/opt/ros/foxy/x64
+          $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
+          Add-Content -Path ${{ github.workspace }}/releaseBody.md -Value $date
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
