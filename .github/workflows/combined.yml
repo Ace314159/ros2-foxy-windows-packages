@@ -25,23 +25,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Test
-        run: |
-          mkdir -p C:/opt/ros/foxy/x64
-          $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
-          Add-Content -Path ${{ github.workspace }}/releaseBody.md -Value $date
-      - name: Archive Release
-        uses: thedoctor0/zip-release@master
-        with:
-          path: C:/opt/ros/foxy/x64
-      - name: Upload Release
-        uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          artifacts: release.zip
-          bodyFile: ${{ github.workspace }}/releaseBody.md
-          tag: ros2-foxy-combined
-          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Remove existing vcpkg and python
         run: |
           rm -rf "$VCPKG_INSTALLATION_ROOT"
@@ -108,16 +91,17 @@ jobs:
           foreach ($file in $files) {
             (Get-Content $file).replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
           }
+          $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
+          Add-Content -Path ${{ github.workspace }}/releaseBody.md -Value $date
       - name: Package
-        run: |
-          zip -r ros2-foxy-combined.zip C:/opt/ros/foxy
+        uses: thedoctor0/zip-release@master
+        with:
+          path: C:/opt/ros/foxy/x64
       - name: Release
-        env:
-          GITHUB_USER: ${{ secrets.GITHUB_USER }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          hub release show ros2-foxy-combined >> description.txt
-          sed -i -e '$d' description.txt
-          echo "Last updated: "$(date) >> description.txt 
-          hub release delete ros2-foxy-combined
-          hub release create -F description.txt -a C:/opt/ros/foxy/ros2-foxy-combined.zip ros2-foxy-combined
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          artifacts: release.zip
+          bodyFile: ${{ github.workspace }}/releaseBody.md
+          tag: ros2-foxy-combined
+          token: ${{ secrets.GITHUB_TOKEN }}
