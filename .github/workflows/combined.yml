@@ -60,7 +60,7 @@ jobs:
           Move-Item -Path '${{ github.workspace }}/nuspec/deps.nuspec' -Destination ${{ env.INSTALL_DIR }}
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
           Add-Content -Path ${{ github.workspace }}/depsRelease.md -Value $date
-    - name: Package Deps
+      - name: Package Deps
         uses: thedoctor0/zip-release@master
         with:
           path: C:/opt/ros/foxy/x64
