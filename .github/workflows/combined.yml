@@ -79,7 +79,7 @@ jobs:
             --event-handlers console_cohesion+ status- `
             --cmake-args `
               -G Ninja `
-              -DCMAKE_BUILD_TYPE=RelWithDebInfo `
+              -DCMAKE_BUILD_TYPE=Release `
               -DVCPKG_BUILD_TYPE=Release `
               -DBUILD_TESTING=False `
               -DBUILD_EXAMPLES=False `
