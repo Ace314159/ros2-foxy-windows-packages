@@ -32,6 +32,7 @@ jobs:
         with:
           allowUpdates: true
           artifacts: release.zip
+          bodyFile: releaseBody.md
           tag: ros2-foxy-combined
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkout
