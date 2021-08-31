@@ -55,6 +55,23 @@ jobs:
           ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps.txt'
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
+
+          Copy-Item -Path ${{ env.INSTALL_DIR }} -Destination C:/deps -Recurse
+          Move-Item -Path '${{ github.workspace }}/nuspec/deps.nuspec' -Destination ${{ env.INSTALL_DIR }}
+          $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
+          Add-Content -Path ${{ github.workspace }}/depsRelease.md -Value $date
+    - name: Package Deps
+        uses: thedoctor0/zip-release@master
+        with:
+          path: C:/opt/ros/foxy/x64
+      - name: Release Deps
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          artifacts: release.zip
+          bodyFile: ${{ github.workspace }}/depsRelease.md
+          tag: ros2-foxy-deps
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
@@ -99,17 +116,21 @@ jobs:
           foreach ($file in $files) {
             (Get-Content $file).replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
           }
+          $files = Get-ChildItem -Recurse C:/deps -Name
+          foreach ($file in $files) {
+            Remove-Item $file
+          }
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
-          Add-Content -Path ${{ github.workspace }}/releaseBody.md -Value $date
-      - name: Package
+          Add-Content -Path ${{ github.workspace }}/combinedRelease.md -Value $date
+      - name: Package ROS
         uses: thedoctor0/zip-release@master
         with:
           path: C:/opt/ros/foxy/x64
-      - name: Release
+      - name: Release ROS
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
           artifacts: release.zip
-          bodyFile: ${{ github.workspace }}/releaseBody.md
+          bodyFile: ${{ github.workspace }}/combinedRelease.md
           tag: ros2-foxy-combined
           token: ${{ secrets.GITHUB_TOKEN }}
