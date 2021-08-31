@@ -54,31 +54,9 @@ jobs:
           ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps.txt'
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
-
-          Copy-Item -Path ${{ env.INSTALL_DIR }} -Destination C:/deps -Recurse
-          Move-Item -Path '${{ github.workspace }}/nuspec/deps.nuspec' -Destination ${{ env.INSTALL_DIR }}
-          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
-            pack ${{ env.INSTALL_DIR }} `
-              -NoDefaultExcludes `
-              -NonInteractive `
-              -OutputFileNamesWithoutVersion
-          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
-            push ros2-foxy-deps.nupkg `
-              -Source "GitHub" `
-              -SkipDuplicate `
-              -Verbosity detailed `
-              -Timeout 0
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
-          $workspaces = '${{ env.WORKSPACES }}'.split(';')
-          foreach ($workspace in $workspaces) {
-            vcs import --input "${{ github.workspace }}/repos/$($workspace).repos" C:/ws/src
-            $patchFile = "${{ github.workspace }}/patches/$($workspace).patch"
-            if (Test-Path $patchFile) {
-              git apply $patchFile --unsafe-paths --directory=C:/ws/src
-            }
-          }
       - name: Build
         working-directory: C:/ws
         run: |
@@ -112,22 +90,17 @@ jobs:
           foreach ($file in $files) {
             (Get-Content $file).replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
           }
-          $files = Get-ChildItem -Recurse C:/deps -Name
-          foreach ($file in $files) {
-            Remove-Item $file
-          }
       - name: Package
         run: |
-          Move-Item -Path '${{ github.workspace }}/nuspec/combined.nuspec' -Destination ${{ env.INSTALL_DIR }}
-          $version = Get-Date -Format "yyyy.MMdd.HHMMss"
-          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
-            pack ${{ env.INSTALL_DIR }} `
-              -NoDefaultExcludes `
-              -NonInteractive `
-              -OutputFileNamesWithoutVersion `
-              -Version $version
-          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
-            push ros2-foxy-combined.nupkg `
-              -Source "GitHub" `
-              -Verbosity detailed `
-              -Timeout 0
+          cd C:/opt/ros/foxy
+          zip -r ros2-foxy-combined.zip C:/opt/ros/foxy
+      - name: Release
+        env:
+          GITHUB_USER: ${{ secrets.GITHUB_USER }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        run: |
+          hub release show ros2-foxy-combined >> description.txt
+          sed -i -e '$d' description.txt
+          echo "Last updated: "$(date) >> description.txt 
+          hub release delete ros2-foxy-combined
+          hub release create -F description.txt -a /opt/ros/foxy/ros2-foxy-combined.zip ros2-foxy-combined
