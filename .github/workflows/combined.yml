@@ -29,7 +29,7 @@ jobs:
           GITHUB_USER: ${{ secrets.GITHUB_USER }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          mkdir C:/opt/ros/foxy/ros2-foxy-combined
+          mkdir -p C:/opt/ros/foxy/ros2-foxy-combined
           hub release show ros2-foxy-combined >> description.txt
           sed -i -e '$d' description.txt
           echo "Last updated: "$(date) >> description.txt 
