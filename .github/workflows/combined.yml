@@ -25,7 +25,16 @@ jobs:
         with:
           submodules: true
       - name: Remove existing vcpkg and python
+        env:
+          GITHUB_USER: ${{ secrets.GITHUB_USER }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          mkdir C:/opt/ros/foxy/ros2-foxy-combined
+          hub release show ros2-foxy-combined >> description.txt
+          sed -i -e '$d' description.txt
+          echo "Last updated: "$(date) >> description.txt 
+          hub release delete ros2-foxy-combined
+          hub release create -F description.txt -a C:/opt/ros/foxy/ros2-foxy-combined.zip ros2-foxy-combined
           rm -rf "$VCPKG_INSTALLATION_ROOT"
           rm -rf "C:/hostedtoolcache/windows/python/"
           rm -rf "C:/Miniconda"
@@ -97,7 +106,7 @@ jobs:
       - name: Release
         env:
           GITHUB_USER: ${{ secrets.GITHUB_USER }}
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           hub release show ros2-foxy-combined >> description.txt
           sed -i -e '$d' description.txt
