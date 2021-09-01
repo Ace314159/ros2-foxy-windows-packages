@@ -57,7 +57,6 @@ jobs:
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
 
           Copy-Item -Path ${{ env.INSTALL_DIR }} -Destination C:/deps -Recurse
-          Remove-Item -Path C:/deps/debug
           Move-Item -Path '${{ github.workspace }}/nuspec/deps.nuspec' -Destination ${{ env.INSTALL_DIR }}
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
           Add-Content -Path ${{ github.workspace }}/depsRelease.md -Value $date
@@ -121,7 +120,6 @@ jobs:
           foreach ($file in $files) {
             Remove-Item $file
           }
-          Remove-Item -Path C:/deps/debug
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
           Add-Content -Path ${{ github.workspace }}/combinedRelease.md -Value $date
       - name: Package ROS
