@@ -21,6 +21,10 @@ jobs:
       WORKSPACES: foxy;moveit2
     runs-on: windows-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
       - name: Test
         run: |
           mkdir -p C:/opt/ros/foxy/x64
@@ -32,10 +36,6 @@ jobs:
           bodyFile: ${{ github.workspace }}/depsRelease.md
           tag: ros2-foxy-deps
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          submodules: true
       - name: Remove existing vcpkg and python
         run: |
           rm -rf "$VCPKG_INSTALLATION_ROOT"
@@ -121,10 +121,6 @@ jobs:
           $files = Get-ChildItem -Path Scripts/* -Include *.py
           foreach ($file in $files) {
             (Get-Content $file).replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
-          }
-          $files = Get-ChildItem -Recurse C:/deps -Name
-          foreach ($file in $files) {
-            Remove-Item $file
           }
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
           Add-Content -Path ${{ github.workspace }}/combinedRelease.md -Value $date
