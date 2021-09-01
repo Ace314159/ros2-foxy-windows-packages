@@ -129,7 +129,7 @@ jobs:
         with:
           path: C:/opt/ros/foxy/x64
       - name: Release ROS
-        uses: ncipollo/release-action@v1
+        uses: Ace314159/release-action@v1
         with:
           allowUpdates: true
           artifacts: release.zip
