@@ -59,6 +59,7 @@ jobs:
       - name: Package Deps
         run: |
           Compress-7Zip -Path C:/opt/ros/foxy/x64 -VolumeSize 2147483648 -ArchiveFileName "release.7z"
+          dir
       - name: Release Deps
         uses: ncipollo/release-action@v1
         with:
