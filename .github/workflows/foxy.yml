@@ -51,6 +51,8 @@ jobs:
               -username "Ace314159" `
               -password "${{ secrets.GITHUB_TOKEN }}"
           ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps/foxy.txt'
+          New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
+          Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
@@ -62,21 +64,28 @@ jobs:
       - name: Build
         working-directory: C:/ws
         run: |
-          & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Launch-VsDevShell.ps1'
+          Invoke-BatchFile "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           colcon build `
             --merge-install `
             --install-base ${{ env.INSTALL_DIR }} `
             --event-handlers console_cohesion+ status- `
             --cmake-args `
-              -DCMAKE_BUILD_TYPE=RelWithDebInfo `
+              -G Ninja `
+              -DCMAKE_BUILD_TYPE=Release `
+              -DVCPKG_BUILD_TYPE=Release `
               -DBUILD_TESTING=False `
               -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" `
               -DCMAKE_SYSTEM_VERSION="10.0.19041.0" `
-              -Wno-dev `
+              -Wno-dev
       - name: Fix Installation
         working-directory: ${{ env.INSTALL_DIR }}/Scripts
         run: |
-          $files = Get-ChildItem -Path * -Include *.py
+          $files = Get-ChildItem -Recurse -Path * -Include *.cmake
+          foreach ($file in $files) {
+            (Get-Content $file).replace('C:/vcpkg/installed/x64-windows/', 'C:/opt/ros/foxy/x64/') | Set-Content $file
+            (Get-Content $file) -replace 'C:/vcpkg/packages/.+/include', 'C:/opt/ros/foxy/x64/include' | Set-Content $file
+          }
+          $files = Get-ChildItem -Path Scripts/* -Include *.py
           foreach ($file in $files) {
             (Get-Content $file).replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
           }
