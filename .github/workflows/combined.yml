@@ -21,6 +21,17 @@ jobs:
       WORKSPACES: foxy;moveit2
     runs-on: windows-latest
     steps:
+      - name: Test
+        run: |
+          mkdir -p C:/opt/ros/foxy/x64
+      - name: Release Test
+        uses: Ace314159/release-action@main
+        with:
+          allowUpdates: true
+          artifacts: release.zip
+          bodyFile: ${{ github.workspace }}/depsRelease.md
+          tag: ros2-foxy-deps
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v2
         with:
