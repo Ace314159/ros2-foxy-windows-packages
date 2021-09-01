@@ -55,15 +55,15 @@ jobs:
           ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps.txt'
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
+          Install-Module 7Zip4Powershell -Scope CurrentUser -Force
       - name: Package Deps
-        uses: thedoctor0/zip-release@master
-        with:
-          path: C:/opt/ros/foxy/x64
+        run: |
+          Compress-7Zip -Path C:/opt/ros/foxy/x64 -VolumeSize 2147483648 -ArchiveFileName "release.7z"
       - name: Release Deps
-        uses: Ace314159/release-action@main
+        uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
-          artifacts: release.zip
+          artifacts: 'release.7z.*'
           bodyFile: ${{ github.workspace }}/depsRelease.md
           tag: ros2-foxy-deps
           token: ${{ secrets.GITHUB_TOKEN }}
