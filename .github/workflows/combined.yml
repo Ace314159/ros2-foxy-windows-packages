@@ -56,18 +56,6 @@ jobs:
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
           Install-Module 7Zip4Powershell -Scope CurrentUser -Force
-      - name: Package Deps
-        run: |
-          Compress-7Zip -Path C:/opt/ros/foxy/x64 -VolumeSize 2147483648 -ArchiveFileName "release.7z"
-          dir
-      - name: Release Deps
-        uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          artifacts: 'release.7z.*'
-          bodyFile: ${{ github.workspace }}/depsRelease.md
-          tag: ros2-foxy-deps
-          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
@@ -115,14 +103,13 @@ jobs:
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
           Add-Content -Path ${{ github.workspace }}/combinedRelease.md -Value $date
       - name: Package ROS
-        uses: thedoctor0/zip-release@master
-        with:
-          path: C:/opt/ros/foxy/x64
+        run: |
+          Compress-7Zip -Path C:/opt/ros/foxy/x64 -VolumeSize 2147483648 -ArchiveFileName "ros2-foxy-combined.7z"
       - name: Release ROS
         uses: Ace314159/release-action@v1
         with:
           allowUpdates: true
-          artifacts: release.zip
+          artifacts: 'ros2-foxy-combined.7z.*'
           bodyFile: ${{ github.workspace }}/combinedRelease.md
           tag: ros2-foxy-combined
           token: ${{ secrets.GITHUB_TOKEN }}
