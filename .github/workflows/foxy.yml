@@ -78,7 +78,7 @@ jobs:
               -DCMAKE_SYSTEM_VERSION="10.0.19041.0" `
               -Wno-dev
       - name: Fix Installation
-        working-directory: ${{ env.INSTALL_DIR }}/Scripts
+        working-directory: ${{ env.INSTALL_DIR }}
         run: |
           $files = Get-ChildItem -Recurse -Path * -Include *.cmake
           foreach ($file in $files) {
