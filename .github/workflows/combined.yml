@@ -28,6 +28,10 @@ jobs:
       - name: Test
         run: |
           mkdir -p C:/opt/ros/foxy/x64
+      - name: Package Test
+        uses: thedoctor0/zip-release@master
+        with:
+          path: C:/opt/ros/foxy/x64
       - name: Release Test
         uses: Ace314159/release-action@main
         with:
