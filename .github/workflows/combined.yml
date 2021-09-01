@@ -55,17 +55,12 @@ jobs:
           ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps.txt'
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
-
-          Copy-Item -Path ${{ env.INSTALL_DIR }} -Destination C:/deps -Recurse
-          Move-Item -Path '${{ github.workspace }}/nuspec/deps.nuspec' -Destination ${{ env.INSTALL_DIR }}
-          $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
-          Add-Content -Path ${{ github.workspace }}/depsRelease.md -Value $date
       - name: Package Deps
         uses: thedoctor0/zip-release@master
         with:
           path: C:/opt/ros/foxy/x64
       - name: Release Deps
-        uses: ncipollo/release-action@v1
+        uses: Ace314159/release-action@main
         with:
           allowUpdates: true
           artifacts: release.zip
