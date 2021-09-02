@@ -29,7 +29,6 @@ jobs:
           submodules: true
       - name: Remove existing vcpkg and python
         run: |
-          rm -rf "$VCPKG_INSTALLATION_ROOT"
           rm -rf "C:/hostedtoolcache/windows/python/"
           rm -rf "C:/Miniconda"
         shell: 'bash'
@@ -64,7 +63,11 @@ jobs:
               -ExcludeVersion `
               -Source "GitHub" `
               -OutputDirectory ${{ env.ROS_BASE }}
+          dir ${{ env.ROS_BASE }}
+          echo "HERE"
           Copy-Item -Path ${{ env.ROS_BASE }}/ros2-foxy-base -Destination ${{ env.INSTALL_DIR }} -Recurse
+          dir ${{ env.INSTALL_DIR }}
+          echo "HERE"
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
@@ -77,7 +80,6 @@ jobs:
         working-directory: C:/ws
         run: |
           Invoke-BatchFile "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-          dir ${{ env.INSTALL_DIR }}
           ${{ env.INSTALL_DIR }}/local_setup.ps1
           colcon build `
             --merge-install `
