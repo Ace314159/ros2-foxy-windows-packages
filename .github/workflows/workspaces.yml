@@ -40,6 +40,15 @@ jobs:
         uses: fbactions/setup-winsdk@v1
         with:
           winsdk-build-version: 19041
+      - name: Setup ROS 2 Foxy Base
+        run: |
+          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
+            install ros2-foxy-base `
+              -ExcludeVersion `
+              -Source "GitHub" `
+              -OutputDirectory ${{ env.ROS_BASE }}
+          Copy-Item -Path ${{ env.ROS_BASE }}/ros2-foxy-base -Destination ${{ env.INSTALL_DIR }} -Recurse
+          New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
       - name: Setup Environment
         working-directory: C:/
         run: |
@@ -54,20 +63,7 @@ jobs:
               -username "Ace314159" `
               -password "${{ secrets.GITHUB_TOKEN }}"
           ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps.txt'
-          New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
-      - name: Setup ROS 2 Foxy Base
-        run: |
-          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
-            install ros2-foxy-base `
-              -ExcludeVersion `
-              -Source "GitHub" `
-              -OutputDirectory ${{ env.ROS_BASE }}
-          dir ${{ env.ROS_BASE }}
-          echo "HERE"
-          Copy-Item -Path ${{ env.ROS_BASE }}/ros2-foxy-base -Destination ${{ env.INSTALL_DIR }} -Recurse
-          dir ${{ env.INSTALL_DIR }}
-          echo "HERE"
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
