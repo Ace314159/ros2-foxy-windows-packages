@@ -106,7 +106,7 @@ jobs:
         run: |
           Compress-7Zip -Path C:/opt/ros/foxy/x64 -ArchiveFileName "ros2-foxy-combined.7z" -CompressionLevel Ultra
       - name: Release ROS
-        uses: Ace314159/release-action@v1
+        uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
           artifacts: 'ros2-foxy-combined.7z'
