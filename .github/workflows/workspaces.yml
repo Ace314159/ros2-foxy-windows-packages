@@ -16,7 +16,7 @@ jobs:
   Build:
     strategy:
       matrix:
-        workspace: [nav2]
+        workspace: [moveit2]
     env:
       ROS_BASE: C:/opt/ros/foxy
       INSTALL_DIR: C:/opt/ros/foxy/x64
@@ -45,8 +45,8 @@ jobs:
         run: |
           pip install -U vcstool colcon-common-extensions catkin_pkg cryptography EmPy ifcfg lark-parser lxml numpy pyparsing pyyaml
           Move-Item -Path '${{ github.workspace }}/vcpkg' -Destination C:/vcpkg
-          ./vcpkg/bootstrap-vcpkg.bat
-          & (./vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
+          C:/vcpkg/bootstrap-vcpkg.bat
+          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
             sources add `
               -source "https://nuget.pkg.github.com/Ace314159/index.json" `
               -storepasswordincleartext `
@@ -58,10 +58,10 @@ jobs:
               -ExcludeVersion `
               -Source "GitHub" `
               -OutputDirectory ${{ env.ROS_BASE }}
-          mkdir C:/vcpkg/installed/x64-windows/
+          mkdir -p C:/vcpkg/installed/x64-windows/
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
           Copy-Item -Path ${{ env.ROS_BASE }}/ros2-foxy-base/** -Destination ${{ env.INSTALL_DIR }} -Recurse
-          ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps.txt'
+          C:/vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/${{ matrix.workspace }}.txt'
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
       - name: Clone Repos
         run: |
