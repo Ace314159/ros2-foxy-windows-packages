@@ -1,5 +1,6 @@
 asio
 assimp
+boost-python
 bullet3
 fcl
 freeglut
