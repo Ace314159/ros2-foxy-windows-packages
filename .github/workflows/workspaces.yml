@@ -58,6 +58,7 @@ jobs:
               -ExcludeVersion `
               -Source "GitHub" `
               -OutputDirectory ${{ env.ROS_BASE }}
+          mkdir C:/vcpkg/installed/x64-windows/
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
           Copy-Item -Path ${{ env.ROS_BASE }}/ros2-foxy-base/** -Destination ${{ env.INSTALL_DIR }} -Recurse
           ./vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps.txt'
