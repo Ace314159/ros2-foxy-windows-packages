@@ -104,7 +104,7 @@ jobs:
           Add-Content -Path ${{ github.workspace }}/combinedRelease.md -Value $date
       - name: Package ROS
         run: |
-          Compress-7Zip -Path C:/opt/ros/foxy/x64 -ArchiveFileName "ros2-foxy-combined.7z" -CompressionLevel Ultra
+          Compress-7Zip -Path C:/opt/ros/foxy -ArchiveFileName "ros2-foxy-combined.7z" -CompressionLevel Ultra
       - name: Release ROS
         uses: ncipollo/release-action@v1
         with:
