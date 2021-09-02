@@ -104,12 +104,12 @@ jobs:
           Add-Content -Path ${{ github.workspace }}/combinedRelease.md -Value $date
       - name: Package ROS
         run: |
-          Compress-7Zip -Path C:/opt/ros/foxy/x64 -VolumeSize 2147483648 -ArchiveFileName "ros2-foxy-combined.7z"
+          Compress-7Zip -Path C:/opt/ros/foxy/x64 -ArchiveFileName "ros2-foxy-combined.7z" -CompressionLevel Ultra
       - name: Release ROS
         uses: Ace314159/release-action@v1
         with:
           allowUpdates: true
-          artifacts: 'ros2-foxy-combined.7z.*'
+          artifacts: 'ros2-foxy-combined.7z'
           bodyFile: ${{ github.workspace }}/combinedRelease.md
           tag: ros2-foxy-combined
           token: ${{ secrets.GITHUB_TOKEN }}
