@@ -1,6 +1,7 @@
 asio
 assimp
 boost-python
+boost-iostreams
 bullet3
 fcl
 freeglut
