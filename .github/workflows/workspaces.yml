@@ -16,7 +16,7 @@ jobs:
   Build:
     strategy:
       matrix:
-        workspace: [moveit2;nav2]
+        workspace: [moveit2, nav2]
     env:
       ROS_BASE: C:/opt/ros/foxy
       INSTALL_DIR: C:/opt/ros/foxy/x64
