@@ -16,7 +16,7 @@ jobs:
   Build:
     strategy:
       matrix:
-        workspace: [moveit2]
+        workspace: [moveit2;nav2]
     env:
       ROS_BASE: C:/opt/ros/foxy
       INSTALL_DIR: C:/opt/ros/foxy/x64
@@ -29,6 +29,7 @@ jobs:
           submodules: true
       - name: Remove existing vcpkg and python
         run: |
+          rm -rf "$VCPKG_INSTALLATION_ROOT"
           rm -rf "C:/hostedtoolcache/windows/python/"
           rm -rf "C:/Miniconda"
         shell: 'bash'
