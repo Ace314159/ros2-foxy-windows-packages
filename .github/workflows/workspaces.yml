@@ -73,8 +73,6 @@ jobs:
           if (Test-Path $patchFile) {
             git apply $patchFile --unsafe-paths --directory=C:/ws/src
           }
-          cd C:/ws/src/ros2/rosbag2
-          git checkout 824794f19c5bc5a7160b50444c0c04dcca03d581
       - name: Build
         working-directory: C:/ws
         run: |
