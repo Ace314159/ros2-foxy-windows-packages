@@ -64,7 +64,7 @@ index 62bb1091..c9fb1a67 100644
    std_msgs
    tf2
 diff --git a/ros2/rviz/rviz_ogre_vendor/CMakeLists.txt b/ros2/rviz/rviz_ogre_vendor/CMakeLists.txt
-index c400c07f..7c57b918 100644
+index c400c07f..6b765d76 100644
 --- a/ros2/rviz/rviz_ogre_vendor/CMakeLists.txt
 +++ b/ros2/rviz/rviz_ogre_vendor/CMakeLists.txt
 @@ -6,7 +6,7 @@ find_package(ament_cmake REQUIRED)
@@ -76,15 +76,28 @@ index c400c07f..7c57b918 100644
    set(BUILDING_FREETYPE_LOCALLY ON)
    set(BUILDING_ZLIB_LOCALLY ON)
  else()
-@@ -143,7 +143,7 @@ macro(build_ogre)
-       "-DZLIB_ROOT=${CMAKE_CURRENT_BINARY_DIR}/zlib-install")
-   endif()
- 
--  if(DEFINED CMAKE_TOOLCHAIN_FILE)
-+  if(false)
-     list(APPEND extra_cmake_args "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}")
-   else()
-     list(APPEND extra_cmake_args "-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}")
+diff --git a/ros2/rviz/rviz_ogre_vendor/pragma-patch.diff b/ros2/rviz/rviz_ogre_vendor/pragma-patch.diff
+index 911a4b7c..5970f625 100644
+--- a/ros2/rviz/rviz_ogre_vendor/pragma-patch.diff
++++ b/ros2/rviz/rviz_ogre_vendor/pragma-patch.diff
+@@ -1845,4 +1845,16 @@ diff --git a/OgreMain/include/OgreTimer.h b/OgreMain/include/OgreTimer.h
+ +#pragma warning(pop)
+ +#endif
+  #endif
+-
++diff --git a/Components/Overlay/CMakeLists.txt b/Components/Overlay/CMakeLists.txt
++index bdb303d..c2c8a94 100644
++--- a/Components/Overlay/CMakeLists.txt
+++++ b/Components/Overlay/CMakeLists.txt
++@@ -21,7 +21,7 @@ file(GLOB SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
++ # setup target
++ add_library(OgreOverlay ${OGRE_COMP_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES} ${PLATFORM_HEADER_FILES} ${PLATFORM_SOURCE_FILES})
++ set_target_properties(OgreOverlay PROPERTIES VERSION ${OGRE_SOVERSION} SOVERSION ${OGRE_SOVERSION})
++-target_link_libraries(OgreOverlay PUBLIC OgreMain PRIVATE "${FREETYPE_LIBRARIES}" ZLIB::ZLIB)
+++target_link_libraries(OgreOverlay PUBLIC OgreMain PRIVATE ${FREETYPE_LIBRARIES} ZLIB::ZLIB)
++ target_include_directories(OgreOverlay PUBLIC 
++   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
++   $<INSTALL_INTERFACE:include/OGRE/Overlay>
 diff --git a/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in b/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in
 index 0ab09b60..7b7fbd92 100644
 --- a/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in

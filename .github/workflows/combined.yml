@@ -18,7 +18,7 @@ jobs:
     env:
       INSTALL_DIR: C:/opt/ros/foxy/x64
       VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
-      WORKSPACES: foxy
+      WORKSPACES: foxy;moveit2;nav2
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -96,9 +96,12 @@ jobs:
             (Get-Content $file).replace('C:/vcpkg/installed/x64-windows/', 'C:/opt/ros/foxy/x64/') | Set-Content $file
             (Get-Content $file) -replace 'C:/vcpkg/packages/.+/include', 'C:/opt/ros/foxy/x64/include' | Set-Content $file
           }
-          $files = Get-ChildItem -Path Scripts/* -Include *.py
+          $files = Get-ChildItem -Path * -Include *.py -Recurse
           foreach ($file in $files) {
-            (Get-Content $file).replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
+            $data = (Get-Content $file)
+            if ($data) {
+              $data.replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
+            }
           }
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
           Add-Content -Path ${{ github.workspace }}/combinedRelease.md -Value $date
