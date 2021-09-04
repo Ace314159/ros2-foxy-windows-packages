@@ -2,6 +2,7 @@ boost-coroutine2
 boost-filesystem
 boost-iostreams
 boost-program-options
+boost-python
 boost-foreach
 bullet3
 ceres[suitesparse]

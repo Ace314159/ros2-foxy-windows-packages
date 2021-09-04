@@ -5,7 +5,8 @@ on:
     branches: main
     paths:
       - .github/workflows/workspaces.yml
-      - .vcpkg_deps.txt
+      - deps/moveit2.txt
+      - deps/nav2.txt
       - vcpkg/**
       - nuspec/*.nuspec
       - patches/*.patch
