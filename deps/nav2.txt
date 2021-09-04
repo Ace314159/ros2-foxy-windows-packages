@@ -2,8 +2,6 @@ boost-coroutine2
 boost-filesystem
 boost-iostreams
 boost-program-options
-boost-python
-boost-signals2
 bullet3
 ceres[suitesparse]
 gazebo11
