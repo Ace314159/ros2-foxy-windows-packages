@@ -74,7 +74,7 @@ jobs:
         run: |
           Invoke-BatchFile "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           $env:PYTHONPATH = "C:/opt/ros/foxy/x64/Lib/site-packages;" + $env:PYTHONPATH
-          $env:PATH = "C:\opt\ros\foxy\x64\opt\yaml_cpp_vendor\bin;C:\opt\ros\foxy\x64\opt\rviz_ogre_vendor\bin;C:\opt\ros\foxy\x64\opt\libcurl_vendor\bin;C:\opt\ros\foxy\x64\Scripts;C:\opt\ros\foxy\x64\bin;" + $env:PATH
+          $env:PATH = "C:\opt\ros\foxy\x64\opt\yaml_cpp_vendor\bin;C:\opt\ros\foxy\x64\opt\rviz_ogre_vendor\bin;C:\opt\ros\foxy\x64\Scripts;C:\opt\ros\foxy\x64\bin;" + $env:PATH
           $env:CMAKE_PREFIX_PATH = "C:\opt\ros\foxy\x64;" + $env:CMAKE_PREFIX_PATH
           colcon build `
             --merge-install `
@@ -103,6 +103,13 @@ jobs:
             $data = (Get-Content $file)
             if ($data) {
               $data.replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
+            }
+          }
+          $files = Get-ChildItem -File -Recurse D:/vcpkg/packages/ogre_x64-windows -Name
+          foreach ($file in $files) {
+            $fullPath = "C:/opt/ros/foxy/x64/$($file)"
+            if (Test-Path $fullPath) {
+              Remove-Item $fullPath
             }
           }
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
