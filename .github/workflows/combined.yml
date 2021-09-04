@@ -105,7 +105,7 @@ jobs:
               $data.replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
             }
           }
-          $files = Get-ChildItem -File -Recurse D:/vcpkg/packages/ogre_x64-windows -Name
+          $files = Get-ChildItem -File -Recurse C:/vcpkg/packages/ogre_x64-windows -Name
           foreach ($file in $files) {
             $fullPath = "C:/opt/ros/foxy/x64/$($file)"
             if (Test-Path $fullPath) {
