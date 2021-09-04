@@ -18,7 +18,7 @@ jobs:
     env:
       INSTALL_DIR: C:/opt/ros/foxy/x64
       VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
-      WORKSPACES: foxy;moveit2;nav2
+      WORKSPACES: foxy
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -111,10 +111,6 @@ jobs:
             if (Test-Path $fullPath) {
               Remove-Item $fullPath
             }
-          }
-          $files = Get-ChildItem C:/vcpkg/packages/ogre_x64-windows/bin
-          foreach ($file in $files) {
-            Move-Item -Path C:/vcpkg/packages/ogre_x64-windows/bin/$file -Destination C:/opt/ros/foxy/x64/tools/gazebo11
           }
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
           Add-Content -Path ${{ github.workspace }}/combinedRelease.md -Value $date
