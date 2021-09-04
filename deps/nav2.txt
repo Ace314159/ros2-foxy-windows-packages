@@ -9,3 +9,4 @@ ceres[suitesparse]
 gazebo11
 graphicsmagick
 ompl
+realsense2
