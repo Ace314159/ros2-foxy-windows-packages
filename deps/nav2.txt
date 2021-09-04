@@ -8,3 +8,4 @@ bullet3
 ceres[suitesparse]
 gazebo11
 graphicsmagick
+ompl
