@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  Build:
+  build:
     strategy:
       matrix:
         workspace: [moveit2, nav2]
@@ -48,15 +48,13 @@ jobs:
           pip install -U vcstool colcon-common-extensions catkin_pkg cryptography EmPy ifcfg lark-parser lxml numpy pyparsing pyyaml
           Move-Item -Path '${{ github.workspace }}/vcpkg' -Destination C:/vcpkg
           C:/vcpkg/bootstrap-vcpkg.bat
-          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
-            sources add `
+          nuget sources add `
               -source "https://nuget.pkg.github.com/Ace314159/index.json" `
               -storepasswordincleartext `
               -name "GitHub" `
               -username "Ace314159" `
               -password "${{ secrets.GITHUB_TOKEN }}"
-          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
-            install ros2-foxy-base `
+          nuget install ros2-foxy-base `
               -ExcludeVersion `
               -Source "GitHub" `
               -OutputDirectory ${{ env.ROS_BASE }}
@@ -74,6 +72,25 @@ jobs:
           if (Test-Path $patchFile) {
             git apply $patchFile --unsafe-paths --directory=C:/ws/src
           }
+      - name: Build
+        working-directory: C:/ws
+        run: |
+          Invoke-BatchFile "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          ${{ env.INSTALL_DIR }}/local_setup.ps1
+          colcon build `
+            --merge-install `
+            --install-base ${{ env.INSTALL_DIR }} `
+            --event-handlers console_cohesion+ status- `
+            --cmake-args `
+              -G Ninja `
+              -DCMAKE_BUILD_TYPE=Release `
+              -DVCPKG_BUILD_TYPE=Release `
+              -DBUILD_TESTING=False `
+              -DBUILD_EXAMPLES=False `
+              -DBUILD_UNIT_TESTS=False `
+              -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" `
+              -DCMAKE_SYSTEM_VERSION="10.0.19041.0" `
+              -Wno-dev
       - name: Fix Installation
         working-directory: ${{ env.INSTALL_DIR }}
         run: |
@@ -92,12 +109,47 @@ jobs:
         run: |
           Move-Item -Path '${{ github.workspace }}/nuspec/${{ matrix.workspace }}.nuspec' -Destination ${{ env.INSTALL_DIR }}
           $version = Get-Date -Format "yyyy.MMdd.HHMMss"
-          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
-            pack ${{ env.INSTALL_DIR}} `
+          nuget pack ${{ env.INSTALL_DIR}} `
               -NoDefaultExcludes `
               -NonInteractive `
               -OutputFileNamesWithoutVersion `
               -Version $version
-          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
-            push ros2-foxy-${{ matrix.workspace }}.nupkg `
+          nuget push ros2-foxy-${{ matrix.workspace }}.nupkg `
               -Source "GitHub"
+  combine:
+    needs: [build]
+    env:
+      ROS_BASE: C:/opt/ros/foxy/
+      WORKSPACES: foxy;moveit2;nav2
+      INSTALL_DIR: C:/opt/ros/foxy/x64
+    steps:
+      - name: Download
+        run: |
+          nuget sources add `
+            -source "https://nuget.pkg.github.com/Ace314159/index.json" `
+            -storepasswordincleartext `
+            -name "GitHub" `
+            -username "Ace314159" `
+            -password "${{ secrets.GITHUB_TOKEN }}"
+          foreach ($workspace in $workspaces) {
+            nuget install $workspace `
+              -ExcludeVersion `
+              -Source "GitHub" `
+              -OutputDirectory ${{ env.ROS_BASE }}
+          }
+      - name: Combine
+        run: |
+          mkdir -p ${{ env.INSTALL_DIR }}
+          foreach ($workspace in $workspaces) {
+            Move-Item -Path ${{ env.ROS_BASE }}/$workspace/** -Destination ${{ env.INSTALL_DIR }} -Recurse -Force
+          }
+      - name: Package
+          Move-Item -Path '${{ github.workspace }}/nuspec/combined.nuspec' -Destination ${{ env.INSTALL_DIR }}
+          $version = Get-Date -Format "yyyy.MMdd.HHMMss"
+          nuget pack ${{ env.INSTALL_DIR}} `
+            -NoDefaultExcludes `
+            -NonInteractive `
+            -OutputFileNamesWithoutVersion `
+            -Version $version
+          nuget push ros2-foxy-combined.nupkg `
+            -Source "GitHub"
