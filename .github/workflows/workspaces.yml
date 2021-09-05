@@ -77,10 +77,9 @@ jobs:
       - name: Fix Installation
         working-directory: ${{ env.INSTALL_DIR }}
         run: |
-          $files = Get-ChildItem -Recurse ${{ env.ROS_BASE }}/ros2-foxy-base -Name
+          $files = Get-ChildItem -Recurse -File ${{ env.ROS_BASE }}/ros2-foxy-base -Name
           foreach ($file in $files) {
-            echo $file
-            Remove-Item -Path $file
+            Remove-Item $file
           }
           $files = Get-ChildItem -Recurse -Path * -Include *.cmake
           foreach ($file in $files) {
