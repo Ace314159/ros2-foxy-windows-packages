@@ -53,5 +53,5 @@ repositories:
     version: foxy-devel
   realsense-ros:
     type: git
-    url: https://github.com/IntelRealSense/realsense-ros.git
+    url: https://github.com/Ace314159/realsense-ros.git
     version: foxy

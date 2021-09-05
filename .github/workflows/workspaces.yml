@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  Build:
     strategy:
       matrix:
         workspace: [moveit2, nav2]
@@ -83,7 +83,7 @@ jobs:
             --event-handlers console_cohesion+ status- `
             --cmake-args `
               -G Ninja `
-              -DCMAKE_BUILD_TYPE=Release `
+              -DCMAKE_BUILD_TYPE=RelWithDebInfo `
               -DVCPKG_BUILD_TYPE=Release `
               -DBUILD_TESTING=False `
               -DBUILD_EXAMPLES=False `
@@ -116,8 +116,8 @@ jobs:
               -Version $version
           nuget push ros2-foxy-${{ matrix.workspace }}.nupkg `
               -Source "GitHub"
-  combine:
-    needs: [build]
+  Combine:
+    needs: [Build]
     env:
       ROS_BASE: C:/opt/ros/foxy/
       WORKSPACES: foxy;moveit2;nav2
