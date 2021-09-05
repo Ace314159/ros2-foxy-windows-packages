@@ -144,6 +144,7 @@ jobs:
             Move-Item -Path ${{ env.ROS_BASE }}/$workspace/** -Destination ${{ env.INSTALL_DIR }} -Recurse -Force
           }
       - name: Package
+        run: |
           Move-Item -Path '${{ github.workspace }}/nuspec/combined.nuspec' -Destination ${{ env.INSTALL_DIR }}
           $version = Get-Date -Format "yyyy.MMdd.HHMMss"
           nuget pack ${{ env.INSTALL_DIR}} `
