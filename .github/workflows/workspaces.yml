@@ -124,6 +124,8 @@ jobs:
       INSTALL_DIR: C:/opt/ros/foxy/x64
     runs-on: windows-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Download
         run: |
           nuget sources add `
