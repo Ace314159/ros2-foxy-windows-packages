@@ -23,6 +23,7 @@ opencv
 qhull
 qt5-base
 qt5-svg
+realsense2
 spdlog
 tinyxml
 tinyxml2
