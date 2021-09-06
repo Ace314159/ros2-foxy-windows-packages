@@ -145,7 +145,7 @@ jobs:
           mkdir -p ${{ env.INSTALL_DIR }}
           $workspaces = '${{ env.WORKSPACES }}'.split(';')
           foreach ($workspace in $workspaces) {
-            Move-Item -Path ${{ env.ROS_BASE }}/$workspace/** -Destination ${{ env.INSTALL_DIR }} -Recurse -Force
+            Get-ChildItem -Path ${{ env.ROS_BASE }}/$workspace -Recurse | Move-Item -Destination ${{ env.INSTALL_DIR }} -Force
           }
       - name: Package
         run: |
