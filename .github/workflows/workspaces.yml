@@ -134,8 +134,9 @@ jobs:
             -name "GitHub" `
             -username "Ace314159" `
             -password "${{ secrets.GITHUB_TOKEN }}"
+          $workspaces = '${{ env.WORKSPACES }}'.split(';')
           foreach ($workspace in $workspaces) {
-            nuget install $workspace `
+            nuget install ros2-foxy-$workspace `
               -ExcludeVersion `
               -Source "GitHub" `
               -OutputDirectory ${{ env.ROS_BASE }}
@@ -145,7 +146,7 @@ jobs:
           mkdir -p ${{ env.INSTALL_DIR }}
           $workspaces = '${{ env.WORKSPACES }}'.split(';')
           foreach ($workspace in $workspaces) {
-            Get-ChildItem -Path ${{ env.ROS_BASE }}/$workspace -Recurse | Move-Item -Destination ${{ env.INSTALL_DIR }} -Force
+            Get-ChildItem -Path ${{ env.ROS_BASE }}/ros2-foxy-$workspace -Recurse | Move-Item -Destination ${{ env.INSTALL_DIR }} -Force
           }
       - name: Package
         run: |
