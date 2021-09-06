@@ -156,6 +156,7 @@ jobs:
             -NoDefaultExcludes `
             -NonInteractive `
             -OutputFileNamesWithoutVersion `
+            -Timeout 0 `
             -Version $version
           nuget push ros2-foxy-combined.nupkg `
             -Source "GitHub"
