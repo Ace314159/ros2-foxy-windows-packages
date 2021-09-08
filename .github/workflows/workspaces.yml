@@ -151,13 +151,12 @@ jobs:
           }
       - name: Package
         run: |
-          Move-Item -Path '${{ github.workspace }}/nuspec/combined.nuspec' -Destination ${{ env.INSTALL_DIR }}
-          $version = Get-Date -Format "yyyy.MMdd.HHMMss"
-          nuget pack ${{ env.INSTALL_DIR}} `
-            -NoDefaultExcludes `
-            -NonInteractive `
-            -OutputFileNamesWithoutVersion `
-            -Version $version
-          nuget push ros2-foxy-combined.nupkg `
-            -Source "GitHub" `
-            -Timeout 0
+          Compress-7Zip -Path C:/opt/ros/foxy -ArchiveFileName "ros2-foxy-combined-test.7z" -CompressionLevel Ultra
+      - name: Release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          artifacts: 'ros2-foxy-combined-test.7z'
+          bodyFile: ${{ github.workspace }}/combinedRelease.md
+          tag: ros2-foxy-combined
+          token: ${{ secrets.GITHUB_TOKEN }}

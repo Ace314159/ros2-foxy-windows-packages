@@ -21,7 +21,7 @@ repositories:
     version: foxy
   image_common:
     type: git
-    url: https://github.com/Ace314159/image_common.git
+    url: https://github.com/ros-perception/image_common.git
     version: ros2
   vision_opencv:
     type: git
