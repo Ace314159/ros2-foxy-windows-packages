@@ -115,7 +115,8 @@ jobs:
               -OutputFileNamesWithoutVersion `
               -Version $version
           nuget push ros2-foxy-${{ matrix.workspace }}.nupkg `
-              -Source "GitHub"
+              -Source "GitHub" `
+              -Timeout 0
   Combine:
     needs: [Build]
     env:
@@ -156,7 +157,7 @@ jobs:
             -NoDefaultExcludes `
             -NonInteractive `
             -OutputFileNamesWithoutVersion `
-            -Timeout 0 `
             -Version $version
           nuget push ros2-foxy-combined.nupkg `
-            -Source "GitHub"
+            -Source "GitHub" `
+            -Timeout 0
