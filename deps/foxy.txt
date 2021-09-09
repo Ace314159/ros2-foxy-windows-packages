@@ -3,11 +3,15 @@ assimp
 bullet3
 console-bridge
 cunit
+curl
 eigen3
+freetype
 log4cxx
 opencv
 qt5-base
 qt5-svg
+spdlog
 tinyxml
 tinyxml2
 urdfdom
+zlib

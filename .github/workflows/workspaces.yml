@@ -152,7 +152,7 @@ jobs:
       - name: Package
         run: |
           Install-Module 7Zip4Powershell -Scope CurrentUser -Force
-          Compress-7Zip -Path C:/opt/ros/foxy -ArchiveFileName "ros2-foxy-combined-test.7z" -CompressionLevel Ultra -VolumeSize 2147483647
+          Compress-7Zip -Path C:/opt/ros/foxy -ArchiveFileName "ros2-foxy-combined-test.7z" -CompressionLevel Ultra -VolumeSize 2147483607
       - name: Release
         uses: ncipollo/release-action@v1
         with:
