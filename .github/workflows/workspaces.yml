@@ -64,6 +64,7 @@ jobs:
           Remove-Item C:/vcpkg/installed/x64-windows/include/openssl/ssl.h
           C:/vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps/${{ matrix.workspace }}.txt'
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
+          Install-Module 7Zip4Powershell -Scope CurrentUser -Force
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
