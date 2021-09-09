@@ -22,7 +22,7 @@ repositories:
   ros2_controllers:
     type: git
     url: https://github.com/Ace314159/ros2_controllers
-    version: jtc-effort
+    version: foxy
   warehouse_ros:
     type: git
     url: https://github.com/ros-planning/warehouse_ros
