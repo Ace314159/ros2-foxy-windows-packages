@@ -152,12 +152,12 @@ jobs:
       - name: Package
         run: |
           Install-Module 7Zip4Powershell -Scope CurrentUser -Force
-          Compress-7Zip -Path C:/opt/ros/foxy -ArchiveFileName "ros2-foxy-combined-test.7z" -CompressionLevel Ultra
+          Compress-7Zip -Path C:/opt/ros/foxy -ArchiveFileName "ros2-foxy-combined-test.7z" -CompressionLevel Ultra -VolumeSize 2147483647
       - name: Release
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
-          artifacts: 'ros2-foxy-combined-test.7z'
+          artifacts: 'ros2-foxy-combined-test.7z.*'
           bodyFile: ${{ github.workspace }}/combinedRelease.md
           tag: ros2-foxy-combined
           token: ${{ secrets.GITHUB_TOKEN }}
