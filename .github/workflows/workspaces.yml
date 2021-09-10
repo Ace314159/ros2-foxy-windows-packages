@@ -149,6 +149,34 @@ jobs:
           foreach ($workspace in $workspaces) {
             Get-ChildItem -Path ${{ env.ROS_BASE }}/ros2-foxy-$workspace -Recurse -File | Move-Item -Destination ${{ env.INSTALL_DIR }} -Force
           }
+      - name: Fix Installation
+        working-directory: ${{ env.INSTALL_DIR }}
+        run: |
+          $files = Get-ChildItem -Recurse -Path * -Include *.cmake
+          foreach ($file in $files) {
+            (Get-Content $file).replace('C:/vcpkg/installed/x64-windows/', 'C:/opt/ros/foxy/x64/') | Set-Content $file
+            (Get-Content $file) -replace 'C:/vcpkg/packages/.+/include', 'C:/opt/ros/foxy/x64/include' | Set-Content $file
+          }
+          $files = Get-ChildItem -Path * -Include *.py -Recurse
+          foreach ($file in $files) {
+            $data = (Get-Content $file)
+            if ($data) {
+              $data.replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
+            }
+          }
+          $files = Get-ChildItem -File -Recurse C:/vcpkg/packages/ogre_x64-windows -Name
+          foreach ($file in $files) {
+            $fullPath = "C:/opt/ros/foxy/x64/$($file)"
+            if (Test-Path $fullPath) {
+              Remove-Item $fullPath
+            }
+          }
+          $files = Get-ChildItem C:/vcpkg/packages/ogre_x64-windows/bin
+          foreach ($file in $files) {
+            Move-Item -Path $file -Destination C:/opt/ros/foxy/x64/tools/ -Force
+          }
+          $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
+          Add-Content -Path ${{ github.workspace }}/combinedRelease.md -Value $date
       - name: Package
         run: |
           Install-Module 7Zip4Powershell -Scope CurrentUser -Force
