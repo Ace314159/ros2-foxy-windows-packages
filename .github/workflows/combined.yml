@@ -120,6 +120,7 @@ jobs:
           Add-Content -Path ${{ github.workspace }}/combinedRelease.md -Value $date
       - name: Package ROS
         run: |
+          Get-ChildItem -Recurse -Force 'C:/opt/ros/foxy' | Measure-Object -Property Length -Sum
           Compress-7Zip -Path C:/opt/ros/foxy -ArchiveFileName "ros2-foxy-combined.7z" -CompressionLevel Ultra
       - name: Release ROS
         uses: ncipollo/release-action@v1
