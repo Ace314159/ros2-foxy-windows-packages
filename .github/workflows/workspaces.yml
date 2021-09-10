@@ -153,7 +153,7 @@ jobs:
         run: |
           Install-Module 7Zip4Powershell -Scope CurrentUser -Force
           Get-ChildItem -Recurse -Force 'C:/opt/ros/foxy' | Measure-Object -Property Length -Sum
-          Compress-7Zip -Path C:/opt/ros/foxy -ArchiveFileName "ros2-foxy-combined-test.7z" -CompressionLevel Ultra
+          Compress-7Zip -Path C:/opt/ros/foxy -ArchiveFileName "ros2-foxy-combined-test.7z" -CompressionLevel Ultra -CompressionMethod Lzma2
       - name: Release
         uses: ncipollo/release-action@v1
         with:
