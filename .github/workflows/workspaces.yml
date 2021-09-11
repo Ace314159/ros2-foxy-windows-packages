@@ -127,6 +127,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          submodules: true
       - name: Download
         run: |
           nuget sources add `
