@@ -114,7 +114,7 @@ jobs:
           }
           $files = Get-ChildItem C:/vcpkg/packages/ogre_x64-windows/bin
           foreach ($file in $files) {
-            Move-Item -Path $file -Destination C:/opt/ros/foxy/x64/tools/ -Force
+            Move-Item -Path $file -Destination C:/opt/ros/foxy/x64/tools/gazebo11 -Force
           }
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
           Add-Content -Path ${{ github.workspace }}/combinedRelease.md -Value $date
