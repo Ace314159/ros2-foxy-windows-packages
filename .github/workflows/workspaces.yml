@@ -149,13 +149,23 @@ jobs:
           foreach ($workspace in $workspaces) {
             Get-ChildItem -Path ${{ env.ROS_BASE }}/ros2-foxy-$workspace -Recurse -File | Move-Item -Destination ${{ env.INSTALL_DIR }} -Force
           }
+      - name: Setup vcpkg
+        run: |
+          ${{ github.workspace }}/vcpkg/bootstrap-vcpkg.bat
+          nuget sources add `
+              -source "https://nuget.pkg.github.com/Ace314159/index.json" `
+              -storepasswordincleartext `
+              -name "GitHub" `
+              -username "Ace314159" `
+              -password "${{ secrets.GITHUB_TOKEN }}"
+          ${{ github.workspace }}/vcpkg/vcpkg.exe --triplet=x64-windows install ogre
       - name: Fix Installation
         working-directory: ${{ env.INSTALL_DIR }}
         run: |
           $files = Get-ChildItem -Recurse -Path * -Include *.cmake
           foreach ($file in $files) {
-            (Get-Content $file).replace('C:/vcpkg/installed/x64-windows/', 'C:/opt/ros/foxy/x64/') | Set-Content $file
-            (Get-Content $file) -replace 'C:/vcpkg/packages/.+/include', 'C:/opt/ros/foxy/x64/include' | Set-Content $file
+            (Get-Content $file).replace('${{ github.workspace }}/vcpkg/installed/x64-windows/', 'C:/opt/ros/foxy/x64/') | Set-Content $file
+            (Get-Content $file) -replace '${{ github.workspace }}/vcpkg/packages/.+/include', 'C:/opt/ros/foxy/x64/include' | Set-Content $file
           }
           $files = Get-ChildItem -Path * -Include *.py -Recurse
           foreach ($file in $files) {
@@ -164,14 +174,14 @@ jobs:
               $data.replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
             }
           }
-          $files = Get-ChildItem -File -Recurse C:/vcpkg/packages/ogre_x64-windows -Name
+          $files = Get-ChildItem -File -Recurse ${{ github.workspace }}/vcpkg/packages/ogre_x64-windows -Name
           foreach ($file in $files) {
             $fullPath = "C:/opt/ros/foxy/x64/$($file)"
             if (Test-Path $fullPath) {
               Remove-Item $fullPath
             }
           }
-          $files = Get-ChildItem C:/vcpkg/packages/ogre_x64-windows/bin
+          $files = Get-ChildItem ${{ github.workspace }}/vcpkg/packages/ogre_x64-windows/bin
           foreach ($file in $files) {
             Move-Item -Path $file -Destination C:/opt/ros/foxy/x64/tools/ -Force
           }
