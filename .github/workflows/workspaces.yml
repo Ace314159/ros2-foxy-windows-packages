@@ -121,7 +121,7 @@ jobs:
     needs: [Build]
     env:
       ROS_BASE: C:/opt/ros/foxy
-      WORKSPACES: foxy;moveit2;nav2
+      WORKSPACES: base;moveit2;nav2
       INSTALL_DIR: C:/opt/ros/foxy/x64
     runs-on: windows-latest
     steps:
