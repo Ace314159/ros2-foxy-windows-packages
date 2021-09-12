@@ -149,7 +149,15 @@ jobs:
           mkdir -p ${{ env.INSTALL_DIR }}
           $workspaces = '${{ env.WORKSPACES }}'.split(';')
           foreach ($workspace in $workspaces) {
-            Get-ChildItem -Path ${{ env.ROS_BASE }}/ros2-foxy-$workspace -Recurse -File | Move-Item -Destination ${{ env.INSTALL_DIR }} -Force
+            $files = Get-ChildItem ${{ env.ROS_BASE }}/ros2-foxy-$workspace/ -Recurse -File -Name
+            foreach($file in $files) {
+              $parent = Split-Path $file -Parent
+              $folder = "${{ env.INSTALL_DIR }}/$($parent)"
+              if (!(Test-Path $folder)) {
+                mkdir -p $folder
+              }
+              Move-Item -Path "${{ env.ROS_BASE }}/$($file)" -Destination $folder -Force
+            }
           }
       - name: Setup vcpkg
         run: |
