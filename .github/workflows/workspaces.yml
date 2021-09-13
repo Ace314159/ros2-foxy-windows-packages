@@ -156,7 +156,7 @@ jobs:
               if (!(Test-Path $folder)) {
                 mkdir -p $folder
               }
-              Move-Item -Path "${{ env.ROS_BASE }}/$($file)" -Destination $folder -Force
+              Move-Item -Path "${{ env.ROS_BASE }}/ros2-foxy-$workspace/$($file)" -Destination $folder -Force
             }
           }
       - name: Setup vcpkg
