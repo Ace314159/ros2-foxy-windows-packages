@@ -105,16 +105,16 @@ jobs:
               $data.replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
             }
           }
+          $files = Get-ChildItem C:/vcpkg/packages/ogre_x64-windows/bin
+          foreach ($file in $files) {
+            Move-Item -Path $file -Destination C:/opt/ros/foxy/x64/tools/gazebo11 -Force
+          }
           $files = Get-ChildItem -File -Recurse C:/vcpkg/packages/ogre_x64-windows -Name
           foreach ($file in $files) {
             $fullPath = "C:/opt/ros/foxy/x64/$($file)"
             if (Test-Path $fullPath) {
               Remove-Item $fullPath
             }
-          }
-          $files = Get-ChildItem C:/vcpkg/packages/ogre_x64-windows/bin
-          foreach ($file in $files) {
-            Move-Item -Path $file -Destination C:/opt/ros/foxy/x64/tools/gazebo11 -Force
           }
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
           Add-Content -Path ${{ github.workspace }}/combinedRelease.md -Value $date
