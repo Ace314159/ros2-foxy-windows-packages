@@ -20,7 +20,7 @@ log4cxx
 octomap
 ompl
 opencv
-openvlam
+openvslam
 qhull
 qt5-base
 qt5-svg
