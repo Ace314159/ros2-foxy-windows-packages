@@ -9,4 +9,5 @@ ceres[suitesparse]
 gazebo11
 graphicsmagick
 ompl
+openvslam
 realsense2

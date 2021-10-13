@@ -63,3 +63,15 @@ repositories:
     type: git
     url: https://github.com/ros-drivers/urg_node
     version: foxy-devel
+  pcl_msgs:
+    type: git
+    url: https://github.com/ros-perception/pcl_msgs
+    version: ros2
+  perception_pcl:
+    type: git
+    url: https://github.com/ros-perception/perception_pcl
+    version: foxy-devel
+  openvslam_ros:
+    type: git
+    url: https://github.com/Ace314159/openvslam_ros
+    version: foxy-devel
