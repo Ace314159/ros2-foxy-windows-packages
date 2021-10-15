@@ -56,6 +56,12 @@ jobs:
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
           Install-Module 7Zip4Powershell -Scope CurrentUser -Force
+      - name: Log
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: log
+          path: C:\vcpkg\buildtrees\graphviz\config-x64-windows-out.log
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
