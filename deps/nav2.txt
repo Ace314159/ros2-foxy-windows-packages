@@ -10,4 +10,5 @@ gazebo11
 graphicsmagick
 ompl
 openvslam
+pcl
 realsense2
