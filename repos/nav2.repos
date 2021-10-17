@@ -71,7 +71,3 @@ repositories:
     type: git
     url: https://github.com/ros-perception/perception_pcl
     version: foxy-devel
-  openvslam_ros:
-    type: git
-    url: https://github.com/Ace314159/openvslam_ros
-    version: foxy-devel
