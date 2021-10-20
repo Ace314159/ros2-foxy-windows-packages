@@ -90,15 +90,20 @@ jobs:
             (Get-Content $file).replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
           }
       - name: Package
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          Move-Item -Path '${{ github.workspace }}/nuspec/${{ env.WORKSPACE }}.nuspec' -Destination ${{ env.INSTALL_DIR }}
-          $version = Get-Date -Format "yyyy.MMdd.HHMMss"
-          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
-            pack ${{ env.INSTALL_DIR }} `
-              -NoDefaultExcludes `
-              -NonInteractive `
-              -OutputFileNamesWithoutVersion `
-              -Version $version
-          & (C:/vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
-            push ros2-${{ env.WORKSPACE }}-base.nupkg `
-              -Source "GitHub"
+          Install-Module 7Zip4Powershell -Scope CurrentUser -Force
+          Compress-7Zip -Path C:/opt/ros/foxy -ArchiveFileName "C:/ros2-foxy-base.7z" -CompressionLevel Ultra
+          hub release show ros2-foxy-base > ${{ github.workspace }}/description.md
+          $file = "${{ github.workspace }}/description.md"
+          $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
+          (Get-Content $file).replace('Last Updated: .*', "Last Updated: $date") | Set-Content $file
+      - name: Release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          artifacts: 'C:/ros2-foxy-base.7z'
+          bodyFile: ${{ github.workspace }}/description.md
+          tag: ros2-foxy-base
+          token: ${{ secrets.GITHUB_TOKEN }}
