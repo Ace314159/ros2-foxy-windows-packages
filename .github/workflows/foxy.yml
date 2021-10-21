@@ -98,7 +98,7 @@ jobs:
           hub release show ros2-foxy-base > ${{ github.workspace }}/description.md
           $file = "${{ github.workspace }}/description.md"
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
-          (Get-Content $file).replace('Last Updated: .*', "Last Updated: $date") | Set-Content $file
+          (Get-Content $file) -replace 'Last Updated: .*', "Last Updated: $date" | Set-Content $file
       - name: Release
         uses: ncipollo/release-action@v1
         with:
