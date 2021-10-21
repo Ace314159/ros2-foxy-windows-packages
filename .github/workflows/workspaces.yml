@@ -64,7 +64,7 @@ jobs:
           cd ${{ github.workspace }}
           hub release download "ros2-foxy-base"
           Expand-7Zip "ros2-foxy-base.7z" -TargetPath ${{ env.ROS_BASE }}
-          Expand-7Zip "ros2-foxy-base.7z" ${{ env.ROS_BASE }}/ros2-foxy-base
+          Expand-7Zip "ros2-foxy-base.7z" C:/ros2-foxy-base
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
@@ -95,7 +95,7 @@ jobs:
       - name: Fix Installation
         working-directory: ${{ env.INSTALL_DIR }}
         run: |
-          $files = Get-ChildItem -Recurse -File ${{ env.ROS_BASE }}/ros2-foxy-base/x64 -Name
+          $files = Get-ChildItem -Recurse -File C:/ros2-foxy-base/x64 -Name
           foreach ($file in $files) {
             if (Test-Path $file) {
               Remove-Item $file
