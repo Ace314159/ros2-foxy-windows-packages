@@ -58,7 +58,6 @@ jobs:
               -password "${{ secrets.GITHUB_TOKEN }}"
           mkdir -p C:/vcpkg/installed/x64-windows/
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
-          Copy-Item -Path ${{ env.ROS_BASE }}/ros2-foxy-base/** -Destination ${{ env.INSTALL_DIR }} -Recurse
           Remove-Item C:/vcpkg/installed/x64-windows/include/openssl/ssl.h
           C:/vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps/${{ matrix.workspace }}.txt'
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
