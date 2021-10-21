@@ -95,7 +95,7 @@ jobs:
         run: |
           Install-Module 7Zip4Powershell -Scope CurrentUser -Force
           Compress-7Zip -Path C:/opt/ros/foxy -ArchiveFileName "C:/ros2-foxy-base.7z" -CompressionLevel Ultra
-          hub release show ros2-foxy-base > ${{ github.workspace }}/description.md
+          hub release show ros2-foxy-base -f "%b" > ${{ github.workspace }}/description.md
           $file = "${{ github.workspace }}/description.md"
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
           (Get-Content $file) -replace 'Last Updated: .*', "Last Updated: $date" | Set-Content $file

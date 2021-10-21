@@ -111,7 +111,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           Compress-7Zip -Path C:/opt/ros/foxy -ArchiveFileName "C:/ros2-foxy-${{ matrix.workspace }}.7z" -CompressionLevel Ultra
-          hub release show ros2-foxy-${{ matrix.workspace }} > ${{ github.workspace }}/description.md
+          hub release show ros2-foxy-${{ matrix.workspace }} -f "%b" > ${{ github.workspace }}/description.md
           $file = "${{ github.workspace }}/description.md"
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
           (Get-Content $file) -replace 'Last Updated: .*', "Last Updated: $date" | Set-Content $file
@@ -186,7 +186,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           Compress-7Zip -Path C:/opt/ros/foxy -ArchiveFileName "C:/ros2-foxy-combined.7z" -CompressionLevel Ultra
-          hub release show ros2-foxy-combined > ${{ github.workspace }}/description.md
+          hub release show ros2-foxy-combined -f "%b" > ${{ github.workspace }}/description.md
           $file = "${{ github.workspace }}/description.md"
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
           (Get-Content $file) -replace 'Last Updated: .*', "Last Updated: $date" | Set-Content $file
