@@ -47,10 +47,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cd ${{ github.workspace }}
-          Install-Module 7Zip4Powershell -Scope CurrentUser -Force
-          hub release download "ros2-foxy-base"
-          Expand-7Zip "ros2-foxy-base.7z" -TargetPath ${{ env.ROS_BASE }}
           pip install -U vcstool colcon-common-extensions catkin_pkg cryptography EmPy ifcfg lark-parser lxml numpy pyparsing pyyaml
           Move-Item -Path '${{ github.workspace }}/vcpkg' -Destination C:/vcpkg
           C:/vcpkg/bootstrap-vcpkg.bat
@@ -64,6 +60,10 @@ jobs:
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
           C:/vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps/${{ matrix.workspace }}.txt'
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
+          Install-Module 7Zip4Powershell -Scope CurrentUser -Force
+          cd ${{ github.workspace }}
+          hub release download "ros2-foxy-base"
+          Expand-7Zip "ros2-foxy-base.7z" -TargetPath ${{ env.ROS_BASE }}
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
