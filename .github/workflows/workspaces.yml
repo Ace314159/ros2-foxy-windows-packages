@@ -121,7 +121,7 @@ jobs:
           allowUpdates: true
           artifacts: 'C:/ros2-foxy-${{ matrix.workspace }}.7z'
           bodyFile: ${{ github.workspace }}/description.md
-          tag: ros2-foxy-combined
+          tag: ros2-foxy-${{ matrix.workspace }}
           token: ${{ secrets.GITHUB_TOKEN }}
   Combine:
     needs: [Build]
