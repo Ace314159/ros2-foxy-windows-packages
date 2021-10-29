@@ -77,7 +77,7 @@ repositories:
     version: ros2-devel
   urg_c:
     type: git
-    url: https://github.com/Ace31459/urg_c.git
+    url: https://github.com/Ace314159/urg_c.git
     version: ros2-devel
   pcl_msgs:
     type: git
