@@ -61,8 +61,24 @@ repositories:
     version: foxy-devel
   urg_node:
     type: git
-    url: https://github.com/ros-drivers/urg_node
+    url: https://github.com/Ace314159/urg_node
     version: foxy-devel
+  urg_node_msgs:
+    type: git
+    url: https://github.com/ros-drivers/urg_node_msgs.git
+    version: master
+  diagnostics:
+    type: git
+    url: https://github.com/ros/diagnostics.git
+    version: foxy
+  laser_proc:
+    type: git
+    url: https://github.com/ros-perception/laser_proc.git
+    version: ros2-devel
+  urg_c:
+    type: git
+    url: https://github.com/Ace31459/urg_c.git
+    version: ros2-devel
   pcl_msgs:
     type: git
     url: https://github.com/ros-perception/pcl_msgs

@@ -1,6 +1,7 @@
 asio
 assimp
 boost-coroutine2
+boost-crc
 boost-filesystem
 boost-iostreams
 boost-program-options
