@@ -58,7 +58,7 @@ jobs:
               -password "${{ secrets.GITHUB_TOKEN }}"
           mkdir -p C:/vcpkg/installed/x64-windows/
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
-          C:/vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps/${{ matrix.workspace }}.txt'
+          C:/vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps/${{ matrix.workspace }}.txt' --overlay-ports=${{ github.workspace }}/overlay-ports
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
           Install-Module 7Zip4Powershell -Scope CurrentUser -Force
           cd ${{ github.workspace }}
