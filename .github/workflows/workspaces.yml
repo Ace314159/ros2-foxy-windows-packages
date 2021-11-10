@@ -28,11 +28,9 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Remove existing vcpkg and python
+      - name: Remove existing vcpkg
         run: |
           rm -rf "$VCPKG_INSTALLATION_ROOT"
-          rm -rf "C:/hostedtoolcache/windows/python/"
-          rm -rf "C:/Miniconda"
         shell: 'bash'
       - name: Install Python
         uses: actions/setup-python@v2
