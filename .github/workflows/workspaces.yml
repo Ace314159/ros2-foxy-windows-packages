@@ -22,7 +22,7 @@ jobs:
       ROS_BASE: C:/opt/ros/foxy
       INSTALL_DIR: C:/opt/ros/foxy/x64
       VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -36,10 +36,6 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.8.3'
-      - name: Update Windows SDK
-        uses: fbactions/setup-winsdk@v1
-        with:
-          winsdk-build-version: 19041
       - name: Setup Environment
         working-directory: C:/
         env:
