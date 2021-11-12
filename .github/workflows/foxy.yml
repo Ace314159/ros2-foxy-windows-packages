@@ -19,6 +19,7 @@ jobs:
       VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
       VCPKG_DEFAULT_TRIPLET: x64-windows-ros2
       VCPKG_OVERLAY_PORTS: '${{ github.workspace }}/overlay-ports'
+      VCPKG_OVERLAY_TRIPLETS: '${{ github.workspace }}/overlay-triplets'
       WORKSPACE: foxy
     runs-on: windows-latest
     steps:
