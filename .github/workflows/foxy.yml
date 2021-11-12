@@ -71,6 +71,7 @@ jobs:
               -G Ninja `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
               -DVCPKG_BUILD_TYPE=Release `
+              -DVCPKG_TARGET_TRIPLET=${{ env.VCPKG_DEFAULT_TRIPLET }} `
               -DBUILD_TESTING=False `
               -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" `
               -DCMAKE_SYSTEM_VERSION="10.0.19041.0" `
