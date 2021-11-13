@@ -17,7 +17,7 @@ jobs:
     env:
       INSTALL_DIR: C:/opt/ros/foxy/x64
       VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
-      VCPKG_DEFAULT_TRIPLET: x64-windows-ros2
+      VCPKG_DEFAULT_TRIPLET: ${{ env.VCPKG_DEFAULT_TRIPLET }}-ros2
       VCPKG_OVERLAY_PORTS: '${{ github.workspace }}/overlay-ports'
       VCPKG_OVERLAY_TRIPLETS: '${{ github.workspace }}/overlay-triplets'
       WORKSPACE: foxy
@@ -49,7 +49,7 @@ jobs:
               -username "Ace314159" `
               -password "${{ secrets.GITHUB_TOKEN }}"
           ./vcpkg/vcpkg.exe install '@${{ github.workspace }}/deps/foxy.txt'
-          New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
+          New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/${{ env.VCPKG_DEFAULT_TRIPLET }}/ -Force
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
       - name: Clone Repos
         run: |
@@ -81,7 +81,7 @@ jobs:
         run: |
           $files = Get-ChildItem -Recurse -Path * -Include *.cmake
           foreach ($file in $files) {
-            (Get-Content $file).replace('C:/vcpkg/installed/x64-windows/', 'C:/opt/ros/foxy/x64/') | Set-Content $file
+            (Get-Content $file).replace('C:/vcpkg/installed/${{ env.VCPKG_DEFAULT_TRIPLET }}/', 'C:/opt/ros/foxy/x64/') | Set-Content $file
             (Get-Content $file) -replace 'C:/vcpkg/packages/.+/include', 'C:/opt/ros/foxy/x64/include' | Set-Content $file
           }
           $files = Get-ChildItem -Path Scripts/* -Include *.py
