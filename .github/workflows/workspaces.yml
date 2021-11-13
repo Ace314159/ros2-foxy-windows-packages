@@ -22,6 +22,9 @@ jobs:
       ROS_BASE: C:/opt/ros/foxy
       INSTALL_DIR: C:/opt/ros/foxy/x64
       VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
+      VCPKG_DEFAULT_TRIPLET: x64-windows-ros2
+      VCPKG_OVERLAY_PORTS: '${{ github.workspace }}/overlay-ports'
+      VCPKG_OVERLAY_TRIPLETS: '${{ github.workspace }}/overlay-triplets'
     runs-on: windows-2019
     steps:
       - name: Checkout
@@ -52,7 +55,7 @@ jobs:
               -password "${{ secrets.GITHUB_TOKEN }}"
           mkdir -p C:/vcpkg/installed/x64-windows/
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/x64-windows/ -Force
-          C:/vcpkg/vcpkg.exe --triplet=x64-windows install '@${{ github.workspace }}/deps/${{ matrix.workspace }}.txt' --overlay-ports=${{ github.workspace }}/overlay-ports
+          C:/vcpkg/vcpkg.exe install '@${{ github.workspace }}/deps/${{ matrix.workspace }}.txt'
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
           Install-Module 7Zip4Powershell -Scope CurrentUser -Force
           cd ${{ github.workspace }}
@@ -80,6 +83,7 @@ jobs:
               -G Ninja `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
               -DVCPKG_BUILD_TYPE=Release `
+              -DVCPKG_TARGET_TRIPLET=${{ env.VCPKG_DEFAULT_TRIPLET }} `
               -DBUILD_TESTING=False `
               -DBUILD_EXAMPLES=False `
               -DBUILD_UNIT_TESTS=False `
