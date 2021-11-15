@@ -127,6 +127,7 @@ jobs:
       ROS_BASE: C:/opt/ros/foxy
       WORKSPACES: base;moveit2;nav2
       INSTALL_DIR: C:/opt/ros/foxy/x64
+      VCPKG_DEFAULT_TRIPLET: x64-windows-ros2
     runs-on: windows-latest
     steps:
       - name: Checkout
