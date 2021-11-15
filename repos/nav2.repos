@@ -87,7 +87,3 @@ repositories:
     type: git
     url: https://github.com/ros-perception/perception_pcl
     version: foxy-devel
-  rtabmap_ros:
-    type: git
-    url: https://github.com/introlab/rtabmap_ros
-    version: foxy-devel
