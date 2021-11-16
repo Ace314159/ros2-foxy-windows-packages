@@ -1,21 +1,16 @@
 name: Build Foxy Workspaces
 
 on:
-  push:
-    branches: main
-    paths:
-      - .github/workflows/workspaces.yml
-      - deps/moveit2.txt
-      - deps/nav2.txt
-      - vcpkg/**
-      - nuspec/*.nuspec
-      - patches/*.patch
-      - repos/*.repos
   workflow_dispatch:
+  workflow_run:
+    workflows: ["ROS2 Foxy Base"]
+    types:
+      - completed
 
 jobs:
   Build:
     strategy:
+      fail-fast: false
       matrix:
         workspace: [moveit2, nav2]
     env:

@@ -1,16 +1,9 @@
 name: Build Foxy Base
 
 on:
-  push:
-    branches: main
-    paths:
-      - .github/workflows/foxy.yml
-      - deps/foxy.txt
-      - vcpkg/**
-      - nuspec/foxy.nuspec
-      - patches/foxy.patch
-      - repos/foxy.repos
   workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * *'
 
 jobs:
   Build:
