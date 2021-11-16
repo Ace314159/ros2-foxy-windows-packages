@@ -40,6 +40,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           pip install -U vcstool colcon-common-extensions catkin_pkg cryptography EmPy ifcfg lark-parser lxml numpy pyparsing pyyaml
+          pip install git+https://github.com/colcon/colcon-powershell
           Move-Item -Path '${{ github.workspace }}/vcpkg' -Destination C:/vcpkg
           C:/vcpkg/bootstrap-vcpkg.bat
           nuget sources add `
