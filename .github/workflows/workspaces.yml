@@ -3,7 +3,7 @@ name: Build Foxy Workspaces
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["ROS2 Foxy Base"]
+    workflows: ["Build Foxy Base"]
     types:
       - completed
 
