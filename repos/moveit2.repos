@@ -71,3 +71,7 @@ repositories:
     type: git
     url: https://github.com/ros-controls/control_toolbox
     version: ros2-master
+  joint_state_publisher:
+    type: git
+    url: https://github.com/ros/joint_state_publisher/tree
+    version: foxy
