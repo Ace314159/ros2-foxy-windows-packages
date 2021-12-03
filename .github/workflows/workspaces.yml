@@ -58,10 +58,6 @@ jobs:
           hub release download "ros2-foxy-base"
           Expand-7Zip "ros2-foxy-base.7z" -TargetPath ${{ env.ROS_BASE }}
           Expand-7Zip "ros2-foxy-base.7z" C:/ros2-foxy-base
-      - uses: actions/upload-artifact@v2
-        with:
-          name: log
-          path: C:\vcpkg\buildtrees\sdformat9\install-x64-windows-ros2-dbg-out.log
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
@@ -79,6 +75,7 @@ jobs:
             --merge-install `
             --install-base ${{ env.INSTALL_DIR }} `
             --event-handlers console_cohesion+ status- `
+            --packages-skip moveit_resources_prbt_ikfast_manipulator_plugin `
             --cmake-args `
               -G Ninja `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
