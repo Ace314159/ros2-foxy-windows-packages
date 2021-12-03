@@ -75,7 +75,7 @@ jobs:
             --merge-install `
             --install-base ${{ env.INSTALL_DIR }} `
             --event-handlers console_cohesion+ status- `
-            --packages-skip prbt_ikfast_manipulator_plugin prbt_moveit_config prbt_pg70_support prbt_support `
+            --packages-skip moveit_resources_prbt_ikfast_manipulator_plugin moveit_resources_prbt_moveit_config moveit_resources_prbt_pg70_support moveit_resources_prbt_support `
             --cmake-args `
               -G Ninja `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
