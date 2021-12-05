@@ -9,6 +9,7 @@ jobs:
   Build:
     env:
       INSTALL_DIR: C:/opt/ros/foxy/x64
+      DEBUG_DIR: C:/opt/ros/debug/x64/
       VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
       VCPKG_DEFAULT_TRIPLET: x64-windows-ros2
       VCPKG_OVERLAY_PORTS: '${{ github.workspace }}/overlay-ports'
@@ -64,7 +65,7 @@ jobs:
             --cmake-args `
               -G Ninja `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
-              -DCMAKE_PDB_OUTPUT_DIRECTORY=${{ env.INSTALL_DIR }}/bin `
+              -DCMAKE_PDB_OUTPUT_DIRECTORY=${{ env.DEBUG_DIR }}/bin `
               -DVCPKG_TARGET_TRIPLET=${{ env.VCPKG_DEFAULT_TRIPLET }} `
               -DBUILD_TESTING=False `
               -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" `
@@ -88,6 +89,7 @@ jobs:
         run: |
           Install-Module 7Zip4Powershell -Scope CurrentUser -Force
           Compress-7Zip -Path C:/opt/ros/foxy -ArchiveFileName "C:/ros2-foxy-base.7z" -CompressionLevel Ultra
+          Compress-7Zip -Path C:/opt/ros/debug -ArchiveFileName "C:/debug.7z" -CompressionLevel Ultra
           hub release show ros2-foxy-base -f "%b" > ${{ github.workspace }}/description.md
           $file = "${{ github.workspace }}/description.md"
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
@@ -96,7 +98,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
-          artifacts: 'C:/ros2-foxy-base.7z'
+          artifacts: 'C:/ros2-foxy-base.7z,C:/debug.7z'
           bodyFile: ${{ github.workspace }}/description.md
           tag: ros2-foxy-base
           token: ${{ secrets.GITHUB_TOKEN }}

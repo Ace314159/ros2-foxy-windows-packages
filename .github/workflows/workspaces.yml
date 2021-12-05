@@ -16,6 +16,7 @@ jobs:
     env:
       ROS_BASE: C:/opt/ros/foxy
       INSTALL_DIR: C:/opt/ros/foxy/x64
+      DEBUG_DIR: C:/opt/ros/debug/x64
       VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
       VCPKG_DEFAULT_TRIPLET: x64-windows-ros2
       VCPKG_OVERLAY_PORTS: '${{ github.workspace }}/overlay-ports'
@@ -78,7 +79,7 @@ jobs:
             --cmake-args `
               -G Ninja `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
-              -DCMAKE_PDB_OUTPUT_DIRECTORY=${{ env.INSTALL_DIR }}/bin `
+              -DCMAKE_PDB_OUTPUT_DIRECTORY=${{ env.DEBUG_DIR }}/bin `
               -DVCPKG_TARGET_TRIPLET=${{ env.VCPKG_DEFAULT_TRIPLET }} `
               -DBUILD_TESTING=False `
               -DBUILD_EXAMPLES=False `
@@ -105,6 +106,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           Compress-7Zip -Path C:/opt/ros/foxy -ArchiveFileName "C:/ros2-foxy-${{ matrix.workspace }}.7z" -CompressionLevel Ultra
+          Compress-7Zip -Path C:/opt/ros/debug -ArchiveFileName "C:/debug.7z" -CompressionLevel Ultra
           hub release show ros2-foxy-${{ matrix.workspace }} -f "%b" > ${{ github.workspace }}/description.md
           $file = "${{ github.workspace }}/description.md"
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
@@ -113,7 +115,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
-          artifacts: 'C:/ros2-foxy-${{ matrix.workspace }}.7z'
+          artifacts: 'C:/ros2-foxy-${{ matrix.workspace }}.7z,C:/debug.7z'
           bodyFile: ${{ github.workspace }}/description.md
           tag: ros2-foxy-${{ matrix.workspace }}
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -121,6 +123,7 @@ jobs:
     needs: [Build]
     env:
       ROS_BASE: C:/opt/ros/foxy
+      DEBUG_BASE: C:/opt/ros/debug
       WORKSPACES: base;moveit2;nav2
       INSTALL_DIR: C:/opt/ros/foxy/x64
       VCPKG_DEFAULT_TRIPLET: x64-windows-ros2
@@ -141,6 +144,7 @@ jobs:
           foreach ($workspace in $workspaces) {
             hub release download "ros2-foxy-$workspace"
             Expand-7Zip "ros2-foxy-$workspace.7z" -TargetPath ${{ env.ROS_BASE }}
+            Expand-7Zip "debug.7z" -TargetPath ${{ env.DEBUG_BASE }}
           }
       - name: Setup vcpkg
         run: |
@@ -183,6 +187,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           Compress-7Zip -Path C:/opt/ros/foxy -ArchiveFileName "C:/ros2-foxy-combined.7z" -CompressionLevel Ultra
+          Compress-7Zip -Path C:/opt/ros/debug -ArchiveFileName "C:/debug.7z" -CompressionLevel Ultra
           hub release show ros2-foxy-combined -f "%b" > ${{ github.workspace }}/description.md
           $file = "${{ github.workspace }}/description.md"
           $date = (Get-Date).ToUniversalTime().ToString("MM-dd-yy HH:mm:ss UTC")
@@ -191,7 +196,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
-          artifacts: 'C:/ros2-foxy-combined.7z'
+          artifacts: 'C:/ros2-foxy-combined.7z,C:/debug.7z'
           bodyFile: ${{ github.workspace }}/description.md
           tag: ros2-foxy-combined
           token: ${{ secrets.GITHUB_TOKEN }}
