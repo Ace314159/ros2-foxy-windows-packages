@@ -78,6 +78,7 @@ jobs:
             --cmake-args `
               -G Ninja `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
+              -DCMAKE_PDB_OUTPUT_DIRECTORY=${{ env.INSTALL_DIR }}/bin `
               -DVCPKG_TARGET_TRIPLET=${{ env.VCPKG_DEFAULT_TRIPLET }} `
               -DBUILD_TESTING=False `
               -DBUILD_EXAMPLES=False `
