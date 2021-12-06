@@ -145,6 +145,7 @@ jobs:
             hub release download "ros2-foxy-$workspace"
             Expand-7Zip "ros2-foxy-$workspace.7z" -TargetPath ${{ env.ROS_BASE }}
             Expand-7Zip "debug.7z" -TargetPath ${{ env.DEBUG_BASE }}
+            Remove-Item -Path "debug.7z"
           }
       - name: Setup vcpkg
         run: |
