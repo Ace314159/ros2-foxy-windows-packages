@@ -8,6 +8,7 @@ boost-foreach
 bullet3
 ceres[suitesparse]
 gazebo11
+geographiclib
 graphicsmagick
 ompl
 pcl
