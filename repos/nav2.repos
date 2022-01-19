@@ -9,8 +9,8 @@ repositories:
     version: master
   angles:
     type: git
-    url: https://github.com/ros/angles.git
-    version: b7f12577bc7f6df49c816a98afef3f67574b8a09
+    url: https://github.com/Ace314159/angles.git
+    version: foxy-devel
   navigation2:
     type: git
     url: https://github.com/ros-planning/navigation2.git
@@ -90,4 +90,12 @@ repositories:
   perception_pcl:
     type: git
     url: https://github.com/ros-perception/perception_pcl
+    version: foxy-devel
+  geographic_info
+    type: git
+    url: https://github.com/ros-geographic-info/geographic_info
+    version: ros2
+  robot_localization:
+    type: git
+    url: https://github.com/Ace314159/robot_localization
     version: foxy-devel

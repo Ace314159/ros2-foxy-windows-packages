@@ -49,8 +49,8 @@ repositories:
     version: ros2
   angles:
     type: git
-    url: https://github.com/ros/angles.git
-    version: b7f12577bc7f6df49c816a98afef3f67574b8a09
+    url: https://github.com/Ace314159/angles.git
+    version: foxy-devel
   realtime_tools:
     type: git
     url: https://github.com/ros-controls/realtime_tools.git
