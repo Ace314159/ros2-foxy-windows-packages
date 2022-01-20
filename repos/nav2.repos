@@ -58,7 +58,7 @@ repositories:
   realsense-ros:
     type: git
     url: https://github.com/Ace314159/realsense-ros.git
-    version: foxy
+    version: ros2
   depthimage_to_laserscan:
     type: git
     url: https://github.com/ros-perception/depthimage_to_laserscan
