@@ -91,7 +91,7 @@ repositories:
     type: git
     url: https://github.com/ros-perception/perception_pcl
     version: foxy-devel
-  geographic_info
+  geographic_info:
     type: git
     url: https://github.com/ros-geographic-info/geographic_info
     version: ros2
