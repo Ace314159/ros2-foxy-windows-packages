@@ -179,10 +179,6 @@ jobs:
               Remove-Item $fullPath
             }
           }
-          $files = Get-ChildItem ${{ github.workspace }}/vcpkg/packages/ogre_${{ env.VCPKG_DEFAULT_TRIPLET }}/bin
-          foreach ($file in $files) {
-            Move-Item -Path $file -Destination C:/opt/ros/foxy/x64/tools/gazebo11 -Force
-          }
       - name: Package
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
