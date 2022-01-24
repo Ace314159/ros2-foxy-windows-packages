@@ -1,27 +1,4 @@
-﻿diff --git a/BehaviorTree.CPP/CMakeLists.txt b/BehaviorTree.CPP/CMakeLists.txt
-index 428b06f..b22ea62 100644
---- a/BehaviorTree.CPP/CMakeLists.txt
-+++ b/BehaviorTree.CPP/CMakeLists.txt
-@@ -16,7 +16,7 @@ else()
- endif()
- 
- #---- Include boost to add coroutines ----
--find_package(Boost COMPONENTS coroutine QUIET)
-+find_package(Boost COMPONENTS coroutine2 QUIET)
- 
- if(Boost_FOUND)
-     string(REPLACE "." "0" Boost_VERSION_NODOT ${Boost_VERSION})
-@@ -202,7 +202,8 @@ endif()
- if (WIN32)
-     set(CMAKE_DEBUG_POSTFIX "d")
-     list(APPEND BT_SOURCE src/shared_library_WIN.cpp )
--    add_library(${BEHAVIOR_TREE_LIBRARY} STATIC ${BT_SOURCE} )
-+    add_library(${BEHAVIOR_TREE_LIBRARY} SHARED ${BT_SOURCE} )
-+    set_target_properties(${BEHAVIOR_TREE_LIBRARY} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
- endif()
- 
- if( ZMQ_FOUND )
-diff --git a/BehaviorTree.CPP/cmake/FindZMQ.cmake b/BehaviorTree.CPP/cmake/FindZMQ.cmake
+﻿diff --git a/BehaviorTree.CPP/cmake/FindZMQ.cmake b/BehaviorTree.CPP/cmake/FindZMQ.cmake
 index c4b8c23..7c3f1f9 100644
 --- a/BehaviorTree.CPP/cmake/FindZMQ.cmake
 +++ b/BehaviorTree.CPP/cmake/FindZMQ.cmake
