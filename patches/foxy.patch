@@ -38,6 +38,31 @@ index 0000000..43fbfd9
 +   endif ()
 + 
 +   enable_language (ASM_MASM)
+diff --git a/ros2/rviz/rviz_assimp_vendor/rviz_assimp_vendor-extras.cmake.in b/ros2/rviz/rviz_assimp_vendor/rviz_assimp_vendor-extras.cmake.in
+index 8e41fe66..4854b903 100644
+--- a/ros2/rviz/rviz_assimp_vendor/rviz_assimp_vendor-extras.cmake.in
++++ b/ros2/rviz/rviz_assimp_vendor/rviz_assimp_vendor-extras.cmake.in
+@@ -19,7 +19,7 @@ find_package(assimp REQUIRED QUIET)
+ string(REPLACE "/lib/lib/" "/lib/" ASSIMP_LIBRARY_DIRS "${ASSIMP_LIBRARY_DIRS}")
+ string(REGEX REPLACE "/lib/include$" "/include" ASSIMP_INCLUDE_DIRS "${ASSIMP_INCLUDE_DIRS}")
+ 
+-set(rviz_assimp_vendor_LIBRARIES)
++set(rviz_assimp_vendor_LIBRARIES assimp::assimp)
+ foreach(library IN LISTS ASSIMP_LIBRARIES)
+   message(STATUS "library: ${library}")
+   if(IS_ABSOLUTE "${library}")
+diff --git a/ros2/rviz/rviz_common/CMakeLists.txt b/ros2/rviz/rviz_common/CMakeLists.txt
+index 62bb1091..c9fb1a67 100644
+--- a/ros2/rviz/rviz_common/CMakeLists.txt
++++ b/ros2/rviz/rviz_common/CMakeLists.txt
+@@ -273,6 +273,7 @@ ament_export_dependencies(
+   geometry_msgs
+   pluginlib
+   rclcpp
++  rviz_assimp_vendor
+   sensor_msgs
+   std_msgs
+   tf2
 diff --git a/ros2/rviz/rviz_ogre_vendor/CMakeLists.txt b/ros2/rviz/rviz_ogre_vendor/CMakeLists.txt
 index c400c07f..6b765d76 100644
 --- a/ros2/rviz/rviz_ogre_vendor/CMakeLists.txt
