@@ -83,7 +83,7 @@ index 911a4b7c..5970f625 100644
 + set_target_properties(OgreOverlay PROPERTIES VERSION ${OGRE_SOVERSION} SOVERSION ${OGRE_SOVERSION})
 +-target_link_libraries(OgreOverlay PUBLIC OgreMain PRIVATE "${FREETYPE_LIBRARIES}" ZLIB::ZLIB)
 ++target_link_libraries(OgreOverlay PUBLIC OgreMain PRIVATE ${FREETYPE_LIBRARIES} ZLIB::ZLIB)
-+ target_include_directories(OgreOverlay PUBLIC
++ target_include_directories(OgreOverlay PUBLIC 
 +   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
 +   $<INSTALL_INTERFACE:include/OGRE/Overlay>
 diff --git a/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in b/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in
