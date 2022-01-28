@@ -7,7 +7,7 @@ boost-python
 boost-foreach
 bullet3
 ceres[suitesparse]
-gazebo11
+gazebo
 geographiclib
 graphicsmagick
 ompl
