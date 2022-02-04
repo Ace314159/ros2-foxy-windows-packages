@@ -21,7 +21,7 @@ jobs:
       VCPKG_DEFAULT_TRIPLET: x64-windows-ros2
       VCPKG_OVERLAY_PORTS: '${{ github.workspace }}/overlay-ports'
       VCPKG_OVERLAY_TRIPLETS: '${{ github.workspace }}/overlay-triplets'
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -126,10 +126,11 @@ jobs:
       DEBUG_BASE: C:/opt/ros/debug
       WORKSPACES: base;moveit2;nav2
       INSTALL_DIR: C:/opt/ros/foxy/x64
+      VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
       VCPKG_DEFAULT_TRIPLET: x64-windows-ros2
       VCPKG_OVERLAY_PORTS: '${{ github.workspace }}/overlay-ports'
       VCPKG_OVERLAY_TRIPLETS: '${{ github.workspace }}/overlay-triplets'
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
       - name: Checkout
         uses: actions/checkout@v2
