@@ -13,4 +13,3 @@ graphicsmagick
 ompl
 pcl
 realsense2
-zeromq

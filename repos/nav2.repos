@@ -1,7 +1,7 @@
 repositories:
   BehaviorTree.CPP:
     type: git
-    url: https://github.com/Ace314159/BehaviorTree.CPP.git
+    url: https://github.com/BehaviorTree/BehaviorTree.CPP.git
     version: master
   Groot:
     type: git
