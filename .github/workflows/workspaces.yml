@@ -53,6 +53,7 @@ jobs:
           mkdir -p C:/vcpkg/installed/${{ env.VCPKG_DEFAULT_TRIPLET }}/
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/${{ env.VCPKG_DEFAULT_TRIPLET }}/ -Force
           C:/vcpkg/vcpkg.exe install '@${{ github.workspace }}/deps/${{ matrix.workspace }}.txt'
+          echo $LASTEXITCODE
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
           Install-Module 7Zip4Powershell -Scope CurrentUser -Force
           cd ${{ github.workspace }}
