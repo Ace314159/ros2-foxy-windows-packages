@@ -41,7 +41,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           pip install -U vcstool colcon-common-extensions catkin_pkg cryptography EmPy ifcfg lark-parser lxml numpy pyparsing pyyaml
-          pip install git+https://github.com/colcon/colcon-powershell
           Move-Item -Path '${{ github.workspace }}/vcpkg' -Destination C:/vcpkg
           C:/vcpkg/bootstrap-vcpkg.bat
           nuget sources add `
@@ -54,7 +53,6 @@ jobs:
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/${{ env.VCPKG_DEFAULT_TRIPLET }}/ -Force
           C:/vcpkg/vcpkg.exe install '@${{ github.workspace }}/deps/${{ matrix.workspace }}.txt'
           if (!$?) { exit 1 }
-          echo $LASTEXITCODE
           Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
           Install-Module 7Zip4Powershell -Scope CurrentUser -Force
           cd ${{ github.workspace }}

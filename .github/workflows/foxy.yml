@@ -33,7 +33,6 @@ jobs:
         working-directory: C:/
         run: |
           pip install -U vcstool colcon-common-extensions catkin_pkg cryptography EmPy ifcfg lark-parser lxml numpy pyparsing pyyaml
-          pip install git+https://github.com/colcon/colcon-powershell
           Move-Item -Path '${{ github.workspace }}/vcpkg' -Destination C:/vcpkg
           ./vcpkg/bootstrap-vcpkg.bat
           & (./vcpkg/vcpkg fetch nuget | Select-Object -Last 1) `
