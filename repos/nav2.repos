@@ -9,7 +9,7 @@ repositories:
     version: master
   angles:
     type: git
-    url: https://github.com/Ace314159/angles.git
+    url: https://github.com/ros/angles.git
     version: foxy-devel
   navigation2:
     type: git
