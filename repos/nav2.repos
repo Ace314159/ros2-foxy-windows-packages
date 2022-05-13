@@ -51,10 +51,6 @@ repositories:
     type: git
     url: https://github.com/ROBOTIS-GIT/hls_lfcd_lds_driver.git
     version: foxy-devel
-  slam_toolbox:
-    type: git
-    url: https://github.com/Ace314159/slam_toolbox.git
-    version: foxy-devel
   realsense-ros:
     type: git
     url: https://github.com/Ace314159/realsense-ros.git
