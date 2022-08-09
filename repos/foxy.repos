@@ -18,7 +18,7 @@ repositories:
   ament/google_benchmark_vendor:
     type: git
     url: https://github.com/ament/google_benchmark_vendor.git
-    version: main
+    version: foxy
   ament/googletest:
     type: git
     url: https://github.com/ament/googletest.git
@@ -197,11 +197,11 @@ repositories:
     version: foxy
   ros2/geometry2:
     type: git
-    url: https://github.com/Ace314159/geometry2.git
+    url: https://github.com/ros2/geometry2.git
     version: foxy
   ros2/launch:
     type: git
-    url: https://github.com/Ace314159/launch.git
+    url: https://github.com/ros2/launch.git
     version: foxy
   ros2/launch_ros:
     type: git
@@ -218,7 +218,7 @@ repositories:
   ros2/mimick_vendor:
     type: git
     url: https://github.com/ros2/mimick_vendor.git
-    version: master
+    version: foxy
   ros2/orocos_kinematics_dynamics:
     type: git
     url: https://github.com/ros2/orocos_kinematics_dynamics.git
@@ -226,7 +226,7 @@ repositories:
   ros2/performance_test_fixture:
     type: git
     url: https://github.com/ros2/performance_test_fixture.git
-    version: main
+    version: rolling
   ros2/python_cmake_module:
     type: git
     url: https://github.com/ros2/python_cmake_module.git
