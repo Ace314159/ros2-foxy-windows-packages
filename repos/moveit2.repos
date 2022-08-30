@@ -46,7 +46,7 @@ repositories:
   octomap_msgs:
     type: git
     url: https://github.com/OctoMap/octomap_msgs.git
-    version: ros2
+    version: foxy
   angles:
     type: git
     url: https://github.com/ros/angles.git
