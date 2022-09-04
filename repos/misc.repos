@@ -1,8 +1,9 @@
-realsense-ros:
+repositories:
+  realsense-ros:
     type: git
     url: https://github.com/Ace314159/realsense-ros.git
     version: ros2
-realsense-ros:
+  joystick_drivers:
     type: git
     url: https://github.com/ros-drivers/joystick_drivers.git
     version: foxy-devel
