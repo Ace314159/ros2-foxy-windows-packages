@@ -1,3 +1,4 @@
 ompl
 realsense2
+libspnav
 sdl2
