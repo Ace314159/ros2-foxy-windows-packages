@@ -27,6 +27,7 @@ qt5-base
 qt5-svg
 realsense2
 spdlog
+sdl2
 tinyxml
 tinyxml2
 urdfdom
