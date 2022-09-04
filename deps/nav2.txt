@@ -1,5 +1,4 @@
 boost-coroutine2
-boost-crc
 boost-filesystem
 boost-iostreams
 boost-program-options
@@ -8,8 +7,5 @@ boost-foreach
 bullet3
 ceres[suitesparse]
 gazebo
-geographiclib
 graphicsmagick
-ompl
-pcl
 realsense2
