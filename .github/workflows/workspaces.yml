@@ -71,11 +71,13 @@ jobs:
         working-directory: C:/ws
         run: |
           Invoke-BatchFile "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          $skip = (Get-Content skip/${{ matrix.workspace }}.txt) -join " "
           ${{ env.INSTALL_DIR }}/local_setup.ps1
           colcon build `
             --merge-install `
             --install-base ${{ env.INSTALL_DIR }} `
             --event-handlers console_cohesion+ status- `
+            --packages-skip $skip
             --cmake-args `
               -G Ninja `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
