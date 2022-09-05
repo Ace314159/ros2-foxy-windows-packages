@@ -1,4 +1,8 @@
 repositories:
+  vision_opencv:
+    type: git
+    url: https://github.com/ros-perception/vision_opencv.git
+    version: ros2
   realsense-ros:
     type: git
     url: https://github.com/Ace314159/realsense-ros.git
