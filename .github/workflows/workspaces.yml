@@ -77,7 +77,7 @@ jobs:
             --merge-install `
             --install-base ${{ env.INSTALL_DIR }} `
             --event-handlers console_cohesion+ status- `
-            --packages-skip $skip
+            --packages-skip $skip `
             --cmake-args `
               -G Ninja `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
