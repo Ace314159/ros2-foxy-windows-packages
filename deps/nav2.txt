@@ -8,4 +8,5 @@ bullet3
 ceres[suitesparse]
 gazebo
 graphicsmagick
+ompl
 realsense2
