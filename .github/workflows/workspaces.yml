@@ -71,7 +71,7 @@ jobs:
         working-directory: C:/ws
         run: |
           Invoke-BatchFile "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-          $skip = (Get-Content '${{ github.workspace }}/skip/${{ matrix.workspace }}.txt') -join " "
+          $skip = Get-Content '${{ github.workspace }}/skip/${{ matrix.workspace }}.txt'
           ${{ env.INSTALL_DIR }}/local_setup.ps1
           colcon build `
             --merge-install `
