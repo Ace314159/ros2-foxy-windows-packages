@@ -126,7 +126,7 @@ jobs:
     env:
       ROS_BASE: C:/opt/ros/foxy
       DEBUG_BASE: C:/opt/ros/debug
-      WORKSPACES: base;moveit2;nav2
+      WORKSPACES: base;moveit2;nav2;misc
       INSTALL_DIR: C:/opt/ros/foxy/x64
       VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
       VCPKG_DEFAULT_TRIPLET: x64-windows-ros2
