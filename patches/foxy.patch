@@ -86,35 +86,3 @@ index 911a4b7c..5970f625 100644
 + target_include_directories(OgreOverlay PUBLIC 
 +   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
 +   $<INSTALL_INTERFACE:include/OGRE/Overlay>
-diff --git a/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in b/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in
-index 0ab09b60..7b7fbd92 100644
---- a/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in
-+++ b/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in
-@@ -97,7 +97,7 @@ foreach(_lib IN LISTS OGRE_LIBRARIES)
-       message(FATAL_ERROR "Could not find freetype package")
-     endif()
- 
--    if(WIN32)
-+    if(false)
-       if(_ogre_main_static_library_debug_abs)
-         set(ZLIB_LIBRARIES "${ZLIB_HOME}/lib/zlibstaticd.lib")
-       else()
-@@ -127,10 +127,14 @@ foreach(_lib IN LISTS OGRE_LIBRARIES)
-     if(APPLE)
-       list(APPEND _extra_interface_link_libraries "-framework Cocoa")
-     endif()
--    set_target_properties(rviz_ogre_vendor::OgreMain
--      PROPERTIES
--        "INTERFACE_LINK_LIBRARIES" "${_extra_interface_link_libraries}"
--    )
-+    if(CMAKE_VERSION VERSION_LESS 3.11)
-+      set_target_properties(rviz_ogre_vendor::OgreMain
-+        PROPERTIES
-+          "INTERFACE_LINK_LIBRARIES" "${_extra_interface_link_libraries}"
-+      )
-+    else()
-+      target_link_libraries(rviz_ogre_vendor::OgreMain INTERFACE ${_extra_interface_link_libraries})
-+    endif()
-   endif()
-   if("OgreOverlayStatic" STREQUAL ${_lib} OR "OgreOverlay" STREQUAL ${_lib})
-     find_library(_ogre_overlay_static_library_abs ${_lib}
