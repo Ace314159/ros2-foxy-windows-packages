@@ -86,10 +86,10 @@ index 911a4b7c..5970f625 100644
 + target_include_directories(OgreOverlay PUBLIC 
 +   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
 +   $<INSTALL_INTERFACE:include/OGRE/Overlay>
-diff --git a/ros2/rivz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in b/ros2/rivz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in
+diff --git a/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in b/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in
 index 786aff99..662522b5 100644
---- a/ros2/rivz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in
-+++ b/ros2/rivz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in
+--- a/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in
++++ b/ros2/rviz/rviz_ogre_vendor/rviz_ogre_vendor-extras.cmake.in
 @@ -97,7 +97,7 @@ foreach(_lib IN LISTS OGRE_LIBRARIES)
        message(FATAL_ERROR "Could not find freetype package")
      endif()
