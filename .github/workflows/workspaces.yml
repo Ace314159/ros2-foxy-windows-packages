@@ -176,7 +176,7 @@ jobs:
               $data.replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
             }
           }
-          ls ${{ github.workspace }}/vcpkg/
+          ls ${{ github.workspace }}/vcpkg/packages/
           $files = Get-ChildItem -File -Recurse ${{ github.workspace }}/vcpkg/packages/ogre_${{ env.VCPKG_DEFAULT_TRIPLET }} -Name
           foreach ($file in $files) {
             $fullPath = "C:/opt/ros/foxy/x64/$($file)"
