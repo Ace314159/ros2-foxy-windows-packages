@@ -159,8 +159,10 @@ jobs:
               -name "GitHub" `
               -username "Ace314159" `
               -password "${{ secrets.GITHUB_TOKEN }}"
+          ls ${{ github.workspace }}/vcpkg/
           ${{ github.workspace }}/vcpkg/vcpkg.exe install ogre
           if (!$?) { exit 1 }
+          ls ${{ github.workspace }}/vcpkg/
       - name: Fix Installation
         working-directory: ${{ env.INSTALL_DIR }}
         run: |
