@@ -61,8 +61,8 @@ repositories:
     version: foxy
   vision_opencv:
     type: git
-    url: https://github.com/Ace314159/vision_opencv.git
-    version: foxy
+    url: https://github.com/ros-perception/vision_opencv.git
+    version: foxy-with-boost-python-fix
   image_common:
     type: git
     url: https://github.com/ros-perception/image_common

@@ -29,8 +29,8 @@ repositories:
     version: foxy
   vision_opencv:
     type: git
-    url: https://github.com/Ace314159/vision_opencv.git
-    version: foxy
+    url: https://github.com/ros-perception/vision_opencv.git
+    version: foxy-with-boost-python-fix
   turtlebot3/turtlebot3:
     type: git
     url: https://github.com/ROBOTIS-GIT/turtlebot3.git
