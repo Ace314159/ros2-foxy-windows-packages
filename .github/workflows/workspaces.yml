@@ -141,6 +141,7 @@ jobs:
       - name: Remove existing vcpkg
         run: |
           rm -rf "$VCPKG_INSTALLATION_ROOT"
+          mv '${{ github.workspace }}/vcpkg' C:/vcpkg
         shell: 'bash'
       - name: Download and Combine
         env:
@@ -156,24 +157,22 @@ jobs:
           }
       - name: Setup vcpkg
         run: |
-          ${{ github.workspace }}/vcpkg/bootstrap-vcpkg.bat
+          C:/vcpkg/bootstrap-vcpkg.bat
           nuget sources add `
               -source "https://nuget.pkg.github.com/Ace314159/index.json" `
               -storepasswordincleartext `
               -name "GitHub" `
               -username "Ace314159" `
               -password "${{ secrets.GITHUB_TOKEN }}"
-          ls ${{ github.workspace }}/vcpkg/
-          ${{ github.workspace }}/vcpkg/vcpkg.exe install ogre
+          C:/vcpkg/vcpkg.exe install ogre
           if (!$?) { exit 1 }
-          ls ${{ github.workspace }}/vcpkg/
       - name: Fix Installation
         working-directory: ${{ env.INSTALL_DIR }}
         run: |
           $files = Get-ChildItem -Recurse -Path * -Include *.cmake
           foreach ($file in $files) {
-            (Get-Content $file).replace('${{ github.workspace }}/vcpkg/installed/${{ env.VCPKG_DEFAULT_TRIPLET }}/', 'C:/opt/ros/foxy/x64/') | Set-Content $file
-            (Get-Content $file) -replace '${{ github.workspace }}/vcpkg/packages/.+/include', 'C:/opt/ros/foxy/x64/include' | Set-Content $file
+            (Get-Content $file).replace('C:/vcpkg/installed/${{ env.VCPKG_DEFAULT_TRIPLET }}/', 'C:/opt/ros/foxy/x64/') | Set-Content $file
+            (Get-Content $file) -replace 'C:/vcpkg/packages/.+/include', 'C:/opt/ros/foxy/x64/include' | Set-Content $file
           }
           $files = Get-ChildItem -Path * -Include *.py -Recurse
           foreach ($file in $files) {
@@ -182,8 +181,8 @@ jobs:
               $data.replace('c:\hostedtoolcache\windows\python\3.8.3\x64\python.exe', 'c:\python38\python.exe') | Set-Content $file
             }
           }
-          ls ${{ github.workspace }}/vcpkg/
-          $files = Get-ChildItem -File -Recurse ${{ github.workspace }}/vcpkg/packages/ogre_${{ env.VCPKG_DEFAULT_TRIPLET }} -Name
+          ls C:/vcpkg/
+          $files = Get-ChildItem -File -Recurse C:/vcpkg/packages/ogre_${{ env.VCPKG_DEFAULT_TRIPLET }} -Name
           foreach ($file in $files) {
             $fullPath = "C:/opt/ros/foxy/x64/$($file)"
             if (Test-Path $fullPath) {
