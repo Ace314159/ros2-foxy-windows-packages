@@ -138,6 +138,10 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
+      - name: Remove existing vcpkg
+        run: |
+          rm -rf "$VCPKG_INSTALLATION_ROOT"
+        shell: 'bash'
       - name: Download and Combine
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
