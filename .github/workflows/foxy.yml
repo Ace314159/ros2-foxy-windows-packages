@@ -45,7 +45,6 @@ jobs:
           ./vcpkg/vcpkg.exe install '@${{ github.workspace }}/deps/foxy.txt'
           if (!$?) { exit 1 }
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/${{ env.VCPKG_DEFAULT_TRIPLET }}/ -Force
-          Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
       - name: Clone Repos
         run: |
           mkdir C:/ws/src
@@ -54,10 +53,11 @@ jobs:
           if (Test-Path $patchFile) {
             git apply $patchFile --unsafe-paths --directory=C:/ws/src
           }
+      - name: Setup MSVC Shell
+        uses: ilammy/msvc-dev-cmd@v1
       - name: Build
         working-directory: C:/ws
         run: |
-          Invoke-BatchFile "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           colcon build `
             --merge-install `
             --install-base ${{ env.INSTALL_DIR }} `

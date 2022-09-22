@@ -53,7 +53,6 @@ jobs:
           New-Item -Path ${{ env.INSTALL_DIR }} -ItemType SymbolicLink -Value C:/vcpkg/installed/${{ env.VCPKG_DEFAULT_TRIPLET }}/ -Force
           C:/vcpkg/vcpkg.exe install '@${{ github.workspace }}/deps/${{ matrix.workspace }}.txt'
           if (!$?) { exit 1 }
-          Install-Module Pscx -Scope CurrentUser -Force -AllowClobber
           Install-Module 7Zip4Powershell -Scope CurrentUser -Force
           cd ${{ github.workspace }}
           hub release download "ros2-foxy-base"
@@ -67,10 +66,11 @@ jobs:
           if (Test-Path $patchFile) {
             git apply $patchFile --unsafe-paths --directory=C:/ws/src
           }
+      - name: Setup MSVC Shell
+        uses: ilammy/msvc-dev-cmd@v1
       - name: Build
         working-directory: C:/ws
         run: |
-          Invoke-BatchFile "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           $skip = Get-Content '${{ github.workspace }}/skip/${{ matrix.workspace }}.txt'
           ${{ env.INSTALL_DIR }}/local_setup.ps1
           colcon build `
